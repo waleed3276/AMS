@@ -2,101 +2,119 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Create</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Vendor</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+<script src="~/Angular/VendorController.js"></script>
+<div ng-controller="VendorCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Vendor</h4>
             </div>
-        </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Vendor</li>
+                    </ol>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vendor_Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vendor_Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor_MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vendor_MobileNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vendor_MobileNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor_Address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vendor_Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vendor_Address, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor_Remaining, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vendor_Remaining, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vendor_Remaining, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor_Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Vendor_Status)
-                    @Html.ValidationMessageFor(model => model.Vendor_Status, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor_NTN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vendor_NTN, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vendor_NTN, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Registration</h4>
+                        <h6 class="card-subtitle">
+                            Register Here
+                        </h6>
+                        <form name="form" class="form-material m-t-40">
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="Vendor_Name" ng-model="VendorObj.Vendor_Name" ng-change="ValidateVendor()" placeholder="Enter Your Name">
+                                <span style="color:red" ng-show="form.Vendor_Name.$invalid &&form.Vendor_Name.$dirty">
+                                    <span ng-show="form.Vendor_Name.$error.required">Enter Vendor Name</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile Number</label>
+                                <input type="text" class="form-control" name="Vendor_MobileNo" ng-model="VendorObj.Vendor_MobileNo" ng-change="ValidateVendor()" placeholder="Enter Your Mobile Number">
+                                <span style="color:red" ng-show="form.Vendor_MobileNo.$invalid &&form.Vendor_MobileNo.$dirty">
+                                    <span ng-show="form.Vendor_MobileNo.$error.required">Enter Vendor Mobile Number</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" rows="3" name="Vendor_Address" ng-model="VendorObj.Vendor_Address" ng-change="ValidateVendor()" placeholder="Enter Your Address"></textarea>
+                                <span style="color:red" ng-show="form.Vendor_Address.$invalid &&form.Vendor_Address.$dirty">
+                                    <span ng-show="form.Vendor_Address.$error.required">Enter Vendor Address</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>National Tax No.</label>
+                                <input type="text" class="form-control" name="Vendor_NTN" ng-model="VendorObj.Vendor_NTN" ng-change="ValidateVendor()" placeholder="Enter Your National Tax Number">
+                                <span style="color:red" ng-show="form.Vendor_NTN.$invalid &&form.Vendor_NTN.$dirty">
+                                    <span ng-show="form.Vendor_NTN.$error.required">Enter Vendor National Tax Number</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input type="text" class="form-control" name="Vendor_Company" ng-model="VendorObj.Vendor_Company" ng-change="ValidateVendor()" placeholder="Enter Your Company Name">
+                                <span style="color:red" ng-show="form.Vendor_Company.$invalid &&form.Vendor_Company.$dirty">
+                                    <span ng-show="form.Vendor_Company.$error.required">Enter Vendor Company Name</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-b-0">
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="SaveVendor()" ng-disabled="!AllowSubmit">Submit</button>
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="Clear()">Clear</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor_Company, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vendor_Company, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vendor_Company, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Vendors</h4>
+                        <h6 class="card-subtitle">All Vendors Data</h6>
+                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetVendor()">Refresh</button>
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Mobile No.</th>
+                                        <th>Address</th>
+                                        <th>NTN</th>
+                                        <th>Company</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in VendorData">
+                                        <td>{{obj.Vendor_Name}}</td>
+                                        <td>{{obj.Vendor_MobileNo}}</td>
+                                        <td>{{obj.Vendor_Address}}</td>
+                                        <td>{{obj.Vendor_NTN}}</td>
+                                        <td>{{obj.Vendor_Company}}</td>
+                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadVendor(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteVendor(obj)" title="Delete"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vendor_Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vendor_Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vendor_Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
