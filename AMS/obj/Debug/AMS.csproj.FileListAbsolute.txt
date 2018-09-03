@@ -1,0 +1,145 @@
+E:\ASP Projects\AMS\AMS\bin\roslyn\csc.exe
+E:\ASP Projects\AMS\AMS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\ASP Projects\AMS\AMS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\ASP Projects\AMS\AMS\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\ASP Projects\AMS\AMS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\ASP Projects\AMS\AMS\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\ASP Projects\AMS\AMS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\ASP Projects\AMS\AMS\bin\roslyn\System.Collections.Immutable.dll
+E:\ASP Projects\AMS\AMS\bin\roslyn\System.Reflection.Metadata.dll
+E:\ASP Projects\AMS\AMS\bin\roslyn\vbc.exe
+E:\ASP Projects\AMS\AMS\bin\roslyn\VBCSCompiler.exe
+E:\ASP Projects\AMS\AMS\bin\roslyn\VBCSCompiler.exe.config
+E:\ASP Projects\AMS\AMS\bin\AMS.dll.config
+E:\ASP Projects\AMS\AMS\bin\AMS.dll
+E:\ASP Projects\AMS\AMS\bin\AMS.pdb
+E:\ASP Projects\AMS\AMS\bin\Antlr3.Runtime.dll
+E:\ASP Projects\AMS\AMS\bin\EntityFramework.dll
+E:\ASP Projects\AMS\AMS\bin\EntityFramework.SqlServer.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.AspNet.Identity.Core.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.AspNet.Identity.Owin.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.Cookies.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.Facebook.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.Google.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.OAuth.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.Twitter.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Web.Infrastructure.dll
+E:\ASP Projects\AMS\AMS\bin\Newtonsoft.Json.dll
+E:\ASP Projects\AMS\AMS\bin\Owin.dll
+E:\ASP Projects\AMS\AMS\bin\System.Web.Helpers.dll
+E:\ASP Projects\AMS\AMS\bin\System.Web.Mvc.dll
+E:\ASP Projects\AMS\AMS\bin\System.Web.Optimization.dll
+E:\ASP Projects\AMS\AMS\bin\System.Web.Razor.dll
+E:\ASP Projects\AMS\AMS\bin\System.Web.WebPages.Deployment.dll
+E:\ASP Projects\AMS\AMS\bin\System.Web.WebPages.dll
+E:\ASP Projects\AMS\AMS\bin\System.Web.WebPages.Razor.dll
+E:\ASP Projects\AMS\AMS\bin\WebGrease.dll
+E:\ASP Projects\AMS\AMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\ASP Projects\AMS\AMS\bin\System.Web.Helpers.xml
+E:\ASP Projects\AMS\AMS\bin\System.Web.Mvc.xml
+E:\ASP Projects\AMS\AMS\bin\System.Web.Optimization.xml
+E:\ASP Projects\AMS\AMS\bin\System.Web.Razor.xml
+E:\ASP Projects\AMS\AMS\bin\System.Web.WebPages.xml
+E:\ASP Projects\AMS\AMS\bin\System.Web.WebPages.Deployment.xml
+E:\ASP Projects\AMS\AMS\bin\System.Web.WebPages.Razor.xml
+E:\ASP Projects\AMS\AMS\bin\Antlr3.Runtime.pdb
+E:\ASP Projects\AMS\AMS\bin\Newtonsoft.Json.xml
+E:\ASP Projects\AMS\AMS\bin\EntityFramework.xml
+E:\ASP Projects\AMS\AMS\bin\EntityFramework.SqlServer.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.AspNet.Identity.Core.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.AspNet.Identity.Owin.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.Facebook.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.Cookies.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.OAuth.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.Google.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.Twitter.xml
+E:\ASP Projects\AMS\AMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\ASP Projects\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
+E:\ASP Projects\AMS\AMS\obj\Debug\AMS.dll
+E:\ASP Projects\AMS\AMS\obj\Debug\AMS.pdb
+E:\ASP Projects\AMS\AMS\obj\Debug\AMS.Migrations.createdModels.resources
+E:\ASP Projects\AMS\AMS\obj\Debug\AMS.csproj.GenerateResource.Cache
+E:\Repos\AMS\AMS\bin\roslyn\csc.exe
+E:\Repos\AMS\AMS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Repos\AMS\AMS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Repos\AMS\AMS\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Repos\AMS\AMS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Repos\AMS\AMS\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Repos\AMS\AMS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Repos\AMS\AMS\bin\roslyn\System.Collections.Immutable.dll
+E:\Repos\AMS\AMS\bin\roslyn\System.Reflection.Metadata.dll
+E:\Repos\AMS\AMS\bin\roslyn\vbc.exe
+E:\Repos\AMS\AMS\bin\roslyn\VBCSCompiler.exe
+E:\Repos\AMS\AMS\bin\roslyn\VBCSCompiler.exe.config
+E:\Repos\AMS\AMS\bin\AMS.dll.config
+E:\Repos\AMS\AMS\bin\AMS.dll
+E:\Repos\AMS\AMS\bin\AMS.pdb
+E:\Repos\AMS\AMS\bin\Antlr3.Runtime.dll
+E:\Repos\AMS\AMS\bin\EntityFramework.dll
+E:\Repos\AMS\AMS\bin\EntityFramework.SqlServer.dll
+E:\Repos\AMS\AMS\bin\Microsoft.AspNet.Identity.Core.dll
+E:\Repos\AMS\AMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+E:\Repos\AMS\AMS\bin\Microsoft.AspNet.Identity.Owin.dll
+E:\Repos\AMS\AMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.Cookies.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.Facebook.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.Google.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.OAuth.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.Twitter.dll
+E:\Repos\AMS\AMS\bin\Microsoft.Web.Infrastructure.dll
+E:\Repos\AMS\AMS\bin\Newtonsoft.Json.dll
+E:\Repos\AMS\AMS\bin\Owin.dll
+E:\Repos\AMS\AMS\bin\System.Web.Helpers.dll
+E:\Repos\AMS\AMS\bin\System.Web.Mvc.dll
+E:\Repos\AMS\AMS\bin\System.Web.Optimization.dll
+E:\Repos\AMS\AMS\bin\System.Web.Razor.dll
+E:\Repos\AMS\AMS\bin\System.Web.WebPages.Deployment.dll
+E:\Repos\AMS\AMS\bin\System.Web.WebPages.dll
+E:\Repos\AMS\AMS\bin\System.Web.WebPages.Razor.dll
+E:\Repos\AMS\AMS\bin\WebGrease.dll
+E:\Repos\AMS\AMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Repos\AMS\AMS\bin\System.Web.Helpers.xml
+E:\Repos\AMS\AMS\bin\System.Web.Mvc.xml
+E:\Repos\AMS\AMS\bin\System.Web.Optimization.xml
+E:\Repos\AMS\AMS\bin\System.Web.Razor.xml
+E:\Repos\AMS\AMS\bin\System.Web.WebPages.xml
+E:\Repos\AMS\AMS\bin\System.Web.WebPages.Deployment.xml
+E:\Repos\AMS\AMS\bin\System.Web.WebPages.Razor.xml
+E:\Repos\AMS\AMS\bin\Antlr3.Runtime.pdb
+E:\Repos\AMS\AMS\bin\Newtonsoft.Json.xml
+E:\Repos\AMS\AMS\bin\EntityFramework.xml
+E:\Repos\AMS\AMS\bin\EntityFramework.SqlServer.xml
+E:\Repos\AMS\AMS\bin\Microsoft.AspNet.Identity.Core.xml
+E:\Repos\AMS\AMS\bin\Microsoft.AspNet.Identity.Owin.xml
+E:\Repos\AMS\AMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.Facebook.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.Cookies.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.OAuth.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.Google.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.Twitter.xml
+E:\Repos\AMS\AMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\Repos\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.createdModels.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.csproj.GenerateResource.Cache
+E:\Repos\AMS\AMS\obj\Debug\AMS.dll
+E:\Repos\AMS\AMS\obj\Debug\AMS.pdb
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.updateModels.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.changeIdentity.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.userId.resources
