@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Angular\CustomerVendorController.js" />
+    <Content Include="Angular\ProductController.js" />
     <Content Include="Content\Admin\assets\css\pages\bootstrap-switch.css" />
     <Content Include="Content\Admin\assets\css\pages\breadcrumb-page.css" />
     <Content Include="Content\Admin\assets\css\pages\chat-app-page.css" />

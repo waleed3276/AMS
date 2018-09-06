@@ -1,126 +1,119 @@
-﻿@model AMS.Models.Product
+﻿@model AMS.Models.Customer
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Product</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategorySub_Id, "CategorySub_Id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CategorySub_Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategorySub_Id, "", new { @class = "text-danger" })
+<script src="~/Angular/CustomerController.js"></script>
+<div ng-controller="CustomerCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Customer</h4>
             </div>
-        </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Customer</li>
+                    </ol>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProductSize_Id, "ProductSize_Id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ProductSize_Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProductSize_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Code, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Code, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Code, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Weight, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Weight, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Weight, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Rate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Rate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Rate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Product_Status)
-                    @Html.ValidationMessageFor(model => model.Product_Status, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Color, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Color, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Color, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Registration</h4>
+                        <h6 class="card-subtitle">
+                            Register Here
+                        </h6>
+                        <form name="form" class="form-material m-t-40">
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="Customer_Name" ng-model="CustomerObj.Customer_Name" ng-change="ValidateCustomer()" placeholder="Enter Your Name">
+                                <span style="color:red" ng-show="form.Customer_Name.$invalid &&form.Customer_Name.$dirty">
+                                    <span ng-show="form.Customer_Name.$error.required">Enter Customer Name</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile Number</label>
+                                <input type="text" class="form-control" name="Customer_MobileNo" ng-model="CustomerObj.Customer_MobileNo" ng-change="ValidateCustomer()" placeholder="Enter Your Mobile Number">
+                                <span style="color:red" ng-show="form.Customer_MobileNo.$invalid &&form.Customer_MobileNo.$dirty">
+                                    <span ng-show="form.Customer_MobileNo.$error.required">Enter Customer Mobile Number</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" rows="3" name="Customer_Address" ng-model="CustomerObj.Customer_Address" ng-change="ValidateCustomer()" placeholder="Enter Your Address"></textarea>
+                                <span style="color:red" ng-show="form.Customer_Address.$invalid &&form.Customer_Address.$dirty">
+                                    <span ng-show="form.Customer_Address.$error.required">Enter Customer Address</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>National Tax No.</label>
+                                <input type="text" class="form-control" name="Customer_NTN" ng-model="CustomerObj.Customer_NTN" ng-change="ValidateCustomer()" placeholder="Enter Your National Tax Number">
+                                <span style="color:red" ng-show="form.Customer_NTN.$invalid &&form.Customer_NTN.$dirty">
+                                    <span ng-show="form.Customer_NTN.$error.required">Enter Customer National Tax Number</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input type="text" class="form-control" name="Customer_Company" ng-model="CustomerObj.Customer_Company" ng-change="ValidateCustomer()" placeholder="Enter Your Company Name">
+                                <span style="color:red" ng-show="form.Customer_Company.$invalid &&form.Customer_Company.$dirty">
+                                    <span ng-show="form.Customer_Company.$error.required">Enter Customer Company Name</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-b-0">
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="SaveCustomer()" ng-disabled="!AllowSubmit">Submit</button>
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="Clear()">Clear</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Customers</h4>
+                        <h6 class="card-subtitle">All Customers Data</h6>
+                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetCustomer()">Refresh</button>
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Mobile No.</th>
+                                        <th>Address</th>
+                                        <th>NTN</th>
+                                        <th>Company</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in CustomerData">
+                                        <td>{{obj.Customer_Name}}</td>
+                                        <td>{{obj.Customer_MobileNo}}</td>
+                                        <td>{{obj.Customer_Address}}</td>
+                                        <td>{{obj.Customer_NTN}}</td>
+                                        <td>{{obj.Customer_Company}}</td>
+                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadCustomer(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteCustomer(obj)" title="Delete"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Unit, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Unit, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Unit, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_UnitPrice, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
