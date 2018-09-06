@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AMS.Models;
+using Newtonsoft.Json;
+using System.Web.Security;
 
 namespace AMS.Controllers
 {
@@ -17,8 +19,8 @@ namespace AMS.Controllers
         // GET: Vendors
         public ActionResult Index()
         {
-            var vendors = db.Vendors.Include(v => v.ApplicationUser);
-            return View(vendors.ToList());
+           
+            return View(db.Vendors.ToList());
         }
 
         // GET: Vendors/Details/5
@@ -39,8 +41,7 @@ namespace AMS.Controllers
         // GET: Vendors/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.ApplicationUsers, "Id", "UserRole");
-            return View();
+             return View();
         }
 
         // POST: Vendors/Create
@@ -57,7 +58,6 @@ namespace AMS.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Id = new SelectList(db.ApplicationUsers, "Id", "UserRole", vendor.Id);
             return View(vendor);
         }
 
@@ -73,7 +73,6 @@ namespace AMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Id = new SelectList(db.ApplicationUsers, "Id", "UserRole", vendor.Id);
             return View(vendor);
         }
 
@@ -90,7 +89,6 @@ namespace AMS.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Id = new SelectList(db.ApplicationUsers, "Id", "UserRole", vendor.Id);
             return View(vendor);
         }
 
@@ -128,5 +126,52 @@ namespace AMS.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public void CreateVendor(FormCollection form)
+        {
+            Vendor vendor = JsonConvert.DeserializeObject<Vendor>(form["VendorObj"]);
+            string userId = "";
+            userId = Session["tempData"].ToString();
+            vendor.Id = userId;
+            vendor.ApplicationUser = db.Users.Where(m => m.Id == userId).SingleOrDefault();
+            vendor.Vendor_Remaining = 0;
+            vendor.Vendor_Date = DateTime.Now;
+            vendor.Vendor_Status = true;
+            db.Vendors.Add(vendor);
+            db.SaveChanges();
+
+            Session["tempData"] = null;
+            
+        }
+
+        public void UpdateVendor(FormCollection form)
+        {
+            Vendor vendor = JsonConvert.DeserializeObject<Vendor>(form["VendorObj"]);
+            int id = vendor.Vendor_Id;
+            var vendor_db = db.Vendors.Find(id);
+            vendor_db.Vendor_Name = vendor.Vendor_Name;
+            vendor_db.Vendor_MobileNo = vendor.Vendor_MobileNo;
+            vendor_db.Vendor_Address = vendor.Vendor_Address;
+            vendor_db.Vendor_Company = vendor.Vendor_Company;
+            vendor_db.Vendor_NTN = vendor.Vendor_NTN;
+            db.Entry(vendor_db).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public JsonResult GetVendor() {
+
+            var vendor_list = db.Vendors.ToList();
+            return Json(vendor_list, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public void DeleteVendor(int id) {
+
+            var vendor = db.Vendors.Find(id);
+            db.Vendors.Remove(vendor);
+            db.SaveChanges();
+
+        }
+
     }
 }

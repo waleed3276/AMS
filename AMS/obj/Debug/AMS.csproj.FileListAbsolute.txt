@@ -143,3 +143,6 @@ E:\Repos\AMS\AMS\obj\Debug\AMS.pdb
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.updateModels.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.changeIdentity.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.userId.resources
+E:\ASP Projects\AMS\AMS\obj\Debug\AMS.Migrations.updateModels.resources
+E:\ASP Projects\AMS\AMS\obj\Debug\AMS.Migrations.changeIdentity.resources
+E:\ASP Projects\AMS\AMS\obj\Debug\AMS.Migrations.userId.resources
