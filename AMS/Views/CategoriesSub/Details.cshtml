@@ -1,0 +1,59 @@
+﻿@model AMS.Models.CategorySub
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CategorySub</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Category_Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Category_Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategorySub_Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategorySub_Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategorySub_Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategorySub_Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategorySub_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategorySub_Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategorySub_Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategorySub_Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CategorySub_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
