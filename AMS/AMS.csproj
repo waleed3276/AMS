@@ -168,6 +168,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CategoriesSubController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -216,7 +218,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Angular\CategoryController.js" />
     <Content Include="Angular\CustomerController.js" />
+    <Content Include="Angular\CategorySubController.js" />
     <Content Include="Angular\VendorController.js" />
     <Content Include="Content\Admin\assets\css\pages\bootstrap-switch.css" />
     <Content Include="Content\Admin\assets\css\pages\breadcrumb-page.css" />
@@ -696,6 +700,16 @@
     <Content Include="Views\Vendors\Details.cshtml" />
     <Content Include="Views\Vendors\Edit.cshtml" />
     <Content Include="Views\Vendors\Index.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\CategoriesSub\Create.cshtml" />
+    <Content Include="Views\CategoriesSub\Delete.cshtml" />
+    <Content Include="Views\CategoriesSub\Details.cshtml" />
+    <Content Include="Views\CategoriesSub\Edit.cshtml" />
+    <Content Include="Views\CategoriesSub\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

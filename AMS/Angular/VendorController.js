@@ -111,10 +111,8 @@
     $scope.DeleteVendor = function (obj) {
         if (confirm('Are you sure you want to delete vendor?')) {
             JsonCallParam("Vendors", "DeleteVendor", { "id": obj.Vendor_Id })
-            $scope.GetCustomer();
-        } else {
-            // Do nothing!
-        }
+            $scope.GetVendor();
+        } 
     }
 
 });

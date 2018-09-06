@@ -1,0 +1,112 @@
+﻿@model AMS.Models.CategorySub
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/Angular/CategorySubController.js"></script>
+<div ng-controller="CategorySubCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Sub-Category</h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Sub-Category</li>
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Add Sub-Categories Here</h4>
+
+                        <form name="form" class="form-material m-t-40">
+
+                            <div class="form-group">
+                                <label>Category Title</label>
+                                <select class="select2 form-control custom-select" name="Category_Id" ng-model="CategorySubObj.Category_Id" ng-options="item.Category_Id as item.Category_Title for item in CategoryData" ng-change="ValidateCategorySub()" style="width: 100%; height:36px;">
+                                    <option>Select</option>
+                                </select>
+                                <span style="color:red" ng-show="form.Category_Id.$invalid &&form.Category_Id.$dirty">
+                                    <span ng-show="form.Category_Id.$error.required">Enter Category Title</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Sub-Category Title</label>
+                                <input type="text" class="form-control" name="CategorySub_Title" ng-model="CategorySubObj.CategorySub_Title" ng-change="ValidateCategorySub()" placeholder="Add Sub-Category Title">
+                                <span style="color:red" ng-show="form.CategorySub_Title.$invalid &&form.CategorySub_Title.$dirty">
+                                    <span ng-show="form.CategorySub_Title.$error.required">Enter Sub-Category Title</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Sub-Category Code</label>
+                                <input type="text" class="form-control" name="CategorySub_Code" ng-model="CategorySubObj.CategorySub_Code" ng-change="ValidateCategorySub()" placeholder="Add Sub-Category Code">
+                                <span style="color:red" ng-show="form.CategorySub_Code.$invalid &&form.CategorySub_Code.$dirty">
+                                    <span ng-show="form.CategorySub_Code.$error.required">Enter Sub-Category Code</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Sub-Category Description</label>
+                                <textarea class="form-control" rows="3" name="CategorySub_Description" ng-model="CategorySubObj.CategorySub_Description" ng-change="ValidateCategorySub()" placeholder="Add Sub-Category Description"></textarea>
+                                <span style="color:red" ng-show="form.CategorySub_Description.$invalid &&form.CategorySub_Description.$dirty">
+                                    <span ng-show="form.CategorySub_Description.$error.required">Enter Sub-Category Description</span>
+                                </span>
+                            </div>
+
+                            <div class="form-group m-b-0">
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="SaveCategorySub()" ng-disabled="!AllowSubmit">Submit</button>
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="Clear()">Clear</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Sub-Categories</h4>
+                        <h6 class="card-subtitle">All Sub-Categories Data</h6>
+                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetCategorySub()">Refresh</button>
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Category Title</th>
+                                        <th>Title</th>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in CategorySubData">
+                                        <td>{{obj.Category.Category_Title}}</td>
+                                        <td>{{obj.CategorySub_Title}}</td>
+                                        <td>{{obj.CategorySub_Code}}</td>
+                                        <td>{{obj.CategorySub_Description}}</td>
+
+                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadCategorySub(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteCategorySub(obj)" title="Delete"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
