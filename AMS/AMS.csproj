@@ -219,8 +219,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Angular\CategoryController.js" />
+    <Content Include="Angular\CategorySubController.js" />
+    <Content Include="Angular\CustomerController.js" />
     <Content Include="Angular\CustomerVendorController.js" />
     <Content Include="Angular\ProductController.js" />
+    <Content Include="Angular\VendorController.js" />
     <Content Include="Content\Admin\assets\css\pages\bootstrap-switch.css" />
     <Content Include="Content\Admin\assets\css\pages\breadcrumb-page.css" />
     <Content Include="Content\Admin\assets\css\pages\chat-app-page.css" />
