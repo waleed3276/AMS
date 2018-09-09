@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AMS.Models;
+using Newtonsoft.Json;
 
 namespace AMS.Controllers
 {
@@ -122,6 +123,66 @@ namespace AMS.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void CreateProductSize(FormCollection form)
+        {
+            ProductSize productSize = JsonConvert.DeserializeObject<ProductSize>(form["ProductSizeObj"]);
+            decimal length = productSize.ProductSize_Length;
+            decimal width = productSize.ProductSize_Width;
+            decimal height = productSize.ProductSize_Height;
+
+            if (length > 0 && width > 0 && height > 0)
+                productSize.ProductSize_Value = length + "x" + width + "x" + height + "" + productSize.ProductSize_Unit;
+            else if (length > 0 && width > 0)
+                productSize.ProductSize_Value = length + "x" + width + "" + productSize.ProductSize_Unit;
+            else if (length > 0)
+                productSize.ProductSize_Value = length + "" + productSize.ProductSize_Unit;
+            else
+                productSize.ProductSize_Value = "Unknown";
+
+            db.ProductSizes.Add(productSize);
+            db.SaveChanges();
+        }
+
+        public void UpdateProductSize(FormCollection form)
+        {
+            ProductSize productSize = JsonConvert.DeserializeObject<ProductSize>(form["ProductSizeObj"]);
+            int id = productSize.ProductSize_Id;
+            var productSize_db = db.ProductSizes.Find(id);
+            decimal length = productSize.ProductSize_Length;
+            decimal width = productSize.ProductSize_Width;
+            decimal height = productSize.ProductSize_Height;
+
+            productSize_db.ProductSize_Length = length;
+            productSize_db.ProductSize_Width = width;
+            productSize_db.ProductSize_Height = height;
+            productSize_db.ProductSize_Unit = productSize.ProductSize_Unit;
+
+            if (length > 0 && width > 0 && height > 0)
+                productSize_db.ProductSize_Value = length + "x" + width + "x" + height + "" + productSize.ProductSize_Unit;
+            else if (length > 0 && width > 0)
+                productSize_db.ProductSize_Value = length + "x" + width + "" + productSize.ProductSize_Unit;
+            else if (length > 0)
+                productSize_db.ProductSize_Value = length + "" + productSize.ProductSize_Unit;
+            else
+                productSize_db.ProductSize_Value = "Unknown";
+
+            db.Entry(productSize_db).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public JsonResult GetProductSize()
+        {
+            var sizes_list = db.ProductSizes.ToList();
+            return Json(sizes_list, JsonRequestBehavior.AllowGet);
+        }
+
+        public void DeleteProductSize(int id)
+        {
+            var productSize = db.ProductSizes.Find(id);
+            db.ProductSizes.Remove(productSize);
+            db.SaveChanges();
         }
     }
 }

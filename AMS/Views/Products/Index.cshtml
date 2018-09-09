@@ -1,22 +1,20 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<script src="~/Angular/CustomerController.js"></script>
-<div ng-controller="CustomerCtrl">
+<script src="~/Angular/ProductController.js"></script>
+<div ng-controller="ProductCtrl">
     <div class="container-fluid">
         <div class="row page-titles">
             <div class="col-md-5 align-self-center">
-                <h4 class="text-themecolor">Customer</h4>
+                <h4 class="text-themecolor">Product</h4>
             </div>
             <div class="col-md-7 align-self-center text-right">
                 <div class="d-flex justify-content-end align-items-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Customer</li>
+                        <li class="breadcrumb-item active">Product</li>
                     </ol>
 
                 </div>
@@ -27,15 +25,15 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Customers</h4>
-                        <h6 class="card-subtitle">All Customers Data</h6>
+                        <h4 class="card-title">Products</h4>
+                        <h6 class="card-subtitle">All Products Data</h6>
                         <!-- Accordian -->
                         <div class="accordion" id="accordionTable">
                             <div class="card m-b-5">
                                 <div class="card-header" id="heading1">
                                     <h5 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#col1" aria-expanded="true" aria-controls="col1">
-                                            Collapse Customer Data
+                                            Collapse Product Data
                                         </button>
                                     </h5>
                                 </div>
@@ -45,24 +43,30 @@
                                             <table id="demo-foo-accordion" class="table table-bordered m-b-0 toggle-arrow-tiny" data-filtering="true" data-paging="true" data-sorting="true">
                                                 <thead>
                                                     <tr class="footable-filtering">
-                                                        <th> Customer Name </th>
-                                                        <th> Mobile No. </th>
-                                                        <th> Address </th>
-                                                        <th> NTN No. </th>
-                                                        <th> Company </th>
-                                                        <th> Remaining </th>
-                                                        <th> Status </th>
+                                                        <th>Name</th>
+                                                        <th>Sub-Category</th>
+                                                        <th>Code</th>
+                                                        <th>Description</th>
+                                                        <th>Size</th>
+                                                        <th>Color</th>
+                                                        <th>UOM</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Rate</th>
+                                                        <th>Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="obj in CustomerData">
-                                                        <td>{{obj.Customer_Name}}</td>
-                                                        <td>{{obj.Customer_MobileNo}}</td>
-                                                        <td>{{obj.Customer_Address}}</td>
-                                                        <td>{{obj.Customer_NTN}}</td>
-                                                        <td>{{obj.Customer_Company}}</td>
-                                                        <td>{{obj.Customer_Remaining}}</td>
-                                                        <td><span class="label label-table label-success" ng-show="obj.Customer_Status">Active</span><span class="label label-table label-inverse" ng-show="!obj.Customer_Status">Disabled</span></td>
+                                                    <tr ng-repeat="obj in ProductData">
+                                                        <td>{{obj.Product_Title}}</td>
+                                                        <td>{{obj.CategorySub.CategorySub_Title}}</td>
+                                                        <td>{{obj.Product_Code}}</td>
+                                                        <td>{{obj.Product_Description}}</td>
+                                                        <td>{{obj.ProductSize.ProductSize_Value}}</td>
+                                                        <td>{{obj.Product_Color}}</td>
+                                                        <td>{{obj.Product_Unit}}</td>
+                                                        <td>{{obj.Product_UnitPrice}}</td>
+                                                        <td>{{obj.Product_Rate}}</td>
+                                                        <td><span class="label label-table label-success" ng-show="obj.Product_Status">Active</span><span class="label label-table label-inverse" ng-show="!obj.Product_Status">Disabled</span></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

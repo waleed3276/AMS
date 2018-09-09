@@ -6,7 +6,7 @@
     $scope.ProductSizeData = [];
 
     $scope.AllowSubmit = false;
-    $scope.ProductObj = { Product_Id: 0, CategorySub_Id: 0, ProductSize_Id: 0, Product_Title: "", Product_Code: "", Product_Description: "", Product_Color: "Default", Product_Unit: "", Product_UnitPrice: 0.00, Product_Rate: 0.00 };
+    $scope.ProductObj = { Product_Id: 0, CategorySub_Id: 0, ProductSize_Id: 0, Product_Title: "", Product_Code: "", Product_Description: "", Product_Color: "Default", Product_Unit: "", Product_UnitPrice: 0, Product_Rate: 0 };
 
     function JsonCall(Controller, Action) {
         $.ajax({
@@ -100,7 +100,7 @@
     $scope.GetProductSize();
 
     $scope.Clear = function () {
-        $scope.ProductObj = { Product_Id: 0, CategorySub_Id: 0, ProductSize_Id: 0, Product_Title: "", Product_Code: "", Product_Description: "", Product_Color: "Default", Product_Unit: "", Product_UnitPrice: 0.00, Product_Rate: 0.00 };
+        $scope.ProductObj = { Product_Id: 0, CategorySub_Id: 0, ProductSize_Id: 0, Product_Title: "", Product_Code: "", Product_Description: "", Product_Color: "Default", Product_Unit: "", Product_UnitPrice: 0, Product_Rate: 0 };
     }
 
     $scope.ValidateProduct = function () {
@@ -111,8 +111,8 @@
             || $scope.ProductObj.Product_Description == ""
             || $scope.ProductObj.Product_Color == ""
             || $scope.ProductObj.Product_Unit == ""
-            || $scope.ProductObj.Product_UnitPrice > 0
-            || $scope.ProductObj.Product_Rate > 0
+            || $scope.ProductObj.Product_UnitPrice == 0
+            || $scope.ProductObj.Product_Rate == 0
             || !$scope.ProductObj.CategorySub_Id > 0
             || !$scope.ProductObj.ProductSize_Id > 0) {
             $scope.AllowSubmit = false;

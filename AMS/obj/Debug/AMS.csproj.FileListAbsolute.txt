@@ -220,3 +220,5 @@ D:\AMSP\AMS\AMS\obj\Debug\AMS.Migrations.userId.resources
 D:\AMSP\AMS\AMS\obj\Debug\AMS.csproj.GenerateResource.Cache
 D:\AMSP\AMS\AMS\obj\Debug\AMS.dll
 D:\AMSP\AMS\AMS\obj\Debug\AMS.pdb
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.unitString.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.productSizeFloat.resources

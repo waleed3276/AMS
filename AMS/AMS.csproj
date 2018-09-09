@@ -174,7 +174,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-	<Compile Include="Controllers\ProductSizesController.cs" />
+    <Compile Include="Controllers\ProductSizesController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -195,9 +195,17 @@
     <Compile Include="Migrations\201809021942508_userId.Designer.cs">
       <DependentUpon>201809021942508_userId.cs</DependentUpon>
     </Compile>
-	<Compile Include="Migrations\201809091630324_removeProductWeight.cs" />
+    <Compile Include="Migrations\201809091630324_removeProductWeight.cs" />
     <Compile Include="Migrations\201809091630324_removeProductWeight.Designer.cs">
       <DependentUpon>201809091630324_removeProductWeight.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809091824526_unitString.cs" />
+    <Compile Include="Migrations\201809091824526_unitString.Designer.cs">
+      <DependentUpon>201809091824526_unitString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809091922516_productSizeFloat.cs" />
+    <Compile Include="Migrations\201809091922516_productSizeFloat.Designer.cs">
+      <DependentUpon>201809091922516_productSizeFloat.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -708,7 +716,7 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
-	<Content Include="Views\ProductSizes\Create.cshtml" />
+    <Content Include="Views\ProductSizes\Create.cshtml" />
     <Content Include="Views\ProductSizes\Delete.cshtml" />
     <Content Include="Views\ProductSizes\Details.cshtml" />
     <Content Include="Views\ProductSizes\Edit.cshtml" />
@@ -752,6 +760,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809021942508_userId.resx">
       <DependentUpon>201809021942508_userId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809091824526_unitString.resx">
+      <DependentUpon>201809091824526_unitString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809091922516_productSizeFloat.resx">
+      <DependentUpon>201809091922516_productSizeFloat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,58 +1,110 @@
-﻿@model IEnumerable<AMS.Models.ProductSize>
-
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<script src="~/Angular/ProductSizeController.js"></script>
+<div ng-controller="ProductSizeCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Product Size</h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Product Size</li>
+                    </ol>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductSize_Value)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductSize_Height)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductSize_Width)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductSize_Length)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductSize_Unit)
-        </th>
-        <th></th>
-    </tr>
+                </div>
+            </div>
+        </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductSize_Value)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductSize_Height)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductSize_Width)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductSize_Length)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductSize_Unit)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductSize_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductSize_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductSize_Id })
-        </td>
-    </tr>
-}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Registration</h4>
+                        <h6 class="card-subtitle">
+                            Register Here
+                        </h6>
+                        <form name="form" class="form-material m-t-40">
 
-</table>
+                            <div class="form-group">
+                                <label>Size Length</label>
+                                <input type="number" class="form-control" name="ProductSize_Length" ng-model="ProductSizeObj.ProductSize_Length" ng-change="ValidateProductSize()" placeholder="Enter Product Size Length">
+                                <span style="color:red" ng-show="form.ProductSize_Length.$invalid &&form.ProductSize_Length.$dirty">
+                                    <span ng-show="form.ProductSize_Length.$error.required">Enter Product Size Length</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Size Width</label>
+                                <input type="number" class="form-control" name="ProductSize_Width" ng-model="ProductSizeObj.ProductSize_Width" ng-change="ValidateProductSize()" placeholder="Enter Product Size Width">
+                                <span style="color:red" ng-show="form.ProductSize_Width.$invalid &&form.ProductSize_Width.$dirty">
+                                    <span ng-show="form.ProductSize_Width.$error.required">Enter Product Size Width</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Size Height</label>
+                                <input type="number" class="form-control" name="ProductSize_Height" ng-model="ProductSizeObj.ProductSize_Height" ng-change="ValidateProductSize()" placeholder="Enter Product Size Height">
+                                <span style="color:red" ng-show="form.ProductSize_Height.$invalid &&form.ProductSize_Height.$dirty">
+                                    <span ng-show="form.ProductSize_Height.$error.required">Enter Product Size Height</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Size Unit</label>
+                                <input class="form-control" name="ProductSize_Unit" ng-model="ProductSizeObj.ProductSize_Unit" ng-change="ValidateProductSize()" placeholder="Enter Product Size Unit">
+                                <span style="color:red" ng-show="form.ProductSize_Unit.$invalid &&form.ProductSize_Unit.$dirty">
+                                    <span ng-show="form.ProductSize_Unit.$error.required">Enter Product Size Unit</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-b-0">
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="SaveProductSize()" ng-disabled="!AllowSubmit">Submit</button>
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="Clear()">Clear</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Product Sizes</h4>
+                        <h6 class="card-subtitle">All Product Sizes Data</h6>
+                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetProductSize()">Refresh</button>
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Size</th>
+                                        <th>Size Length</th>
+                                        <th>Size Width</th>
+                                        <th>Size Height</th>
+                                        <th>Size Unit</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in ProductSizeData">
+                                        <td>{{obj.ProductSize_Value}}</td>
+                                        <td>{{obj.ProductSize_Length}}</td>
+                                        <td>{{obj.ProductSize_Width}}</td>
+                                        <td>{{obj.ProductSize_Height}}</td>
+                                        <td>{{obj.ProductSize_Unit}}</td>
+                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadProductSize(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteProductSize(obj)" title="Delete"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

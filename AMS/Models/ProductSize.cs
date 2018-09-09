@@ -13,13 +13,13 @@ namespace AMS.Models
 
         public string ProductSize_Value { get; set; }
 
-        public int ProductSize_Height { get; set; }
+        public decimal ProductSize_Height { get; set; }
 
-        public int ProductSize_Width { get; set; }
+        public decimal ProductSize_Width { get; set; }
 
-        public int ProductSize_Length { get; set; }
+        public decimal ProductSize_Length { get; set; }
 
-        public int ProductSize_Unit { get; set; }
+        public string ProductSize_Unit { get; set; }
 
         //public int ProductSize_ItemId { get; set; }
 
