@@ -139,12 +139,14 @@ namespace AMS.Controllers
             db.CategoriesSub.Add(categorysub);
             db.SaveChanges();
         }
+
         public void UpdateCategorySub(FormCollection form)
         {
-
             CategorySub categorysub = JsonConvert.DeserializeObject<CategorySub>(form["CategorySubObj"]);
             var id = categorysub.CategorySub_Id;
             var catsub_db = db.CategoriesSub.Find(id);
+            catsub_db.Category_Id = categorysub.Category_Id;
+            catsub_db.Category = db.Categories.Find(categorysub.Category_Id);
             catsub_db.CategorySub_Title = categorysub.CategorySub_Title;
             catsub_db.CategorySub_Code = categorysub.CategorySub_Code;
             catsub_db.CategorySub_Description = categorysub.CategorySub_Description;
@@ -165,17 +167,11 @@ namespace AMS.Controllers
             return Json(catsub_list, JsonRequestBehavior.AllowGet);
         }
 
-
         public void DeleteCategorySub(int id)
         {
-
             var catsub = db.CategoriesSub.Find(id);
             db.CategoriesSub.Remove(catsub);
             db.SaveChanges();
-
         }
-
-
-
     }
 }

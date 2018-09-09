@@ -33,21 +33,21 @@
 
                             <div class="form-group">
                                 <label>Category Title</label>
-                                <input type="text" class="form-control" name="Category_Title" ng-model="CategoryObj.Category_Title" ng-change="ValidateCategory()" placeholder="Add Category Title">
+                                <input type="text" class="form-control" name="Category_Title" ng-model="CategoryObj.Category_Title" ng-change="ValidateCategory()" placeholder="Enter Category Title">
                                 <span style="color:red" ng-show="form.Category_Title.$invalid &&form.Category_Title.$dirty">
                                     <span ng-show="form.Category_Title.$error.required">Enter Category Title</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Category Code</label>
-                                <input type="text" class="form-control" name="Category_Code" ng-model="CategoryObj.Category_Code" ng-change="ValidateCategory()" placeholder="Add Category Code">
+                                <input type="text" class="form-control" name="Category_Code" ng-model="CategoryObj.Category_Code" ng-change="ValidateCategory()" placeholder="Enter Category Code">
                                 <span style="color:red" ng-show="form.Category_Code.$invalid &&form.Category_Code.$dirty">
                                     <span ng-show="form.Category_Code.$error.required">Enter Category Code</span>
                                 </span>
                             </div>
                            <div class="form-group">
                                 <label>Category Description</label>
-                                <textarea class="form-control" rows="3" name="Category_Description" ng-model="CategoryObj.Category_Description" ng-change="ValidateCategory()" placeholder="Add Category Description"></textarea>
+                                <textarea class="form-control" rows="3" name="Category_Description" ng-model="CategoryObj.Category_Description" ng-change="ValidateCategory()" placeholder="Enter Category Description"></textarea>
                                 <span style="color:red" ng-show="form.Category_Description.$invalid &&form.Category_Description.$dirty">
                                     <span ng-show="form.Category_Description.$error.required">Enter Category Description</span>
                                 </span>
@@ -78,7 +78,6 @@
                                         <th>Title</th>
                                         <th>Code</th>
                                         <th>Description</th>
-                                     
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -87,7 +86,6 @@
                                         <td>{{obj.Category_Title}}</td>
                                         <td>{{obj.Category_Code}}</td>
                                         <td>{{obj.Category_Description}}</td>
-                                       
                                         <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadCategory(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteCategory(obj)" title="Delete"></button></td>
                                     </tr>
                                 </tbody>

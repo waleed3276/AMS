@@ -2,10 +2,9 @@
     
     $scope.list = [];
     $scope.CategoryData = [];
+
     $scope.AllowSubmit = false;
-
     $scope.CategoryObj = { Category_Id: 0, Category_Title: "", Category_Code: "", Category_Description: "" }
-
 
     function JsonCall(Controller, Action) {
         $.ajax({
@@ -65,13 +64,11 @@
     };
 
     $scope.SaveCategory = function () {
+        var pram = { "CategoryObj": JSON.stringify($scope.CategoryObj) };
 
-            var pram = { "CategoryObj": JSON.stringify($scope.CategoryObj) };
-
-            if ($scope.CategoryObj.Category_Id == 0) {
-                JsonCallParam("Categories", "CreateCategory", pram)
-            }
-        
+        if ($scope.CategoryObj.Category_Id == 0) {
+            JsonCallParam("Categories", "CreateCategory", pram)
+        }
         else {
             JsonCallParam("Categories", "UpdateCategory", pram)
         }
@@ -84,41 +81,36 @@
     $scope.GetCategory = function () {
         JsonCall("Categories", "GetCategory");
         $scope.CategoryData = list;
-
     };
     $scope.GetCategory();
 
-
     $scope.Clear = function () {
         $scope.CategoryObj = { Category_Id: 0, Category_Title: "", Category_Code: "", Category_Description: "" }
-
     };
 
     $scope.ValidateCategory = function () {
-        if ($scope.CategoryObj.Category_Title == "",
-            $scope.CategoryObj.Category_Code == "",
-            $scope.CategoryObj.Category_Description == ""
-            ) {
+        if ($scope.CategoryObj.Category_Title == ""
+            || $scope.CategoryObj.Category_Code == ""
+            || $scope.CategoryObj.Category_Description == "") {
             $scope.AllowSubmit = false;
         }
         else {
-
             $scope.AllowSubmit = true;
         }
-
     };
 
-    $scope.LoadCategory = function (object) {
-        $scope.CategoryObj = object;
+    $scope.LoadCategory = function (obj) {
+        $scope.CategoryObj = obj;
         $scope.ValidateCategory();
-
     };
 
-    $scope.DeleteCategory = function (object) {
-
-        if (confirm("Are you sure you want to delete the selected Category?")) {
-            JsonCallParam("Categories", "DeleteCategory", { "id": object.Category_Id })
+    $scope.DeleteCategory = function (obj) {
+        if (confirm("Are you sure you want to delete category?")) {
+            JsonCallParam("Categories", "DeleteCategory", { "id": obj.Category_Id })
             $scope.GetCategory();
+        }
+        else {
+            // Do nothing!
         }
     };
 });

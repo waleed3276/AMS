@@ -26,7 +26,7 @@ namespace AMS.Models
 
         public string Product_Description { get; set; }
 
-        public int Product_Weight { get; set; }
+        //public int Product_Weight { get; set; }
 
         public decimal Product_Rate { get; set; }
 

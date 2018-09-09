@@ -159,19 +159,14 @@ namespace AMS.Controllers
         }
 
         public JsonResult GetVendor() {
-
             var vendor_list = db.Vendors.ToList();
             return Json(vendor_list, JsonRequestBehavior.AllowGet);
-
         }
 
         public void DeleteVendor(int id) {
-
             var vendor = db.Vendors.Find(id);
             db.Vendors.Remove(vendor);
             db.SaveChanges();
-
         }
-
     }
 }

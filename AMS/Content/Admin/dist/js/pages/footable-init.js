@@ -52,7 +52,7 @@ $(window).on('load', function() {
 		$editorTitle = $('#editor-title'),
 		ft = FooTable.init('#footable-addrow', {
 			columns: $.get('https://fooplugins.github.io/FooTable/docs/content/columns.json'),
-			rows: $.get('https://fooplugins.github.io/FooTable/docs/content/rows.json'),
+			rows: [],
 			editing: {
 				addRow: function(){
 					$modal.removeData('row');

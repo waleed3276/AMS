@@ -1,22 +1,22 @@
-﻿@model AMS.Models.Customer
+﻿@model AMS.Models.Product
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<script src="~/Angular/CustomerController.js"></script>
-<div ng-controller="CustomerCtrl">
+<script src="~/Angular/ProductController.js"></script>
+<div ng-controller="ProductCtrl">
     <div class="container-fluid">
         <div class="row page-titles">
             <div class="col-md-5 align-self-center">
-                <h4 class="text-themecolor">Customer</h4>
+                <h4 class="text-themecolor">Product</h4>
             </div>
             <div class="col-md-7 align-self-center text-right">
                 <div class="d-flex justify-content-end align-items-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Customer</li>
+                        <li class="breadcrumb-item active">Product</li>
                     </ol>
 
                 </div>
@@ -34,42 +34,74 @@
                         <form name="form" class="form-material m-t-40">
 
                             <div class="form-group">
+                                <label>Sub-Category</label>
+                                <select class="select2 form-control custom-select" id="CategorySub_Id" name="CategorySub_Id" ng-model="ProductObj.Product_Id" ng-options="item.CategorySub_Id as item.CategorySub_Title for item in CategorySubData" ng-change="ValidateProduct()" style="width: 100%; height:36px;">
+                                    <option value="">Select Sub-Category</option>
+                                </select>
+                                <span style="color:red" ng-show="form.CategorySub_Id.$invalid &&form.CategorySub_Id.$dirty">
+                                    <span ng-show="form.CategorySub_Id.$error.required">Select Sub-Category</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="Customer_Name" ng-model="CustomerObj.Customer_Name" ng-change="ValidateCustomer()" placeholder="Enter Your Name">
-                                <span style="color:red" ng-show="form.Customer_Name.$invalid &&form.Customer_Name.$dirty">
-                                    <span ng-show="form.Customer_Name.$error.required">Enter Customer Name</span>
+                                <input type="text" class="form-control" name="Product_Title" ng-model="ProductObj.Product_Title" ng-change="ValidateProduct()" placeholder="Enter Product Name">
+                                <span style="color:red" ng-show="form.Product_Title.$invalid &&form.Product_Title.$dirty">
+                                    <span ng-show="form.Product_Title.$error.required">Enter Product Name</span>
                                 </span>
                             </div>
                             <div class="form-group">
-                                <label>Mobile Number</label>
-                                <input type="text" class="form-control" name="Customer_MobileNo" ng-model="CustomerObj.Customer_MobileNo" ng-change="ValidateCustomer()" placeholder="Enter Your Mobile Number">
-                                <span style="color:red" ng-show="form.Customer_MobileNo.$invalid &&form.Customer_MobileNo.$dirty">
-                                    <span ng-show="form.Customer_MobileNo.$error.required">Enter Customer Mobile Number</span>
+                                <label>Product Code</label>
+                                <input type="text" class="form-control" name="Product_Code" ng-model="ProductObj.Product_Code" ng-change="ValidateProduct()" placeholder="Enter Product Code">
+                                <span style="color:red" ng-show="form.Product_Code.$invalid &&form.Product_Code.$dirty">
+                                    <span ng-show="form.Product_Code.$error.required">Enter Product Code</span>
                                 </span>
                             </div>
                             <div class="form-group">
-                                <label>Address</label>
-                                <textarea class="form-control" rows="3" name="Customer_Address" ng-model="CustomerObj.Customer_Address" ng-change="ValidateCustomer()" placeholder="Enter Your Address"></textarea>
-                                <span style="color:red" ng-show="form.Customer_Address.$invalid &&form.Customer_Address.$dirty">
-                                    <span ng-show="form.Customer_Address.$error.required">Enter Customer Address</span>
+                                <label>Product Description</label>
+                                <input class="form-control" name="Product_Description" ng-model="ProductObj.Product_Description" ng-change="ValidateProduct()" placeholder="Enter Product Description">
+                                <span style="color:red" ng-show="form.Product_Description.$invalid &&form.Product_Description.$dirty">
+                                    <span ng-show="form.Product_Description.$error.required">Enter Product Description</span>
                                 </span>
                             </div>
                             <div class="form-group">
-                                <label>National Tax No.</label>
-                                <input type="text" class="form-control" name="Customer_NTN" ng-model="CustomerObj.Customer_NTN" ng-change="ValidateCustomer()" placeholder="Enter Your National Tax Number">
-                                <span style="color:red" ng-show="form.Customer_NTN.$invalid &&form.Customer_NTN.$dirty">
-                                    <span ng-show="form.Customer_NTN.$error.required">Enter Customer National Tax Number</span>
+                                <label>Product Size</label>
+                                <select class="select2 form-control custom-select" id="ProductSize_Id" name="ProductSize_Id" ng-model="ProductObj.ProductSize_Id" ng-options="item.ProductSize_Id as item.ProductSize_Value for item in ProductSizeData" ng-change="ValidateProduct()" style="width: 100%; height:36px;">
+                                    <option value="">Select Product Size</option>
+                                </select>
+                                <span style="color:red" ng-show="form.ProductSize_Id.$invalid &&form.ProductSize_Id.$dirty">
+                                    <span ng-show="form.ProductSize_Id.$error.required">Select Product Size</span>
                                 </span>
                             </div>
                             <div class="form-group">
-                                <label>Company Name</label>
-                                <input type="text" class="form-control" name="Customer_Company" ng-model="CustomerObj.Customer_Company" ng-change="ValidateCustomer()" placeholder="Enter Your Company Name">
-                                <span style="color:red" ng-show="form.Customer_Company.$invalid &&form.Customer_Company.$dirty">
-                                    <span ng-show="form.Customer_Company.$error.required">Enter Customer Company Name</span>
+                                <label>Product Color</label>
+                                <input class="form-control" name="Product_Color" ng-model="ProductObj.Product_Color" ng-change="ValidateProduct()" placeholder="Enter Product Color">
+                                <span style="color:red" ng-show="form.Product_Color.$invalid &&form.Product_Color.$dirty">
+                                    <span ng-show="form.Product_Color.$error.required">Enter Product Color</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Product UOM</label>
+                                <input class="form-control" name="Product_Unit" ng-model="ProductObj.Product_Unit" ng-change="ValidateProduct()" placeholder="Enter Product Unit of Measurement">
+                                <span style="color:red" ng-show="form.Product_Unit.$invalid &&form.Product_Unit.$dirty">
+                                    <span ng-show="form.Product_Unit.$error.required">Enter Product Unit of Measurement</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Product Unit Price</label>
+                                <input type="number" class="form-control" name="Product_UnitPrice" ng-model="ProductObj.Product_UnitPrice" ng-change="ValidateProduct()" placeholder="Enter Product Unit Price (Purchase Rate)">
+                                <span style="color:red" ng-show="form.Product_UnitPrice.$invalid &&form.Product_UnitPrice.$dirty">
+                                    <span ng-show="form.Product_UnitPrice.$error.required">Enter Product Unit Price</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Product Rate</label>
+                                <input type="number" class="form-control" name="Product_Rate" ng-model="ProductObj.Product_Rate" ng-change="ValidateProduct()" placeholder="Enter Product Rate (Sale Rate)">
+                                <span style="color:red" ng-show="form.Product_Rate.$invalid &&form.Product_Rate.$dirty">
+                                    <span ng-show="form.Product_Rate.$error.required">Enter Product Rate</span>
                                 </span>
                             </div>
                             <div class="form-group m-b-0">
-                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="SaveCustomer()" ng-disabled="!AllowSubmit">Submit</button>
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="SaveProduct()" ng-disabled="!AllowSubmit">Submit</button>
                                 <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="Clear()">Clear</button>
                             </div>
 
@@ -83,29 +115,37 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Customers</h4>
-                        <h6 class="card-subtitle">All Customers Data</h6>
-                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetCustomer()">Refresh</button>
+                        <h4 class="card-title">Products</h4>
+                        <h6 class="card-subtitle">All Products Data</h6>
+                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetProduct()">Refresh</button>
                         <div class="jsgrid table-responsive m-t-40">
                             <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Mobile No.</th>
-                                        <th>Address</th>
-                                        <th>NTN</th>
-                                        <th>Company</th>
+                                        <th>Sub-Category</th>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Size</th>
+                                        <th>Color</th>
+                                        <th>UOM</th>
+                                        <th>Unit Price</th>
+                                        <th>Rate</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="jsgrid-alt-row" ng-repeat="obj in CustomerData">
-                                        <td>{{obj.Customer_Name}}</td>
-                                        <td>{{obj.Customer_MobileNo}}</td>
-                                        <td>{{obj.Customer_Address}}</td>
-                                        <td>{{obj.Customer_NTN}}</td>
-                                        <td>{{obj.Customer_Company}}</td>
-                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadCustomer(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteCustomer(obj)" title="Delete"></button></td>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in ProductData">
+                                        <td>{{obj.Product_Title}}</td>
+                                        <td>{{obj.CategorySub.CategorySub_Title}}</td>
+                                        <td>{{obj.Product_Code}}</td>
+                                        <td>{{obj.Product_Description}}</td>
+                                        <td>{{obj.ProductSize.ProductSize_Value}}</td>
+                                        <td>{{obj.Product_Color}}</td>
+                                        <td>{{obj.Product_Unit}}</td>
+                                        <td>{{obj.Product_UnitPrice}}</td>
+                                        <td>{{obj.Product_Rate}}</td>
+                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadProduct(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteProduct(obj)" title="Delete"></button></td>
                                     </tr>
                                 </tbody>
                             </table>

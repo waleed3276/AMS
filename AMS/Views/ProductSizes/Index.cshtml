@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AMS.Models.ProductSize>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductSize_Value)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductSize_Height)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductSize_Width)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductSize_Length)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductSize_Unit)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductSize_Value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductSize_Height)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductSize_Width)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductSize_Length)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductSize_Unit)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProductSize_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ProductSize_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ProductSize_Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -46,15 +46,17 @@
                                             <table id="demo-foo-accordion" class="table table-bordered m-b-0 toggle-arrow-tiny" data-filtering="true" data-paging="true" data-sorting="true">
                                                 <thead>
                                                     <tr class="footable-filtering">
-                                                        <th> Sub-Category Title </th>
-                                                        <th> Sub-Category Code </th>
-                                                        <th> Sub-Category Description </th>
-                                                        <th> Status </th>
+                                                        <th>Title</th>
+                                                        <th>Category</th>
+                                                        <th>Code</th>
+                                                        <th>Description</th>
+                                                        <th>Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="obj in CategorySubData">
                                                         <td>{{obj.CategorySub_Title}}</td>
+                                                        <td>{{obj.Category.Category_Title}}</td>
                                                         <td>{{obj.CategorySub_Code}}</td>
                                                         <td>{{obj.CategorySub_Description}}</td>
                                                         <td><span class="label label-table label-success" ng-show="obj.CategorySub_Status">Active</span><span class="label label-table label-inverse" ng-show="!obj.CategorySub_Status">Disabled</span></td>

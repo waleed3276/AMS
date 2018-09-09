@@ -133,7 +133,6 @@ namespace AMS.Controllers
         }
 
         public void UpdateCategory(FormCollection form) {
-
             Category category = JsonConvert.DeserializeObject<Category>(form["CategoryObj"]);
             var id = category.Category_Id;
             var cat_db = db.Categories.Find(id);
@@ -141,10 +140,8 @@ namespace AMS.Controllers
             cat_db.Category_Code = category.Category_Code;
             cat_db.Category_Description = category.Category_Description;
             db.Entry(cat_db).State = EntityState.Modified;
-
             db.SaveChanges();
         }
-
 
         public JsonResult GetCategory()
         {
@@ -152,14 +149,10 @@ namespace AMS.Controllers
             return Json(cat_list, JsonRequestBehavior.AllowGet);
         }
 
-
         public void DeleteCategory(int id) {
-
             var cat = db.Categories.Find(id);
             db.Categories.Remove(cat);
             db.SaveChanges();
-
         }
-
     }
 }
