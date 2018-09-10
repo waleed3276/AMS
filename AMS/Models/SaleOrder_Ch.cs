@@ -14,6 +14,9 @@ namespace AMS.Models
         public int SOP_Id { get; set; }
         public virtual SaleOrder_Pt SaleOrder_Pt { get; set; }
 
+        public int Product_Id { get; set; }
+        public virtual Product Product { get; set; }
+
         public int SOC_Quantity { get; set; }
 
         public decimal SOC_Rate { get; set; }
@@ -27,9 +30,5 @@ namespace AMS.Models
         public int SOC_ItemCode { get; set; }
 
         public string SOC_Unit { get; set; }
-
-
-
-
     }
 }

@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProductSizesController.cs" />
+    <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -207,6 +208,10 @@
     <Compile Include="Migrations\201809091922516_productSizeFloat.Designer.cs">
       <DependentUpon>201809091922516_productSizeFloat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809100306415_addProductSO.cs" />
+    <Compile Include="Migrations\201809100306415_addProductSO.Designer.cs">
+      <DependentUpon>201809100306415_addProductSO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -237,6 +242,7 @@
     <Content Include="Angular\CustomerController.js" />
     <Content Include="Angular\ProductController.js" />
     <Content Include="Angular\ProductSizeController.js" />
+    <Content Include="Angular\SaleOrderController.js" />
     <Content Include="Angular\VendorController.js" />
     <Content Include="Content\Admin\assets\css\pages\bootstrap-switch.css" />
     <Content Include="Content\Admin\assets\css\pages\breadcrumb-page.css" />
@@ -736,6 +742,7 @@
     <Content Include="Views\Vendors\Details.cshtml" />
     <Content Include="Views\Vendors\Edit.cshtml" />
     <Content Include="Views\Vendors\Index.cshtml" />
+    <Content Include="Views\SaleOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -766,6 +773,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809091922516_productSizeFloat.resx">
       <DependentUpon>201809091922516_productSizeFloat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809100306415_addProductSO.resx">
+      <DependentUpon>201809100306415_addProductSO.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

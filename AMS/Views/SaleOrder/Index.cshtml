@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/Angular/SaleOrderController.js"></script>
+<div ng-controller="SaleOrderCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Sale Order</h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">SO</li>
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Sale Order</h4>
+
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Item Code</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                        <th>GST</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in SaleOrder_ChData">
+                                        <td>{{obj.Product.Product_Title}}</td>
+                                        <td>{{obj.SOC_ItemCode}}</td>
+                                        <td>{{obj.SOC_Description}}</td>
+                                        <td>{{obj.SOC_Quantity}}</td>
+                                        <td>{{obj.SOC_Unit}}</td>
+                                        <td>{{obj.SOC_Rate}}</td>
+                                        <td>{{obj.SOC_Amount}}</td>
+                                        <td>{{obj.SOC_GST}}</td>
+                                        <td><button type="button" ng-click="AddNew()" title="Add New"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">All Sale Orders</h4>
+                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetSaleOrders()">Refresh</button>
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Item Code</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                        <th>GST</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in CategoryData">
+                                        <td>{{obj.Product.Product_Title}}</td>
+                                        <td>{{obj.SOC_ItemCode}}</td>
+                                        <td>{{obj.SOC_Description}}</td>
+                                        <td>{{obj.SOC_Quantity}}</td>
+                                        <td>{{obj.SOC_Unit}}</td>
+                                        <td>{{obj.SOC_Rate}}</td>
+                                        <td>{{obj.SOC_Amount}}</td>
+                                        <td>{{obj.SOC_GST}}</td>
+                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadCategory(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteCategory(obj)" title="Delete"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
