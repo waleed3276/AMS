@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AMS.Models;
+using Newtonsoft.Json;
 
 namespace AMS.Controllers
 {
@@ -131,6 +132,60 @@ namespace AMS.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void CreateProduct(FormCollection form)
+        {
+            Product product = JsonConvert.DeserializeObject<Product>(form["ProductObj"]);
+            product.CategorySub = db.CategoriesSub.Find(product.CategorySub_Id);
+            product.ProductSize = db.ProductSizes.Find(product.ProductSize_Id);
+            product.Product_Date = DateTime.Now;
+            product.Product_Status = true;
+            db.Products.Add(product);
+            db.SaveChanges();
+        }
+
+        public void UpdateProduct(FormCollection form)
+        {
+            Product product = JsonConvert.DeserializeObject<Product>(form["ProductObj"]);
+            int id = product.Product_Id;
+            var product_db = db.Products.Find(id);
+            product_db.CategorySub = db.CategoriesSub.Find(product.CategorySub_Id);
+            product_db.ProductSize = db.ProductSizes.Find(product.ProductSize_Id);
+            product_db.Product_Title = product.Product_Title;
+            product_db.Product_Code = product.Product_Code;
+            product_db.Product_Description = product.Product_Description;
+            product_db.Product_Color = product.Product_Color;
+            product_db.Product_Unit = product.Product_Unit;
+            product_db.Product_UnitPrice = product.Product_UnitPrice;
+            product_db.Product_Rate = product.Product_Rate;
+            db.Entry(product_db).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public JsonResult GetProduct()
+        {
+            var products_list = db.Products.ToList();
+            return Json(products_list, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCategorySub()
+        {
+            var catsub_list = db.CategoriesSub.ToList();
+            return Json(catsub_list, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetProductSize()
+        {
+            var sizes_list = db.ProductSizes.ToList();
+            return Json(sizes_list, JsonRequestBehavior.AllowGet);
+        }
+
+        public void DeleteProduct(int id)
+        {
+            var product = db.Products.Find(id);
+            db.Products.Remove(product);
+            db.SaveChanges();
         }
     }
 }

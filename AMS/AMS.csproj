@@ -173,6 +173,9 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ProductSizesController.cs" />
+    <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -192,6 +195,22 @@
     <Compile Include="Migrations\201809021942508_userId.cs" />
     <Compile Include="Migrations\201809021942508_userId.Designer.cs">
       <DependentUpon>201809021942508_userId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809091630324_removeProductWeight.cs" />
+    <Compile Include="Migrations\201809091630324_removeProductWeight.Designer.cs">
+      <DependentUpon>201809091630324_removeProductWeight.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809091824526_unitString.cs" />
+    <Compile Include="Migrations\201809091824526_unitString.Designer.cs">
+      <DependentUpon>201809091824526_unitString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809091922516_productSizeFloat.cs" />
+    <Compile Include="Migrations\201809091922516_productSizeFloat.Designer.cs">
+      <DependentUpon>201809091922516_productSizeFloat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809100306415_addProductSO.cs" />
+    <Compile Include="Migrations\201809100306415_addProductSO.Designer.cs">
+      <DependentUpon>201809100306415_addProductSO.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -219,8 +238,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Angular\CategoryController.js" />
-    <Content Include="Angular\CustomerController.js" />
     <Content Include="Angular\CategorySubController.js" />
+    <Content Include="Angular\CustomerController.js" />
+    <Content Include="Angular\ProductController.js" />
+    <Content Include="Angular\ProductSizeController.js" />
+    <Content Include="Angular\SaleOrderController.js" />
     <Content Include="Angular\VendorController.js" />
     <Content Include="Content\Admin\assets\css\pages\bootstrap-switch.css" />
     <Content Include="Content\Admin\assets\css\pages\breadcrumb-page.css" />
@@ -695,11 +717,16 @@
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
-    <Content Include="Views\Vendors\Create.cshtml" />
-    <Content Include="Views\Vendors\Delete.cshtml" />
-    <Content Include="Views\Vendors\Details.cshtml" />
-    <Content Include="Views\Vendors\Edit.cshtml" />
-    <Content Include="Views\Vendors\Index.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\ProductSizes\Create.cshtml" />
+    <Content Include="Views\ProductSizes\Delete.cshtml" />
+    <Content Include="Views\ProductSizes\Details.cshtml" />
+    <Content Include="Views\ProductSizes\Edit.cshtml" />
+    <Content Include="Views\ProductSizes\Index.cshtml" />
     <Content Include="Views\Categories\Create.cshtml" />
     <Content Include="Views\Categories\Delete.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />
@@ -710,6 +737,12 @@
     <Content Include="Views\CategoriesSub\Details.cshtml" />
     <Content Include="Views\CategoriesSub\Edit.cshtml" />
     <Content Include="Views\CategoriesSub\Index.cshtml" />
+    <Content Include="Views\Vendors\Create.cshtml" />
+    <Content Include="Views\Vendors\Delete.cshtml" />
+    <Content Include="Views\Vendors\Details.cshtml" />
+    <Content Include="Views\Vendors\Edit.cshtml" />
+    <Content Include="Views\Vendors\Index.cshtml" />
+    <Content Include="Views\SaleOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -734,6 +767,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809021942508_userId.resx">
       <DependentUpon>201809021942508_userId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809091824526_unitString.resx">
+      <DependentUpon>201809091824526_unitString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809091922516_productSizeFloat.resx">
+      <DependentUpon>201809091922516_productSizeFloat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809100306415_addProductSO.resx">
+      <DependentUpon>201809100306415_addProductSO.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
