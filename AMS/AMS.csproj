@@ -219,6 +219,8 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GatePass_Ch.cs" />
     <Compile Include="Models\GatePass_Pt.cs" />
+    <Compile Include="Models\HardCode\DefaultStrings.cs" />
+    <Compile Include="Models\HardCode\OrderNumber.cs" />
     <Compile Include="Models\HardCode\SalePurchaseInvoiceType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />

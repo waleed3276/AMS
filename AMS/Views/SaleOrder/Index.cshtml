@@ -25,10 +25,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Sale Order</h4>
-                        <hr />
-                        <div class="jsgrid table-responsive m-t-40">
-                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                        <h4 class="card-title">New Sale Order {{Transaction.Transaction_Description}}</h4>
+                        <hr /><br />
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" ng-model="selectedAll" ng-click="CheckAll()" /></th>
@@ -40,48 +40,127 @@
                                         <th>Rate</th>
                                         <th>Amount</th>
                                         <th>GST</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="jsgrid-alt-row" ng-repeat="obj in SaleOrder_ChList">
+                                    <tr ng-repeat="obj in SaleOrder_ChList">
                                         <td>
                                             <input type="checkbox" ng-model="obj.selected" />
                                         </td>
                                         <td>
-                                            <select class="select2 form-control custom-select" id="Product_Id{{$index}}" name="Product_Id" ng-model="obj.Product_Id" ng-options="item.Product_Id as item.Product_Title for item in ProductData" ng-change="GetProductDetail({{$index}})" style="width: 100%; height:36px;">
+                                            <select class="select2 form-control custom-select" id="Product_Id{{$index}}" name="Product_Id" ng-model="obj.Product_Id" ng-options="item.Product_Id as item.Product_Description for item in ProductData" ng-change="GetProductDetail({{$index}})" style="width: 100%; height:36px;">
                                                 <option value="">Select Product</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" name="SOC_ItemCode" ng-model="obj.SOC_ItemCode" ng-change="" required>
+                                            <input type="text" class="form-control" name="SOC_ItemCode" ng-model="obj.SOC_ItemCode" required>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" name="SOC_Description" ng-model="obj.SOC_Description" ng-change="" required>
+                                            <input type="text" class="form-control" name="SOC_Description" ng-model="obj.SOC_Description" required>
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" name="SOC_Quantity" ng-model="obj.SOC_Quantity" ng-change="" required>
+                                            <input type="number" class="form-control" name="SOC_Quantity" ng-model="obj.SOC_Quantity" ng-change="QuantityChange({{$index}})" required>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" name="SOC_Unit" ng-model="obj.SOC_Unit" ng-change="" required>
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" name="SOC_Rate" ng-model="obj.SOC_Rate" ng-change="" required>
+                                            <input type="number" class="form-control" name="SOC_Rate" ng-model="obj.SOC_Rate" ng-change="QuantityChange({{$index}})" required>
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" name="SOC_Amount" ng-model="obj.SOC_Amount" ng-change="" required>
+                                            <input type="number" class="form-control" name="SOC_Amount" ng-model="obj.SOC_Amount" ng-change="CalculateTotal()" required>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" name="SOC_GST" ng-model="obj.SOC_GST" ng-change="" required>
-                                        </td>
-                                        <td>
-                                            <input type="button" class="btn btn-primary addnew pull-right" value="Add New" ng-click="AddNew()" style="margin-right:3px">
+                                            <input type="text" class="form-control" name="SOC_GST" ng-model="obj.SOC_GST" required>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <input ng-hide="!SaleOrder_ChList.length" type="button" class="btn btn-danger pull-right" ng-click="remove()" value="Remove Selected">
+                            <input ng-hide="!SaleOrder_ChList.length" type="button" class="btn btn-danger pull-right" ng-click="Remove()" value="Remove Selected">
                             <input type="button" class="btn btn-primary addnew pull-right" value="Add New" ng-click="AddNew()" style="margin-right:3px">
+                        </div>
+                        <br />
+                        <div class="form-material row">
+                            <div class="form-group col-md-6">
+                                <label>Total Quantity:</label>
+                                <label>{{SaleOrder_PtObj.SOP_TotalQuantity}}</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Total Amount:</label>
+                                <label>{{SaleOrder_PtObj.SOP_TotalAmount}}</label>
+                            </div>
+                        </div>
+                        <div class="form-material row">
+                            <div class="form-group col-md-6">
+                                <label>Charges:</label>
+                                <input type="number" ng-model="SaleOrder_PtObj.SOP_Charges" ng-change="CalculateTotal()" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Tax Percentage:</label>
+                                <input type="number" ng-model="SaleOrder_PtObj.SOP_TaxPercent" ng-change="CalculateTotal()" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-material row">
+                            <div class="form-group col-md-4">
+                                <label>Net Total:</label>
+                                <label>{{NetTotal}}</label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Received:</label>
+                                <input type="number" ng-model="SaleOrder_PtObj.SOP_TotalReceived" ng-change="ValidateSaleOrder()" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Remaining:</label>
+                                <label>{{NetTotal - SaleOrder_PtObj.SOP_TotalReceived}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label col-md-2">Select Receiving method</label>
+                            <div class="col-md-10" style="margin-top:10px">
+
+                                <input type="radio" name="isCash" id="isCash" ng-model="isCash" ng-click="CashClick()" value="true">Cash Payment
+                                <input type="radio" name="isBankAccount" ng-model="isBankAccount" id="isBankAccount" value="true" ng-click="BankClick()" style="margin-left:20px">Receiving By Bank Account
+                                <input type="radio" name="isCheckbook" id="isCheckbook" ng-model="isCheckbook" value="true" ng-click="CheckClick()" style="margin-left:20px">Receiving By Check
+                            </div>
+                        </div>
+                        <div class="form-group" id="checkbook_id" ng-show="isCheckbook=='true'">
+                            <div id="checkbook_content">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Checkbook no</label>
+                                    <div class="col-md-9">
+                                        <input name="CheckBookNo" id="CheckBookNo" ng-model="CheckNo" class="form-control" required />
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Bank Account no</label>
+                                    <div class="col-md-9">
+                                        <input name="BankAccountNo" id="BankAccountNo" ng-model="BankAccountNo" class="form-control" required />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group" id="isBankAccount" ng-show="isBankAccount=='true'">
+                            <div id="BankAccount_content">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Bank Account no</label>
+                                    <div class="col-md-9">
+                                        <input name="BankAccountNo" id="BankAccountNo" ng-model="BankAccountNo" class="form-control" required />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-material row">
+                            <div class="btn-group col-md-6">
+                                <input type="button" class="btn btn-success" value="Save" ng-click="SaveSaleOrder()" ng-disabled="AllowSubmit" style="width:100%">
+                            </div>
+                            <div class="btn-group col-md-6">
+                                <input type="button" class="btn btn-warning" value="Clear" ng-click="Clear()" style="width:100%">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,7 +177,8 @@
                             <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
+                                        <th>Invoice</th>
+                                        <th>Customer</th>
                                         <th>Total Quantity</th>
                                         <th>Total Amount</th>
                                         <th>Total Received</th>
@@ -109,6 +189,7 @@
                                 </thead>
                                 <tbody>
                                     <tr class="jsgrid-alt-row" ng-repeat="obj in SaleOrder_PtData">
+                                        <td>1001</td>
                                         <td>{{obj.Customer.Customer_Name}}</td>
                                         <td>{{obj.SOP_TotalQuantity}}</td>
                                         <td>{{obj.SOP_TotalAmount}}</td>
