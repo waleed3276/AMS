@@ -1,17 +1,20 @@
 ﻿App.controller("SaleOrderCtrl", function ($scope, $http) {
 
     $scope.list = [];
+    $scope.Grid = [];
     
     $scope.ProductData = [];
     $scope.SaleOrder_PtData = [];
     $scope.SaleOrder_ChList = [];
 
     $scope.selectedAll = false;
+    $scope.AllowAddNewRow = true;
     $scope.AllowSubmit = false;
     $scope.isCash = true;
     $scope.isBankAccount = false;
     $scope.isCheckbook = false;
     $scope.NetTotal = 0;
+    $scope.AmountRemaining = 0;
     $scope.SaleOrder_PtObj = { SOP_Id: 0, CustomerId: 0, Customer: {}, SOP_TotalQuantity: 0, SOP_TotalAmount: 0, SOP_TotalReceived: 0, SOP_Charges: 0, SOP_TaxPercent: 0, SOP_TaxAmount: 0 };
     $scope.Transaction = { Transaction_Description: "", Transaction_Debit: 0, Transaction_Credit: 0 };
 
@@ -73,20 +76,32 @@
     }
 
     $scope.AddNew = function () {
-        $scope.SaleOrder_ChList.push({
-            'SOC_Id': 0,
-            'SOP_Id': 0,
-            'SaleOrder_Pt': {},
-            'Product_Id': 0,
-            'Product': {},
-            'SOC_Quantity': 0,
-            'SOC_Rate': 0,
-            'SOC_Description': "",
-            'SOC_GST': 0,
-            'SOC_Amount': 0,
-            'SOC_ItemCode': 0,
-            'SOC_Unit': "",
+        $scope.AllowAddNewRow = true;
+        angular.forEach($scope.SaleOrder_ChList, function (obj) {
+            if (obj.Product_Id == 0 || obj.SOC_Quantity == 0)
+            {
+                $scope.AllowAddNewRow = false;
+                return;
+            }
         });
+
+        if ($scope.AllowAddNewRow)
+        {
+            $scope.SaleOrder_ChList.push({
+                'SOC_Id': 0,
+                'SOP_Id': 0,
+                'SaleOrder_Pt': {},
+                'Product_Id': 0,
+                'Product': {},
+                'SOC_Quantity': 0,
+                'SOC_Rate': 0,
+                'SOC_Description': "",
+                'SOC_GST': 0,
+                'SOC_Amount': 0,
+                'SOC_ItemCode': 0,
+                'SOC_Unit': "",
+            });
+        }
     };
 
     $scope.SaveSaleOrder = function () {
@@ -94,6 +109,7 @@
             obj.SaleOrder_Pt = null;
             obj.Product = null;
         });
+        $scope.SaleOrder_PtObj.SOP_TotalAmount = $scope.NetTotal;
         var pram = {
             "SaleOrder_PtObj": JSON.stringify($scope.SaleOrder_PtObj),
             "SaleOrder_ChList": JSON.stringify($scope.SaleOrder_ChList),
@@ -104,6 +120,7 @@
             if (list == "Save")
             {
                 $scope.AddTransaction();
+                $scope.AddCustomerRemaining();
             }
         }
         else {
@@ -132,6 +149,10 @@
         }
     };
 
+    $scope.AddCustomerRemaining = function () {
+        JsonCallParam("SaleOrder", "AddTransaction", { "remainingAmount": $scope.AmountRemaining });
+    };
+
     $scope.ShowDescription = function () {
         $scope.Transaction.Transaction_Description = "";
         var count = 0;
@@ -156,7 +177,8 @@
 
     $scope.GetSaleOrder = function () {
         JsonCall("SaleOrder", "GetSaleOrder");
-        $scope.SaleOrder_PtData = list;
+        $scope.Grid = list;
+        //$scope.SaleOrder_PtData = list;
     };
     $scope.GetSaleOrder();
 
@@ -221,6 +243,7 @@
         $scope.isBankAccount = false;
         $scope.isCheckbook = false;
         $scope.NetTotal = 0;
+        $scope.ShowDescription();
     };
 
     $scope.CashClick = function () {
@@ -266,6 +289,7 @@
         });
         $scope.SaleOrder_ChList = newDataList;
         $scope.CalculateTotal();
+        $scope.ShowDescription();
     };
 
     $scope.ValidateSaleOrder = function () {
@@ -275,6 +299,7 @@
         if ($scope.SaleOrder_PtObj.SOP_TotalReceived <= 0) {
             $scope.SaleOrder_PtObj.SOP_TotalReceived = 0;
         }
+        $scope.AmountRemaining = $scope.NetTotal - $scope.SaleOrder_PtObj.SOP_TotalReceived;
 
         if ($scope.SaleOrder_PtObj.SOP_TotalReceived > 0) {
             $scope.AllowSubmit = false;

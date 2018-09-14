@@ -11,6 +11,9 @@ namespace AMS.Models
         [Key]
         public int PO_Id { get; set; }
 
+        public int Vendor_Id { get; set; }
+        public virtual Vendor Vendor { get; set; }
+
         public int POP_TotalQuantity { get; set; }
 
         public decimal POP_TotalAmount { get; set; }
@@ -29,7 +32,6 @@ namespace AMS.Models
 
         public string POP_PO { get; set; }
 
-        public int Vendor_Id { get; set; }
-        public virtual Vendor Vendor { get; set; }
+        public string POP_Status { get; set; }
     }
 }

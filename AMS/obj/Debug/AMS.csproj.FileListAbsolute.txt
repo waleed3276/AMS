@@ -223,3 +223,4 @@ D:\AMSP\AMS\AMS\obj\Debug\AMS.pdb
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.unitString.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.productSizeFloat.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.addProductSO.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.addPoSoStatus.resources

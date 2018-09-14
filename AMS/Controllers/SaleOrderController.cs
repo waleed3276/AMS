@@ -7,12 +7,14 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using AMS.Models.HardCode;
+using System.Data.Entity;
 
 namespace AMS.Controllers
 {
     public class SaleOrderController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private DefaultStrings ds = new DefaultStrings();
 
         // GET: SaleOrder
         public ActionResult Index()
@@ -38,7 +40,32 @@ namespace AMS.Controllers
             {
                 string userId = Session["UserId"].ToString();
                 var saleOrders = db.SaleOrder_Pts.Where(s => s.Customer.ApplicationUser.Id == userId).ToList();
-                return Json(saleOrders, JsonRequestBehavior.AllowGet);
+                
+                List<Tuple<SaleOrder_Pt, decimal, string, int, int, string>> obj = new List<Tuple<SaleOrder_Pt, decimal, string, int, int, string>>();
+                foreach (var item in saleOrders)
+                {
+                    try
+                    {
+                        var trans = db.Transactions.Where(m => m.Transaction_Status && m.Transaction_ItemId == item.SOP_Id && m.Transaction_ItemType == ds.SaleInvoiceType).SingleOrDefault();
+
+                        int action = 0;
+                        if (DateTime.Now.ToShortDateString() == item.SOP_ModificationDate.ToShortDateString() && item.SOP_Status == ds.Status_Pending)
+                        {
+                            action = 1;
+                        }
+                        
+                        int invoice_no = db.Invoices.Where(m => m.SalePurchase_Id == item.SOP_Id && m.Invoice_Type == ds.SaleInvoiceType).SingleOrDefault().Invoice_No;
+                        obj.Add(new Tuple<SaleOrder_Pt, decimal, string, int, int, string>(item, item.SOP_TotalAmount - item.SOP_TotalReceived, trans.Transaction_Description, invoice_no, action, item.SOP_ModificationDate.ToShortDateString()));
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                return Json(obj, JsonRequestBehavior.AllowGet);
+                //return Json(saleOrders, JsonRequestBehavior.AllowGet);
             }
             
             return Json(null, JsonRequestBehavior.AllowGet);
@@ -46,9 +73,9 @@ namespace AMS.Controllers
 
         public JsonResult CreateSaleOrder(FormCollection form)
         {
-            if (ModelState.IsValid)
+            string userId = Session["UserId"].ToString();
+            if (ModelState.IsValid && userId != null)
             {
-                string userId = Session["UserId"].ToString();
                 var js = new JavaScriptSerializer();
                 try
                 {
@@ -109,8 +136,7 @@ namespace AMS.Controllers
 
                 int soPt_Id = 0;
                 soPt_Id = db.SaleOrder_Pts.Max(s => s.SOP_Id);
-
-                DefaultStrings ds = new DefaultStrings();
+                
                 Transaction transaction = js.Deserialize<Transaction>(form["Transaction"]);
                 try
                 {
@@ -143,6 +169,18 @@ namespace AMS.Controllers
                 }
                 catch (Exception e)
                 {  }
+            }
+        }
+
+        public void AddCustomerRemaining(int remainingAmount)
+        {
+            if (Session["UserId"] != null)
+            {
+                string userId = Session["UserId"].ToString();
+                var customer = db.Customers.Where(s => s.ApplicationUser.Id == userId).SingleOrDefault();
+                customer.Customer_Remaining += remainingAmount;
+                db.Entry(customer).State = EntityState.Modified;
+                db.SaveChanges();
             }
         }
     }

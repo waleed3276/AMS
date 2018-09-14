@@ -9,5 +9,9 @@ namespace AMS.Models.HardCode
     {
         public string SaleInvoiceType = "SaleOrder";
         public string PurchaseInvoiceType = "PurchaseOrder";
+        public string Status_Approve = "Approve";
+        public string Status_Disapprove = "Disapprove";
+        public string Status_Pending = "Pending";
+        public string Status_InProcess= "InProcess";
     }
 }
