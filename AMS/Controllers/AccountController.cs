@@ -201,6 +201,7 @@ namespace AMS.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         await this.UserManager.AddToRoleAsync(user.Id, roleName);
+                       
                         Session["tempData"] = user.Id;
                         return Json(user.Id, JsonRequestBehavior.AllowGet);
                     }

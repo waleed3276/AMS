@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminPurchaseOrderController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CategoriesSubController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
@@ -212,6 +213,10 @@
     <Compile Include="Migrations\201809100306415_addProductSO.Designer.cs">
       <DependentUpon>201809100306415_addProductSO.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809121456039_updatedDb.cs" />
+    <Compile Include="Migrations\201809121456039_updatedDb.Designer.cs">
+      <DependentUpon>201809121456039_updatedDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -242,6 +247,7 @@
     <Content Include="Angular\CustomerController.js" />
     <Content Include="Angular\ProductController.js" />
     <Content Include="Angular\ProductSizeController.js" />
+    <Content Include="Angular\PurchaseOrderController.js" />
     <Content Include="Angular\SaleOrderController.js" />
     <Content Include="Angular\VendorController.js" />
     <Content Include="Content\Admin\assets\css\pages\bootstrap-switch.css" />
@@ -743,6 +749,7 @@
     <Content Include="Views\Vendors\Edit.cshtml" />
     <Content Include="Views\Vendors\Index.cshtml" />
     <Content Include="Views\SaleOrder\Index.cshtml" />
+    <Content Include="Views\AdminPurchaseOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -776,6 +783,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809100306415_addProductSO.resx">
       <DependentUpon>201809100306415_addProductSO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809121456039_updatedDb.resx">
+      <DependentUpon>201809121456039_updatedDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,7 +9,10 @@ namespace AMS.Models
     public class PurchaseOrder_Pt
     {
         [Key]
-        public int PO_Id { get; set; }
+        public int POP_Id { get; set; }
+
+        public int Vendor_Id { get; set; }
+        public virtual Vendor Vendor { get; set; }
 
         public int POP_TotalQuantity { get; set; }
 
@@ -29,7 +32,6 @@ namespace AMS.Models
 
         public string POP_PO { get; set; }
 
-        public int Vendor_Id { get; set; }
-        public virtual Vendor Vendor { get; set; }
+       
     }
 }

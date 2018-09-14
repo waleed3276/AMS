@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<script src="~/Angular/PurchaseOrderController.js"></script>
+<div ng-controller="PurchaseOrderCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Sale Order</h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">SO</li>
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Purchase Order</h4>
+                        <hr />
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="CheckAll()" /></th>
+                                        <th>Product</th>
+                                        <th>Item Code</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                        <th>GST</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in PurchaseOrder_ChList">
+                                        <td>
+                                            <input type="checkbox" ng-model="obj.selected" />
+                                        </td>
+                                        <td>
+                                            <select class="select2 form-control custom-select" id="Product_Id{{$index}}" name="Product_Id" ng-model="obj.Product_Id" ng-options="item.Product_Id as item.Product_Title for item in ProductData" ng-change="GetProductDetail({{$index}})" style="width: 100%; height:36px;">
+                                                <option value="">Select Product</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="POC_ItemCode" ng-model="obj.POC_ItemCode" ng-change="" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="POC_Description" ng-model="obj.POC_Description" ng-change="" required>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="POC_Quantity" ng-model="obj.POC_Quantity" ng-change="" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="POC_Unit" ng-model="obj.POC_Unit" ng-change="" required>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="POC_Rate" ng-model="obj.POC_Rate" ng-change="" required>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="POC_Amount" ng-model="obj.POC_Amount" ng-change="" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="POC_GST" ng-model="obj.POC_GST" ng-change="" required>
+                                        </td>
+                                        <td>
+                                            <input type="button" class="btn btn-primary addnew pull-right" value="Add New" ng-click="AddNew()" style="margin-right:3px">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <input ng-hide="!PurchaseOrder_ChList.length" type="button" class="btn btn-danger pull-right" ng-click="remove()" value="Remove Selected">
+                            <input type="button" class="btn btn-primary addnew pull-right" value="Add New" ng-click="AddNew()" style="margin-right:3px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">All Purchase Orders</h4>
+                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetPurchaseOrder()">Refresh</button>
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Total Quantity</th>
+                                        <th>Total Amount</th>
+                                        <th>Total Received</th>
+                                        <th>Remaining</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in PurchaseOrder_PtData">
+                                        <td>{{obj.Vendor.Vendor_Name}}</td>
+                                        <td>{{obj.POP_TotalQuantity}}</td>
+                                        <td>{{obj.POP_TotalAmount}}</td>
+                                        <td>{{obj.POP_TotalPaid}}</td>
+                                        <td>{{obj.POP_TotalAmount - obj.SOP_TotalPaid}}</td>
+                                        <td>{{obj.ModificationDate}}</td>
+                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadPurchaseOrder(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeletePurchaseOrder(obj)" title="Delete"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
