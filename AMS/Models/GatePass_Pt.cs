@@ -33,7 +33,5 @@ namespace AMS.Models
         public string GPP_No { get; set; }
 
         public bool GPP_Status { get; set; }
-
-
     }
 }

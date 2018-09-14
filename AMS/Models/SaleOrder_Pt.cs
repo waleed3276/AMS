@@ -31,5 +31,7 @@ namespace AMS.Models
         public decimal SOP_TaxAmount { get; set; }
 
         public string SOP_SO { get; set; }
+
+        public string SOP_Status { get; set; }
     }
 }
