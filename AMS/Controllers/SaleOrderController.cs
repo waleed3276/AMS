@@ -22,6 +22,12 @@ namespace AMS.Controllers
             return View();
         }
 
+        // GET: SaleOrder/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         public JsonResult GetProducts()
         {
             var product_list = db.Products.ToList();
@@ -79,7 +85,7 @@ namespace AMS.Controllers
                 var js = new JavaScriptSerializer();
                 try
                 {
-                    OrderNumber oNo = new OrderNumber();
+                    //OrderNumber oNo = new OrderNumber();
                     int soPt_Id = 0;
 
                     var soPt = JsonConvert.DeserializeObject<SaleOrder_Pt>(form["SaleOrder_PtObj"]);
@@ -87,7 +93,7 @@ namespace AMS.Controllers
                     soPt.Customer = db.Customers.Where(c => c.ApplicationUser.Id == userId).SingleOrDefault();
                     soPt.SOP_Date = DateTime.Now;
                     soPt.SOP_ModificationDate = DateTime.Now;
-                    soPt.SOP_SO = oNo.GenerateSaleOrderNumber().ToString();
+                    //soPt.SOP_SO = oNo.GenerateSaleOrderNumber().ToString();
                     db.SaleOrder_Pts.Add(soPt);
                     db.SaveChanges();
 
@@ -111,8 +117,8 @@ namespace AMS.Controllers
                     SalePurchaseInvoiceType mSalePurchaseInvoiceType = new SalePurchaseInvoiceType();
                     Invoice invoice = new Invoice()
                     {
-                        Invoice_No = mSalePurchaseInvoiceType.GenerateInvoiceNo("SaleOrder"),
-                        Invoice_Type = "SaleOrder",
+                        Invoice_No = mSalePurchaseInvoiceType.GenerateInvoiceNo(ds.SaleInvoiceType),
+                        Invoice_Type = ds.SaleInvoiceType,
                         SalePurchase_Id = soPt_Id,
                         Invoice_Date = DateTime.Now,
                         Invoice_Status = true
@@ -172,16 +178,162 @@ namespace AMS.Controllers
             }
         }
 
-        public void AddCustomerRemaining(int remainingAmount)
+        public void AddCustomerRemaining(FormCollection form)
         {
             if (Session["UserId"] != null)
             {
+                var js = new JavaScriptSerializer();
+                int RemainingAmount = Convert.ToInt32(js.Deserialize<float>(form["RemainingAmount"]));
+
                 string userId = Session["UserId"].ToString();
                 var customer = db.Customers.Where(s => s.ApplicationUser.Id == userId).SingleOrDefault();
-                customer.Customer_Remaining += remainingAmount;
+                customer.Customer_Remaining += RemainingAmount;
                 db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
             }
+        }
+
+        public JsonResult UpdateSaleOrder(FormCollection form)
+        {
+            if (ModelState.IsValid)
+            {
+                var js = new JavaScriptSerializer();
+                try
+                {
+                    var soPt = JsonConvert.DeserializeObject<SaleOrder_Pt>(form["SaleOrder_PtObj"]);
+                    var soPt_db = db.SaleOrder_Pts.Where(s => s.SOP_Id == soPt.SOP_Id).SingleOrDefault();
+                    soPt_db.SOP_TotalQuantity = soPt.SOP_TotalQuantity;
+                    soPt_db.SOP_TotalAmount = soPt.SOP_TotalAmount;
+                    soPt_db.SOP_TotalReceived = soPt.SOP_TotalReceived;
+                    soPt_db.SOP_ModificationDate = DateTime.Now;
+                    soPt_db.SOP_GST = soPt.SOP_GST;
+                    soPt_db.SOP_SO = soPt.SOP_SO;
+                    db.Entry(soPt_db).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    try
+                    {
+                        List<SaleOrder_Ch> soCh_list = js.Deserialize<SaleOrder_Ch[]>(form["SaleOrder_ChList"].ToString()).ToList();
+                        foreach (var soCh in soCh_list)
+                        {
+                            if (soCh.SOC_Id > 0)
+                            {
+                                var soCh_db = db.SaleOrder_Ches.Where(s => s.SOC_Id == soCh.SOC_Id).SingleOrDefault();
+                                soCh_db.Product = db.Products.Where(p => p.Product_Id == soCh.Product_Id).SingleOrDefault();
+                                soCh_db.SOC_Quantity = soCh.SOC_Quantity;
+                                soCh_db.SOC_Rate = soCh.SOC_Rate;
+                                soCh_db.SOC_Description = soCh.SOC_Description;
+                                soCh_db.SOC_Amount = soCh.SOC_Amount;
+                                soCh_db.SOC_ItemCode = soCh.SOC_ItemCode;
+                                soCh_db.SOC_Unit = soCh.SOC_Unit;
+                                db.Entry(soCh_db).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                soCh.Product = db.Products.Where(p => p.Product_Id == soCh.Product_Id).SingleOrDefault();
+                                soCh.SOP_Id = soPt.SOP_Id;
+                                soCh.SaleOrder_Pt = db.SaleOrder_Pts.Find(soPt.SOP_Id);
+                                db.SaleOrder_Ches.Add(soCh);
+                                db.SaveChanges();
+                            }
+                        }
+
+                        List<SaleOrder_Ch> deleted_SaleOrder_ChList = js.Deserialize<SaleOrder_Ch[]>(form["Deleted_SaleOrder_ChList"].ToString()).ToList();
+                        foreach (var item in deleted_SaleOrder_ChList)
+                        {
+                            if (item.SOC_Id > 0)
+                            {
+                                var socDel = db.SaleOrder_Ches.Find(item.SOC_Id);
+                                db.SaleOrder_Ches.Remove(socDel);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    { }
+
+                    return Json("Update", JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                { }
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        public void UpdateTransaction(FormCollection form)
+        {
+            if (ModelState.IsValid)
+            {
+                var js = new JavaScriptSerializer();
+
+                int soPt_Id = js.Deserialize<int>(form["SOP_Id"]);
+
+                Transaction transaction = js.Deserialize<Transaction>(form["Transaction"]);
+                int transId = db.Transactions.Where(t => t.Transaction_ItemId == soPt_Id && t.Transaction_ItemType == ds.SaleInvoiceType).Max(t => t.Transaction_Id);
+                Transaction trans_db = db.Transactions.Where(t => t.Transaction_Id == transId).SingleOrDefault();
+                try
+                {
+                    trans_db.Transaction_Debit = transaction.Transaction_Debit;
+                    trans_db.Transaction_Description = transaction.Transaction_Description;
+                    trans_db.OpeningClosing_Id = db.OpeningClosings.Max(o => o.OpeningClosing_Id);
+                    trans_db.OpeningClosing = db.OpeningClosings.Where(o => o.OpeningClosing_Id == trans_db.OpeningClosing_Id).SingleOrDefault();
+                    trans_db.Transaction_Status = true;
+                    if (form["isBankAccount"] == "true")
+                    {
+                        trans_db.Transaction_IsCash = false;
+                        trans_db.Transaction_CheckBookNo = 0;
+                        trans_db.Transaction_BankAccountNo = form["BankAccountNo"];
+                    }
+                    else if (form["isCheckbook"] == "true")
+                    {
+                        trans_db.Transaction_IsCash = false;
+                        trans_db.Transaction_CheckBookNo = Convert.ToInt32(form["CheckNo"]);
+                        trans_db.Transaction_BankAccountNo = form["BankAccountNo"];
+                    }
+                    else if (form["isCash"] == "true")
+                    {
+                        trans_db.Transaction_IsCash = true;
+                        trans_db.Transaction_CheckBookNo = 0;
+                        trans_db.Transaction_BankAccountNo = "";
+                    }
+                    db.Entry(trans_db).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                { }
+            }
+        }
+        
+        public void UpdateCustomerRemaining(FormCollection form)
+        {
+            if (Session["UserId"] != null)
+            {
+                var js = new JavaScriptSerializer();
+                int RemainingAmount = Convert.ToInt32(js.Deserialize<float>(form["RemainingAmount"]));
+                int RemainingOld = Convert.ToInt32(js.Deserialize<float>(form["RemainingAmountOld"]));
+
+                string userId = Session["UserId"].ToString();
+                var customer = db.Customers.Where(s => s.ApplicationUser.Id == userId).SingleOrDefault();
+                customer.Customer_Remaining -= RemainingOld;
+                customer.Customer_Remaining += RemainingAmount;
+                db.Entry(customer).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public JsonResult LoadSaleOrder(int SoPtId)
+        {
+            var saleOrderCh_List = db.SaleOrder_Ches.Where(s => s.SOP_Id == SoPtId).ToList();
+            return Json(saleOrderCh_List, JsonRequestBehavior.AllowGet);
+        }
+
+        public void DeleteSaleOrder(int SoPtId)
+        {
+            var saleOrderPt = db.SaleOrder_Pts.Where(s => s.SOP_Id == SoPtId).SingleOrDefault();
+            saleOrderPt.SOP_Status = ds.Status_Cancel;
+            db.Entry(saleOrderPt).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

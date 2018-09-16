@@ -19,189 +19,64 @@
 
                 </div>
             </div>
-        </div>  
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">New Sale Order {{Transaction.Transaction_Description}}</h4>
-                        <hr /><br />
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="CheckAll()" /></th>
-                                        <th>Product</th>
-                                        <th>Item Code</th>
-                                        <th>Description</th>
-                                        <th>Quantity</th>
-                                        <th>Unit</th>
-                                        <th>Rate</th>
-                                        <th>Amount</th>
-                                        <th>GST</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="obj in SaleOrder_ChList">
-                                        <td>
-                                            <input type="checkbox" ng-model="obj.selected" />
-                                        </td>
-                                        <td>
-                                            <select class="select2 form-control custom-select" id="Product_Id{{$index}}" name="Product_Id" ng-model="obj.Product_Id" ng-options="item.Product_Id as item.Product_Description for item in ProductData" ng-change="GetProductDetail({{$index}})" style="width: 100%; height:36px;">
-                                                <option value="">Select Product</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="SOC_ItemCode" ng-model="obj.SOC_ItemCode" required readonly>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="SOC_Description" ng-model="obj.SOC_Description" required>
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control" name="SOC_Quantity" ng-model="obj.SOC_Quantity" ng-change="QuantityChange({{$index}})" required>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="SOC_Unit" ng-model="obj.SOC_Unit" ng-change="" required readonly>
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control" name="SOC_Rate" ng-model="obj.SOC_Rate" ng-change="QuantityChange({{$index}})" required>
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control" name="SOC_Amount" ng-model="obj.SOC_Amount" ng-change="CalculateTotal()" required readonly>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="SOC_GST" ng-model="obj.SOC_GST" required>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <input ng-hide="!SaleOrder_ChList.length" type="button" class="btn btn-danger pull-right" ng-click="Remove()" value="Remove Selected">
-                            <input type="button" class="btn btn-primary addnew pull-right" value="Add New" ng-click="AddNew()" style="margin-right:3px">
-                        </div>
-                        <br />
-                        <div class="form-material row">
-                            <div class="form-group col-md-6">
-                                <label>Total Quantity:</label>
-                                <label>{{SaleOrder_PtObj.SOP_TotalQuantity}}</label>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Total Amount:</label>
-                                <label>{{SaleOrder_PtObj.SOP_TotalAmount}}</label>
-                            </div>
-                        </div>
-                        <div class="form-material row">
-                            <div class="form-group col-md-6">
-                                <label>Charges:</label>
-                                <input type="number" ng-model="SaleOrder_PtObj.SOP_Charges" ng-change="CalculateTotal()" class="form-control">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Tax Percentage:</label>
-                                <input type="number" ng-model="SaleOrder_PtObj.SOP_TaxPercent" ng-change="CalculateTotal()" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-material row">
-                            <div class="form-group col-md-4">
-                                <label>Net Total:</label>
-                                <label>{{NetTotal}}</label>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label>Received:</label>
-                                <input type="number" ng-model="SaleOrder_PtObj.SOP_TotalReceived" ng-change="ValidateSaleOrder()" class="form-control">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label>Remaining:</label>
-                                <label>{{AmountRemaining}}</label>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="control-label col-md-2">Select Receiving method</label>
-                            <div class="col-md-10" style="margin-top:10px">
-
-                                <input type="radio" name="isCash" id="isCash" ng-model="isCash" ng-click="CashClick()" value="true">Cash Payment
-                                <input type="radio" name="isBankAccount" ng-model="isBankAccount" id="isBankAccount" value="true" ng-click="BankClick()" style="margin-left:20px">Receiving By Bank Account
-                                <input type="radio" name="isCheckbook" id="isCheckbook" ng-model="isCheckbook" value="true" ng-click="CheckClick()" style="margin-left:20px">Receiving By Check
-                            </div>
-                        </div>
-                        <div class="form-group" id="checkbook_id" ng-show="isCheckbook=='true'">
-                            <div id="checkbook_content">
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Checkbook no</label>
-                                    <div class="col-md-9">
-                                        <input name="CheckBookNo" id="CheckBookNo" ng-model="CheckNo" class="form-control" required />
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Bank Account no</label>
-                                    <div class="col-md-9">
-                                        <input name="BankAccountNo" id="BankAccountNo" ng-model="BankAccountNo" class="form-control" required />
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="form-group" id="isBankAccount" ng-show="isBankAccount=='true'">
-                            <div id="BankAccount_content">
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Bank Account no</label>
-                                    <div class="col-md-9">
-                                        <input name="BankAccountNo" id="BankAccountNo" ng-model="BankAccountNo" class="form-control" required />
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="form-material row">
-                            <div class="btn-group col-md-6">
-                                <input type="button" class="btn btn-success" value="Save" ng-click="SaveSaleOrder()" ng-disabled="AllowSubmit" style="width:100%">
-                            </div>
-                            <div class="btn-group col-md-6">
-                                <input type="button" class="btn btn-warning" value="Clear" ng-click="Clear()" style="width:100%">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">All Sale Orders</h4>
-                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetSaleOrder()">Refresh</button>
-                        <div class="jsgrid table-responsive m-t-40">
-                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Invoice</th>
-                                        <th>Title</th>
-                                        <th>Total Quantity</th>
-                                        <th>Total Amount</th>
-                                        <th>Total Received</th>
-                                        <th>Remaining</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="jsgrid-alt-row" ng-repeat="obj in Grid">
-                                        <td>IN-<a href="~/SaleOrder/SOInvoice?id={{obj.Item1.SOP_Id}}&In=IN-{{obj.Item4}}">{{obj.Item4}}</a></td>
-                                        <td>{{obj.Item3}}</td>
-                                        <td>{{obj.Item1.SOP_TotalQuantity}}</td>
-                                        <td>{{obj.Item1.SOP_TotalAmount}}</td>
-                                        <td>{{obj.Item1.SOP_TotalReceived}}</td>
-                                        <td>{{obj.Item2}}</td>
-                                        <td>{{obj.Item6}}</td>
-                                        <td ng-if="obj.Item5==1" class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadSaleOrder(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteSaleOrder(obj)" title="Delete"></button></td>
-                                        <td ng-if="obj.Item5==0">No Action</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <h4 class="card-title">All Sale Order</h4>
+                        <!-- Accordian -->
+                        <div class="accordion" id="accordionTable">
+                            <div class="card m-b-5">
+                                <div class="card-header" id="heading1">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#col1" aria-expanded="true" aria-controls="col1">
+                                            Collapse Sale Order Data
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="col1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionTable">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="demo-foo-accordion" class="table table-bordered m-b-0 toggle-arrow-tiny" data-filtering="true" data-paging="true" data-sorting="true">
+                                                <thead>
+                                                    <tr class="footable-filtering">
+                                                        <th>Invoice</th>
+                                                        <th>SO #</th>
+                                                        <th>Title</th>
+                                                        <th>Total Quantity</th>
+                                                        <th>Total Amount</th>
+                                                        <th>Total Received</th>
+                                                        <th>Remaining</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="obj in Grid">
+                                                        <td>IN-<a href="~/SaleOrder/SOInvoice?id={{obj.Item1.SOP_Id}}&In=IN-{{obj.Item4}}">{{obj.Item4}}</a></td>
+                                                        <td>{{obj.Item1.SOP_SO}}</td>
+                                                        <td>{{obj.Item3}}</td>
+                                                        <td>{{obj.Item1.SOP_TotalQuantity}}</td>
+                                                        <td>{{obj.Item1.SOP_TotalAmount}}</td>
+                                                        <td>{{obj.Item1.SOP_TotalReceived}}</td>
+                                                        <td>{{obj.Item2}}</td>
+                                                        <td>{{obj.Item6}}</td>
+                                                        <td><span class="label label-table label-success" ng-show="obj.Item1.SOP_Status=='Approve'">Approve</span>
+                                                            <span class="label label-table label-info" ng-show="obj.Item1.SOP_Status=='InProcess'">InProcess</span>
+                                                            <span class="label label-table label-warning" ng-show="obj.Item1.SOP_Status=='Pending'">Pending</span>
+                                                            <span class="label label-table label-danger" ng-show="obj.Item1.SOP_Status=='Disapprove'">Disapprove</span>
+                                                            <span class="label label-table label-inverse" ng-show="obj.Item1.SOP_Status=='Cancel'">Cancel</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 

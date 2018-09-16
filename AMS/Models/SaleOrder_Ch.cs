@@ -23,8 +23,6 @@ namespace AMS.Models
 
         public string SOC_Description { get; set; }
 
-        public int SOC_GST { get; set; }
-
         public decimal SOC_Amount { get; set; }
 
         public int SOC_ItemCode { get; set; }

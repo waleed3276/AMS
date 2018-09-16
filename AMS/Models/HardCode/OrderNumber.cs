@@ -21,5 +21,19 @@ namespace AMS.Models.HardCode
             }
             return (soNumber == 100000) ? 100001 : ++soNumber;
         }
+
+        public long GeneratePurchaseOrderNumber()
+        {
+            long poNumber = 100000;
+            try
+            {
+                poNumber = Convert.ToInt64(db.PurchaseOrder_Pts.Max(m => m.POP_PO));
+            }
+            catch (Exception)
+            {
+
+            }
+            return (poNumber == 100000) ? 100001 : ++poNumber;
+        }
     }
 }

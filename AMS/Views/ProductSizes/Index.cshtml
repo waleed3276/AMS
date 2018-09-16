@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -86,7 +86,6 @@
                                         <th>Size Width</th>
                                         <th>Size Height</th>
                                         <th>Size Unit</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,7 +95,6 @@
                                         <td>{{obj.ProductSize_Width}}</td>
                                         <td>{{obj.ProductSize_Height}}</td>
                                         <td>{{obj.ProductSize_Unit}}</td>
-                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center"><button class="jsgrid-button jsgrid-edit-button" type="button" ng-click="LoadProductSize(obj)" title="Edit"></button><button class="jsgrid-button jsgrid-delete-button" type="button" ng-click="DeleteProductSize(obj)" title="Delete"></button></td>
                                     </tr>
                                 </tbody>
                             </table>

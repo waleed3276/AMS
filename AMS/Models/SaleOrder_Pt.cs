@@ -26,6 +26,8 @@ namespace AMS.Models
 
         public decimal SOP_Charges { get; set; }
 
+        public int SOP_GST { get; set; }
+
         public int SOP_TaxPercent { get; set; }
 
         public decimal SOP_TaxAmount { get; set; }

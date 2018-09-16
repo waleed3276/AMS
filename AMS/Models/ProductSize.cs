@@ -22,8 +22,5 @@ namespace AMS.Models
         public string ProductSize_Unit { get; set; }
 
         //public int ProductSize_ItemId { get; set; }
-
-        
-
     }
 }

@@ -13,5 +13,6 @@ namespace AMS.Models.HardCode
         public string Status_Disapprove = "Disapprove";
         public string Status_Pending = "Pending";
         public string Status_InProcess= "InProcess";
+        public string Status_Cancel = "Cancel";
     }
 }

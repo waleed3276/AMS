@@ -15,7 +15,9 @@
     $scope.isCheckbook = false;
     $scope.NetTotal = 0;
     $scope.AmountRemaining = 0;
-    $scope.SaleOrder_PtObj = { SOP_Id: 0, CustomerId: 0, Customer: {}, SOP_TotalQuantity: 0, SOP_TotalAmount: 0, SOP_TotalReceived: 0, SOP_Charges: 0, SOP_TaxPercent: 0, SOP_TaxAmount: 0 };
+    $scope.AmountRemainingOld = 0;
+    $scope.SaleOrder_PtObj = { SOP_Id: 0, CustomerId: 0, Customer: {}, SOP_TotalQuantity: 0, SOP_TotalAmount: 0, SOP_TotalReceived: 0, SOP_Charges: 0, SOP_GST: 0, SOP_TaxPercent: 0, SOP_TaxAmount: 0, SOP_SO: "" };
+    $scope.OldSaleOrder_PtObj = {};
     $scope.Transaction = { Transaction_Description: "", Transaction_Debit: 0, Transaction_Credit: 0 };
 
     function JsonCall(Controller, Action) {
@@ -96,7 +98,6 @@
                 'SOC_Quantity': 0,
                 'SOC_Rate': 0,
                 'SOC_Description': "",
-                'SOC_GST': 0,
                 'SOC_Amount': 0,
                 'SOC_ItemCode': 0,
                 'SOC_Unit': "",
@@ -124,7 +125,19 @@
             }
         }
         else {
-            JsonCallParam("SaleOrder", "UpdateSaleOrder", pram)
+            var pram2 = {
+                "SaleOrder_PtObj": JSON.stringify($scope.SaleOrder_PtObj),
+                "SaleOrder_ChList": JSON.stringify($scope.SaleOrder_ChList),
+                "OldSaleOrder_PtObj": JSON.stringify($scope.SaleOrder_PtObj),
+                "OldSaleOrder_ChList": JSON.stringify($scope.SaleOrder_ChList),
+                "Deleted_SaleOrder_ChList": JSON.stringify($scope.Deleted_SaleOrder_ChList),
+            };
+            JsonCallParam("SaleOrder", "UpdateSaleOrder", pram2)
+            if (list == "Update")
+            {
+                $scope.UpdateTransaction();
+                $scope.UpdateCustomerRemaining();
+            }
         }
 
         $scope.GetSaleOrder();
@@ -149,8 +162,31 @@
         }
     };
 
+    $scope.UpdateTransaction = function () {
+        $scope.Transaction.Debit = $scope.SaleOrder_PtObj.SOP_TotalReceived;
+        $scope.Transaction.Credit = 0;
+        $scope.Transaction.Transaction_Description = "Sale Order: " + $scope.Transaction.Transaction_Description;
+
+        if ($scope.Transaction.Debit > 0) {
+            var pram = {
+                'Transaction': JSON.stringify($scope.Transaction),
+                'SOP_Id': JSON.stringify($scope.SaleOrder_PtObj.SOP_Id),
+                'isCash': $scope.isCash,
+                'isBankAccount': $scope.isBankAccount,
+                'isCheckbook': $scope.isCheckbook,
+                'CheckNo': $scope.CheckNo,
+                'BankAccountNo': $scope.BankAccountNo,
+            };
+            JsonCallParam("SaleOrder", "UpdateTransaction", pram);
+        }
+    };
+
     $scope.AddCustomerRemaining = function () {
-        JsonCallParam("SaleOrder", "AddTransaction", { "remainingAmount": $scope.AmountRemaining });
+        JsonCallParam("SaleOrder", "AddCustomerRemaining", { "RemainingAmount": JSON.stringify($scope.AmountRemaining) });
+    };
+
+    $scope.UpdateCustomerRemaining = function () {
+        JsonCallParam("SaleOrder", "UpdateCustomerRemaining", { "RemainingAmount": JSON.stringify($scope.AmountRemaining), "RemainingAmountOld": JSON.stringify($scope.AmountRemainingOld) });
     };
 
     $scope.ShowDescription = function () {
@@ -188,17 +224,35 @@
     };
     $scope.GetProducts();
 
+    $scope.GetGST = function () {
+        JsonCall("Home", "GetGST");
+        $scope.SaleOrder_PtObj.SOP_GST = list;
+    };
+    $scope.GetGST();
+
     $scope.GetProductDetail = function (i) {
-        JsonCallParam("SaleOrder", "GetProductDetail", { "id": $scope.SaleOrder_ChList[i].Product_Id });
-        if (list != null)
+        if ($scope.SaleOrder_ChList[i].Product_Id > 0)
         {
-            $scope.SaleOrder_ChList[i].Product = list;
-            $scope.SaleOrder_ChList[i].SOC_ItemCode = list.Product_Code;
-            $scope.SaleOrder_ChList[i].SOC_Description = list.Product_Description;
-            $scope.SaleOrder_ChList[i].SOC_Rate = list.Product_Rate;
-            $scope.SaleOrder_ChList[i].SOC_Unit = list.Product_Unit;
+            JsonCallParam("SaleOrder", "GetProductDetail", { "id": $scope.SaleOrder_ChList[i].Product_Id });
+            if (list != null) {
+                $scope.SaleOrder_ChList[i].Product = list;
+                $scope.SaleOrder_ChList[i].SOC_ItemCode = list.Product_Code;
+                $scope.SaleOrder_ChList[i].SOC_Description = list.Product_Description;
+                $scope.SaleOrder_ChList[i].SOC_Rate = list.Product_Rate;
+                $scope.SaleOrder_ChList[i].SOC_Unit = list.Product_Unit;
+            }
         }
+        else
+        {
+            $scope.SaleOrder_ChList[i].Product = {};
+            $scope.SaleOrder_ChList[i].SOC_ItemCode = 0;
+            $scope.SaleOrder_ChList[i].SOC_Description = "";
+            $scope.SaleOrder_ChList[i].SOC_Rate = 0;
+            $scope.SaleOrder_ChList[i].SOC_Unit = "";
+        }
+        $scope.QuantityChange(i);
         $scope.ShowDescription();
+        $scope.ValidateSaleOrder();
     };
 
     $scope.QuantityChange = function (i) {
@@ -219,7 +273,7 @@
         });
 
         $scope.CalculateTax();
-        $scope.NetTotal = $scope.SaleOrder_PtObj.SOP_TotalAmount + $scope.SaleOrder_PtObj.SOP_Charges + $scope.SaleOrder_PtObj.SOP_TaxAmount;
+        $scope.NetTotal = $scope.SaleOrder_PtObj.SOP_TotalAmount + (($scope.SaleOrder_PtObj.SOP_TotalAmount / 100) * $scope.SaleOrder_PtObj.SOP_GST) + $scope.SaleOrder_PtObj.SOP_Charges + $scope.SaleOrder_PtObj.SOP_TaxAmount;
     };
 
     $scope.CalculateTax = function () {
@@ -236,14 +290,16 @@
 
     $scope.Clear = function () {
         $scope.Transaction = { Transaction_Description: "", Transaction_Debit: 0, Transaction_Credit: 0 };
-        $scope.SaleOrder_PtObj = { SOP_Id: 0, CustomerId: 0, Customer: {}, SOP_TotalQuantity: 0, SOP_TotalAmount: 0, SOP_TotalReceived: 0, SOP_Charges: 0, SOP_TaxPercent: 0, SOP_TaxAmount: 0 };
+        $scope.SaleOrder_PtObj = { SOP_Id: 0, CustomerId: 0, Customer: {}, SOP_TotalQuantity: 0, SOP_TotalAmount: 0, SOP_TotalReceived: 0, SOP_Charges: 0, SOP_GST: 0, SOP_TaxPercent: 0, SOP_TaxAmount: 0, SOP_SO: "" };
         $scope.SaleOrder_ChList = [];
         $scope.AllowSubmit = false;
         $scope.isCash = true;
         $scope.isBankAccount = false;
         $scope.isCheckbook = false;
         $scope.NetTotal = 0;
+        $scope.AmountRemaining = 0;
         $scope.ShowDescription();
+        $scope.GetGST();
     };
 
     $scope.CashClick = function () {
@@ -290,6 +346,7 @@
         $scope.SaleOrder_ChList = newDataList;
         $scope.CalculateTotal();
         $scope.ShowDescription();
+        $scope.ValidateSaleOrder();
     };
 
     $scope.ValidateSaleOrder = function () {
@@ -301,7 +358,7 @@
         }
         $scope.AmountRemaining = $scope.NetTotal - $scope.SaleOrder_PtObj.SOP_TotalReceived;
 
-        if ($scope.SaleOrder_PtObj.SOP_TotalReceived > 0) {
+        if ($scope.SaleOrder_PtObj.SOP_TotalReceived > 0 && $scope.SaleOrder_PtObj.SOP_SO != "") {
             $scope.AllowSubmit = false;
         }
         else {
@@ -310,7 +367,15 @@
     };
 
     $scope.LoadSaleOrder = function (obj) {
-        $scope.SaleOrder_PtObj = obj;
+        $scope.SaleOrder_PtObj = obj.Item1;
+        $scope.NetTotal = obj.Item1.SOP_TotalAmount;
+        JsonCallParam("SaleOrder", "LoadSaleOrder", { "SoPtId": obj.Item1.SOP_Id })
+        $scope.SaleOrder_ChList = list;
+        $scope.CalculateTotal();
+        $scope.ShowDescription();
+        $scope.ValidateSaleOrder();
+        $scope.OldSaleOrder_PtObj = obj.Item1;
+        $scope.AmountRemainingOld = obj.Item1.SOP_TotalAmount - obj.Item1.SOP_TotalReceived;
     };
 
     $scope.DeleteSaleOrder = function (obj) {
