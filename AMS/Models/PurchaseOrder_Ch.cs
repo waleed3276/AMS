@@ -23,8 +23,6 @@ namespace AMS.Models
 
         public string POC_Description { get; set; }
 
-        public int POC_GST { get; set; }
-
         public decimal POC_Amount { get; set; }
 
         public string POC_ItemCode { get; set; }

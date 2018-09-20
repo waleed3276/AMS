@@ -9,7 +9,7 @@ namespace AMS.Models
     public class PurchaseOrder_Pt
     {
         [Key]
-        public int PO_Id { get; set; }
+        public int POP_Id { get; set; }
 
         public int Vendor_Id { get; set; }
         public virtual Vendor Vendor { get; set; }
@@ -25,6 +25,8 @@ namespace AMS.Models
         public DateTime POP_ModificationDate { get; set; }
 
         public decimal POP_Charges { get; set; }
+
+        public int POP_GST { get; set; }
 
         public int POP_TaxPercent { get; set; }
 

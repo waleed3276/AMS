@@ -99,7 +99,7 @@
                 'SOC_Rate': 0,
                 'SOC_Description': "",
                 'SOC_Amount': 0,
-                'SOC_ItemCode': 0,
+                'SOC_ItemCode': "",
                 'SOC_Unit': "",
             });
         }
@@ -110,7 +110,7 @@
             obj.SaleOrder_Pt = null;
             obj.Product = null;
         });
-        $scope.SaleOrder_PtObj.SOP_TotalAmount = $scope.NetTotal;
+        $scope.SaleOrder_PtObj.SOP_TotalAmount = $scope.SaleOrder_PtObj.SOP_TotalReceived;//$scope.NetTotal;
         var pram = {
             "SaleOrder_PtObj": JSON.stringify($scope.SaleOrder_PtObj),
             "SaleOrder_ChList": JSON.stringify($scope.SaleOrder_ChList),
@@ -128,8 +128,7 @@
             var pram2 = {
                 "SaleOrder_PtObj": JSON.stringify($scope.SaleOrder_PtObj),
                 "SaleOrder_ChList": JSON.stringify($scope.SaleOrder_ChList),
-                "OldSaleOrder_PtObj": JSON.stringify($scope.SaleOrder_PtObj),
-                "OldSaleOrder_ChList": JSON.stringify($scope.SaleOrder_ChList),
+                "OldSaleOrder_PtObj": JSON.stringify($scope.OldSaleOrder_PtObj),
                 "Deleted_SaleOrder_ChList": JSON.stringify($scope.Deleted_SaleOrder_ChList),
             };
             JsonCallParam("SaleOrder", "UpdateSaleOrder", pram2)
@@ -145,11 +144,11 @@
     };
 
     $scope.AddTransaction = function () {
-        $scope.Transaction.Debit = $scope.SaleOrder_PtObj.SOP_TotalReceived;
-        $scope.Transaction.Credit = 0;
+        $scope.Transaction.Transaction_Debit = $scope.SaleOrder_PtObj.SOP_TotalReceived;
+        $scope.Transaction.Transaction_Credit = 0;
         $scope.Transaction.Transaction_Description = "Sale Order: " + $scope.Transaction.Transaction_Description;
 
-        if ($scope.Transaction.Debit > 0) {
+        if ($scope.Transaction.Transaction_Debit > 0) {
             var pram = {
                 'Transaction': JSON.stringify($scope.Transaction),
                 'isCash': $scope.isCash,
@@ -163,11 +162,11 @@
     };
 
     $scope.UpdateTransaction = function () {
-        $scope.Transaction.Debit = $scope.SaleOrder_PtObj.SOP_TotalReceived;
-        $scope.Transaction.Credit = 0;
+        $scope.Transaction.Transaction_Debit = $scope.SaleOrder_PtObj.SOP_TotalReceived;
+        $scope.Transaction.Transaction_Credit = 0;
         $scope.Transaction.Transaction_Description = "Sale Order: " + $scope.Transaction.Transaction_Description;
 
-        if ($scope.Transaction.Debit > 0) {
+        if ($scope.Transaction.Transaction_Debit > 0) {
             var pram = {
                 'Transaction': JSON.stringify($scope.Transaction),
                 'SOP_Id': JSON.stringify($scope.SaleOrder_PtObj.SOP_Id),
@@ -245,7 +244,7 @@
         else
         {
             $scope.SaleOrder_ChList[i].Product = {};
-            $scope.SaleOrder_ChList[i].SOC_ItemCode = 0;
+            $scope.SaleOrder_ChList[i].SOC_ItemCode = "";
             $scope.SaleOrder_ChList[i].SOC_Description = "";
             $scope.SaleOrder_ChList[i].SOC_Rate = 0;
             $scope.SaleOrder_ChList[i].SOC_Unit = "";
@@ -273,17 +272,23 @@
         });
 
         $scope.CalculateTax();
-        $scope.NetTotal = $scope.SaleOrder_PtObj.SOP_TotalAmount + (($scope.SaleOrder_PtObj.SOP_TotalAmount / 100) * $scope.SaleOrder_PtObj.SOP_GST) + $scope.SaleOrder_PtObj.SOP_Charges + $scope.SaleOrder_PtObj.SOP_TaxAmount;
+        $scope.NetTotal = $scope.SaleOrder_PtObj.SOP_TotalAmount + $scope.SaleOrder_PtObj.SOP_Charges + $scope.SaleOrder_PtObj.SOP_TaxAmount;
     };
 
     $scope.CalculateTax = function () {
-        if ($scope.SaleOrder_PtObj.SOP_TaxPercent > 0 && $scope.SaleOrder_PtObj.SOP_TaxPercent <= 100 && $scope.SaleOrder_PtObj.SOP_TotalAmount > 0)
+        /*if ($scope.SaleOrder_PtObj.SOP_TaxPercent > 0 && $scope.SaleOrder_PtObj.SOP_TaxPercent <= 100 && $scope.SaleOrder_PtObj.SOP_TotalAmount > 0)
         {
             $scope.SaleOrder_PtObj.SOP_TaxAmount = ($scope.SaleOrder_PtObj.SOP_TotalAmount / 100) * $scope.SaleOrder_PtObj.SOP_TaxPercent;
         }
         else
         {
             $scope.SaleOrder_PtObj.SOP_TaxPercent = 0;
+            $scope.SaleOrder_PtObj.SOP_TaxAmount = 0;
+        }*/
+        if ($scope.SaleOrder_PtObj.SOP_GST > 0 && $scope.SaleOrder_PtObj.SOP_TotalAmount > 0) {
+            $scope.SaleOrder_PtObj.SOP_TaxAmount = ($scope.SaleOrder_PtObj.SOP_TotalAmount / 100) * $scope.SaleOrder_PtObj.SOP_GST;
+        }
+        else {
             $scope.SaleOrder_PtObj.SOP_TaxAmount = 0;
         }
     };
@@ -380,8 +385,8 @@
 
     $scope.DeleteSaleOrder = function (obj) {
         if (confirm("Are you sure you want to delete sale order?")) {
-            JsonCallParam("SaleOrder", "DeleteSaleOrder", { "id": obj.SaleOrder_PtObj.SOP_Id })
-            $scope.GetCategorySub();
+            JsonCallParam("SaleOrder", "DeleteSaleOrder", { "SoPtId": obj.SaleOrder_PtObj.SOP_Id })
+            $scope.GetSaleOrder();
         }
     };
 });

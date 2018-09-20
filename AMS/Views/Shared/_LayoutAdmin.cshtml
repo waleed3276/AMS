@@ -42,6 +42,12 @@
         var Category_Id = 0;
         var CategorySub_Id = 0;
         var ProductSize_Id = 0;
+        var Vendor_Id = 0;
+
+        var IsAuthenticated="@Session["UserId"]";
+        if(IsAuthenticated==""){
+            window.location = "/Account/Login";
+        }
     </script>
 
 </head>
@@ -331,7 +337,7 @@
                         <!-- User Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown u-pro">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/Content/Admin/assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down">Mark &nbsp;<i class="fa fa-angle-down"></i></span> </a>
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/Content/Admin/assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down">@Session["UserName"] &nbsp;<i class="fa fa-angle-down"></i></span> </a>
                             <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                 <!-- text-->
                                 <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
@@ -371,7 +377,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="user-pro">
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><img src="~/Content/Admin/assets/images/users/1.jpg" alt="user-img" class="img-circle"><span class="hide-menu">Mark Jeckson</span></a>
+                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><img src="~/Content/Admin/assets/images/users/1.jpg" alt="user-img" class="img-circle"><span class="hide-menu">@Session["UserName"]</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="javascript:void(0)"><i class="ti-user"></i> My Profile</a></li>
                                 <li><a href="javascript:void(0)"><i class="ti-wallet"></i> My Balance</a></li>
@@ -422,6 +428,13 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="~/SaleOrder/Index">View Sale Orders</a></li>
                                 <li><a href="~/SaleOrder/Create">New Sale Order</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Purchase Order</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/PurchaseOrder/Index">View Purchase Orders</a></li>
+                                <li><a href="~/PurchaseOrder/Create">New Purchase Order</a></li>
                             </ul>
                         </li>
 
@@ -642,6 +655,9 @@
             });
             $("select.select2#ProductSize_Id").change(function () {
                 ProductSize_Id = parseInt($(".select2#ProductSize_Id option:selected").val().slice(7));
+            });
+            $("select.select2#Vendor_Id").change(function () {
+                Vendor_Id = parseInt($(".select2#Vendor_Id option:selected").val().slice(7));
             });
         })
     </script>

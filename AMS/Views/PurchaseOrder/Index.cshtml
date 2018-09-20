@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/Angular/PurchaseOrderController.js"></script>
+<div ng-controller="PurchaseOrderCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Purchase Order</h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">PO</li>
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">All Purchase Order</h4>
+                        <!-- Accordian -->
+                        <div class="accordion" id="accordionTable">
+                            <div class="card m-b-5">
+                                <div class="card-header" id="heading1">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#col1" aria-expanded="true" aria-controls="col1">
+                                            Collapse Purchase Order Data
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="col1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionTable">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="demo-foo-accordion" class="table table-bordered m-b-0 toggle-arrow-tiny" data-filtering="true" data-paging="true" data-sorting="true">
+                                                <thead>
+                                                    <tr class="footable-filtering">
+                                                        <th>Invoice</th>
+                                                        <th>PO #</th>
+                                                        <th>Title</th>
+                                                        <th>Total Quantity</th>
+                                                        <th>Total Amount</th>
+                                                        <th>Total Paid</th>
+                                                        <th>Remaining</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="obj in Grid">
+                                                        <td>IN-<a href="~/PurchaseOrder/POInvoice?id={{obj.Item1.POP_Id}}&In=IN-{{obj.Item4}}">{{obj.Item4}}</a></td>
+                                                        <td>{{obj.Item1.POP_PO}}</td>
+                                                        <td>{{obj.Item3}}</td>
+                                                        <td>{{obj.Item1.POP_TotalQuantity}}</td>
+                                                        <td>{{obj.Item1.POP_TotalAmount}}</td>
+                                                        <td>{{obj.Item1.POP_TotalPaid}}</td>
+                                                        <td>{{obj.Item2}}</td>
+                                                        <td>{{obj.Item6}}</td>
+                                                        <td>
+                                                            <span class="label label-table label-success" ng-show="obj.Item1.POP_Status=='Approve'">Approve</span>
+                                                            <span class="label label-table label-info" ng-show="obj.Item1.POP_Status=='InProcess'">InProcess</span>
+                                                            <span class="label label-table label-warning" ng-show="obj.Item1.POP_Status=='Pending'">Pending</span>
+                                                            <span class="label label-table label-danger" ng-show="obj.Item1.POP_Status=='Disapprove'">Disapprove</span>
+                                                            <span class="label label-table label-inverse" ng-show="obj.Item1.POP_Status=='Cancel'">Cancel</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

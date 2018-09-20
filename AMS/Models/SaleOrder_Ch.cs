@@ -25,7 +25,7 @@ namespace AMS.Models
 
         public decimal SOC_Amount { get; set; }
 
-        public int SOC_ItemCode { get; set; }
+        public string SOC_ItemCode { get; set; }
 
         public string SOC_Unit { get; set; }
     }

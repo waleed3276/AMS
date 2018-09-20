@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProductSizesController.cs" />
+    <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -220,6 +221,10 @@
     <Compile Include="Migrations\201809141406278_gstMove.Designer.cs">
       <DependentUpon>201809141406278_gstMove.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809170828387_poChanges.cs" />
+    <Compile Include="Migrations\201809170828387_poChanges.Designer.cs">
+      <DependentUpon>201809170828387_poChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -252,6 +257,7 @@
     <Content Include="Angular\CustomerController.js" />
     <Content Include="Angular\ProductController.js" />
     <Content Include="Angular\ProductSizeController.js" />
+    <Content Include="Angular\PurchaseOrderController.js" />
     <Content Include="Angular\SaleOrderController.js" />
     <Content Include="Angular\VendorController.js" />
     <Content Include="Content\AdminInformation.txt" />
@@ -755,6 +761,8 @@
     <Content Include="Views\Vendors\Index.cshtml" />
     <Content Include="Views\SaleOrder\Index.cshtml" />
     <Content Include="Views\SaleOrder\Create.cshtml" />
+    <Content Include="Views\PurchaseOrder\Create.cshtml" />
+    <Content Include="Views\PurchaseOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -794,6 +802,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809141406278_gstMove.resx">
       <DependentUpon>201809141406278_gstMove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809170828387_poChanges.resx">
+      <DependentUpon>201809170828387_poChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
