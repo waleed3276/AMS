@@ -64,6 +64,7 @@ namespace AMS.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            return RedirectToAction("Login", "Home");
             return View();
         }
 
@@ -447,6 +448,9 @@ namespace AMS.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Clear();
+            Session.RemoveAll();
+            Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
 

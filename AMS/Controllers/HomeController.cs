@@ -27,6 +27,16 @@ namespace AMS.Controllers
             return View();
         }
 
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         public JsonResult GetCompanyName()
         {
             string line = System.IO.File.ReadLines(Server.MapPath("~/Content/AdminInformation.txt")).Skip(1).Take(1).First();

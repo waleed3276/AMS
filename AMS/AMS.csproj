@@ -660,6 +660,14 @@
     <Content Include="Content\Admin\dist\js\waves.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\includes\bg.jpg" />
+    <Content Include="Content\includes\circle_close_delete.png" />
+    <Content Include="Content\includes\consolerunner.js" />
+    <Content Include="Content\includes\csslivereload.js" />
+    <Content Include="Content\includes\jquery.min.js" />
+    <Content Include="Content\includes\login-w-icon.png" />
+    <Content Include="Content\includes\stopExecutionOnTimeout.js" />
+    <Content Include="Content\includes\TweenMax.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -763,6 +771,7 @@
     <Content Include="Views\SaleOrder\Create.cshtml" />
     <Content Include="Views\PurchaseOrder\Create.cshtml" />
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

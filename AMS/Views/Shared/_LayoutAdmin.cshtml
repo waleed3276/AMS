@@ -58,7 +58,7 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label">Elite admin</p>
+            <p class="loader__label">e-accounting</p>
         </div>
     </div>
     <!-- ============================================================== -->
@@ -352,7 +352,11 @@
                                 <!-- text-->
                                 <div class="dropdown-divider"></div>
                                 <!-- text-->
-                                <a href="pages-login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                <a href="javascript:$('#logoutForm').submit();" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                                }
                                 <!-- text-->
                             </div>
                         </li>
@@ -383,7 +387,11 @@
                                 <li><a href="javascript:void(0)"><i class="ti-wallet"></i> My Balance</a></li>
                                 <li><a href="javascript:void(0)"><i class="ti-email"></i> Inbox</a></li>
                                 <li><a href="javascript:void(0)"><i class="ti-settings"></i> Account Setting</a></li>
-                                <li><a href="javascript:void(0)"><i class="fa fa-power-off"></i> Logout</a></li>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                <li><a href="javascript:$('#logoutForm').submit();"><i class="fa fa-power-off"></i> Logout</a></li>
+                                }
                             </ul>
                         </li>
                         <li class="nav-small-cap">--- Links</li>
