@@ -171,6 +171,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CategoriesSubController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\GatePassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -225,13 +226,16 @@
     <Compile Include="Migrations\201809170828387_poChanges.Designer.cs">
       <DependentUpon>201809170828387_poChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809230741259_GatePass.cs" />
+    <Compile Include="Migrations\201809230741259_GatePass.Designer.cs">
+      <DependentUpon>201809230741259_GatePass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategorySub.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\GatePass_Ch.cs" />
-    <Compile Include="Models\GatePass_Pt.cs" />
+    <Compile Include="Models\GatePass.cs" />
     <Compile Include="Models\HardCode\DefaultStrings.cs" />
     <Compile Include="Models\HardCode\OrderNumber.cs" />
     <Compile Include="Models\HardCode\SalePurchaseInvoiceType.cs" />
@@ -255,6 +259,7 @@
     <Content Include="Angular\CategoryController.js" />
     <Content Include="Angular\CategorySubController.js" />
     <Content Include="Angular\CustomerController.js" />
+    <Content Include="Angular\GatePassController.js" />
     <Content Include="Angular\ProductController.js" />
     <Content Include="Angular\ProductSizeController.js" />
     <Content Include="Angular\PurchaseOrderController.js" />
@@ -772,6 +777,8 @@
     <Content Include="Views\PurchaseOrder\Create.cshtml" />
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\GatePass\Index.cshtml" />
+    <Content Include="Views\GatePass\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -814,6 +821,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809170828387_poChanges.resx">
       <DependentUpon>201809170828387_poChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809230741259_GatePass.resx">
+      <DependentUpon>201809230741259_GatePass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

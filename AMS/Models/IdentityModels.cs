@@ -60,8 +60,6 @@ namespace AMS.Models
 
         public DbSet<ProductSize> ProductSizes { get; set; }
 
-        public DbSet<GatePass_Pt> GatePass_Pts { get; set; }
-
-        public DbSet<GatePass_Ch> GatePass_Ches { get; set; }
+        public DbSet<GatePass> GatePasses { get; set; }
     }
 }

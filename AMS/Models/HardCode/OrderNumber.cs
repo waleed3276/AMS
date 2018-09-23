@@ -35,5 +35,19 @@ namespace AMS.Models.HardCode
             }
             return (poNumber == 100000) ? 100001 : ++poNumber;
         }
+
+        public int GenerateGatePassNumber()
+        {
+            int dcNumber = 0;
+            try
+            {
+                dcNumber = Int32.Parse(db.GatePasses.Max(m => m.GatePass_No));
+            }
+            catch (Exception)
+            {
+
+            }
+            return (dcNumber == 0) ? 1 : ++dcNumber;
+        }
     }
 }

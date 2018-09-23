@@ -43,6 +43,7 @@
         var CategorySub_Id = 0;
         var ProductSize_Id = 0;
         var Vendor_Id = 0;
+        var Customer_Id = 0;
 
         var IsAuthenticated="@Session["UserId"]";
         if(IsAuthenticated==""){
@@ -445,6 +446,13 @@
                                 <li><a href="~/PurchaseOrder/Create">New Purchase Order</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">GatePass</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/GatePass/Index">View GatePasses</a></li>
+                                <li><a href="~/GatePass/Create">New GatePass</a></li>
+                            </ul>
+                        </li>
 
 
                     </ul>
@@ -666,6 +674,9 @@
             });
             $("select.select2#Vendor_Id").change(function () {
                 Vendor_Id = parseInt($(".select2#Vendor_Id option:selected").val().slice(7));
+            });
+            $("select.select2#Customer_Id").change(function () {
+                Customer_Id = parseInt($(".select2#Customer_Id option:selected").val().slice(7));
             });
         })
     </script>

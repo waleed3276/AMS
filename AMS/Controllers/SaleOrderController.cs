@@ -28,6 +28,16 @@ namespace AMS.Controllers
             return View();
         }
 
+        public JsonResult GetCustomers()
+        {
+            if (User.IsInRole("Admin"))
+            {
+                var customer_list = db.Customers.ToList();
+                return Json(customer_list, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetProducts()
         {
             var product_list = db.Products.ToList();
@@ -195,7 +205,8 @@ namespace AMS.Controllers
 
         public JsonResult UpdateSaleOrder(FormCollection form)
         {
-            if (ModelState.IsValid)
+            string userId = Session["UserId"].ToString();
+            if (ModelState.IsValid && userId != null)
             {
                 var js = new JavaScriptSerializer();
                 try

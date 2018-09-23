@@ -3,6 +3,7 @@
     $scope.list = [];
     $scope.Grid = [];
     
+    $scope.CustomerData = [];
     $scope.ProductData = [];
     $scope.SaleOrder_PtData = [];
     $scope.SaleOrder_ChList = [];
@@ -209,6 +210,12 @@
             count++;
         });
     };
+
+    $scope.GetCustomers = function () {
+        JsonCall("SaleOrder", "GetCustomers");
+        $scope.CustomerData = list;
+    };
+    $scope.GetCustomers();
 
     $scope.GetSaleOrder = function () {
         JsonCall("SaleOrder", "GetSaleOrder");
