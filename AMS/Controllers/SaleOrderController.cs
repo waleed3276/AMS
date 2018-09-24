@@ -103,6 +103,7 @@ namespace AMS.Controllers
                     soPt.Customer = db.Customers.Where(c => c.ApplicationUser.Id == userId).SingleOrDefault();
                     soPt.SOP_Date = DateTime.Now;
                     soPt.SOP_ModificationDate = DateTime.Now;
+                    soPt.SOP_Status = ds.Status_Pending;
                     //soPt.SOP_SO = oNo.GenerateSaleOrderNumber().ToString();
                     db.SaleOrder_Pts.Add(soPt);
                     db.SaveChanges();
