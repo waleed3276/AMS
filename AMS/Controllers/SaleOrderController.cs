@@ -28,6 +28,21 @@ namespace AMS.Controllers
             return View();
         }
 
+        public ActionResult SaleOrderInvoice(int? id, string In = null)
+        {
+            ViewBag.In = In;
+            if (id != null)
+            {
+                var saleOrder = db.SaleOrder_Pts.Where(s => s.SOP_Id == id).SingleOrDefault();
+                if (saleOrder != null)
+                    ViewBag.Date = saleOrder.SOP_ModificationDate;
+                else
+                    ViewBag.Date = DateTime.Now;
+                return View(saleOrder);
+            }
+            return View();
+        }
+
         public JsonResult GetCustomers()
         {
             if (User.IsInRole("Admin"))
