@@ -43,6 +43,17 @@ namespace AMS.Controllers
             return View();
         }
 
+        public JsonResult CheckSaleOrderNoExist(string soNumber)
+        {
+            if (soNumber != "")
+            {
+                var obj = db.SaleOrder_Pts.Where(s => s.SOP_SO == soNumber).SingleOrDefault();
+                if (obj != null)
+                    return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetCustomers()
         {
             if (User.IsInRole("Admin"))

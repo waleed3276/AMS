@@ -28,6 +28,21 @@ namespace AMS.Controllers
             return View();
         }
 
+        public ActionResult PurchaseOrderInvoice(int? id, string In = null)
+        {
+            ViewBag.In = In;
+            if (id != null)
+            {
+                var purchaseOrder = db.PurchaseOrder_Pts.Where(s => s.POP_Id == id).SingleOrDefault();
+                if (purchaseOrder != null)
+                    ViewBag.Date = purchaseOrder.POP_ModificationDate;
+                else
+                    ViewBag.Date = DateTime.Now;
+                return View(purchaseOrder);
+            }
+            return View();
+        }
+
         public JsonResult GetVendors()
         {
             var vendor_list = db.Vendors.ToList();

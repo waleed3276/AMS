@@ -11,6 +11,7 @@
     $scope.selectedAll = false;
     $scope.AllowAddNewRow = true;
     $scope.AllowSubmit = false;
+    $scope.IsSOExist = false;
     $scope.isCash = true;
     $scope.isBankAccount = false;
     $scope.isCheckbook = false;
@@ -359,6 +360,23 @@
         $scope.CalculateTotal();
         $scope.ShowDescription();
         $scope.ValidateSaleOrder();
+    };
+
+    $scope.CheckSaleOrderNoExist = function () {
+        $scope.ValidateSaleOrder();
+        if ($scope.SaleOrder_PtObj.SOP_SO != "")
+        {
+            JsonCallParam("SaleOrder", "CheckSaleOrderNoExist", { "soNumber": $scope.SaleOrder_PtObj.SOP_SO });
+            if (list == true)
+            {
+                $scope.IsSOExist = true;
+                $scope.AllowSubmit = true;
+            }
+            else
+            {
+                $scope.IsSOExist = false;
+            }
+        }
     };
 
     $scope.ValidateSaleOrder = function () {

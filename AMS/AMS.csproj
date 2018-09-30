@@ -780,6 +780,7 @@
     <Content Include="Views\GatePass\Index.cshtml" />
     <Content Include="Views\GatePass\Create.cshtml" />
     <Content Include="Views\SaleOrder\SaleOrderInvoice.cshtml" />
+    <Content Include="Views\PurchaseOrder\PurchaseOrderInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -30,7 +30,8 @@
                         <div class="form-material row">
                             <div class="form-group col-md-6">
                                 <label>Sale Order #:</label>
-                                <input type="text" ng-model="SaleOrder_PtObj.SOP_SO" ng-change="ValidateSaleOrder()" class="form-control">
+                                <input type="text" ng-model="SaleOrder_PtObj.SOP_SO" ng-change="CheckSaleOrderNoExist()" class="form-control">
+                                <span style="color:red" ng-show="IsSOExist">Sale Order Number Exist</span>
                             </div>
                             @if(User.IsInRole("Admin"))
                             {
