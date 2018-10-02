@@ -1,0 +1,309 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Start content -->
+<div class="container-fluid">
+
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h4 class="text-themecolor">Add Transaction</h4>
+        </div>
+        <div class="col-md-7 align-self-center text-right">
+            <div class="d-flex justify-content-end align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item active">Add</li>
+                </ol>
+
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-horizontal">
+                        @using (Html.BeginForm("Add", "Transactions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <label for="Section Name">Description</label>
+                                <input type="text" class="form-control" name="Transaction_Description" id="Description" placeholder="Transaction Description">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            Driver Expense: <input type="checkbox" class="" name="IsDriverExpense" id="IsDriverExpense" value="1" placeholder="Transaction Description">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-10">
+                                        <label for="Section Name">Expense (Debit)</label>
+                                        <input type="text" class="form-control" name="Transaction_Debit" id="Debit" placeholder="Debit Amount">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-10">
+                                        <label for="Section Name">Expense (Credit)</label>
+                                        <input type="text" class="form-control" name="Transaction_Credit" id="Credit" placeholder="Credit Amount">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-md-2">Select Transaction method</label>
+                            <div class="col-md-10" style="margin-top:10px">
+
+                                <input type="radio" name="isCash" id="isCash" value="1" checked>Cash Transaction
+                                <input type="radio" name="isBankAccount" id="isBankAccount" value="1" style="margin-left:20px">Transaction By Bank Account
+                                <input type="radio" name="isCheckbook" id="isCheckbook" value="1" style="margin-left:20px">Transaction By Check
+                            </div>
+                        </div>
+                        <div class="form-group" id="checkbook_id">
+                            @*<div id="checkbook_content">
+                            <label class="control-label col-md-2">Checkbook no</label>
+                            <div class="col-md-9">
+                                <input name="Transaction_CheckBookNo" id="CheckBookNo" class="form-control" />
+                            </div>
+                            </div>*@
+                        </div>
+                        <br />
+
+                        <div class="form-group">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">
+                                <input type="submit" id="submit" value="Add Transaction" class="btn btn-success" style="width:100%" />
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#Description').keyup(function () {
+            $('span.error-Description').remove();
+            $('span.valid-Description').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                $(this).after('<span class="valid valid-Description hidden" style="color:green;"></br></span>');
+            }
+            else {
+                $(this).after('<span class="error error-Description" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Description').focusout(function () {
+            $('span.error-Description').remove();
+            $('span.valid-Description').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                $(this).after('<span class="valid valid-Description hidden" style="color:green;"></br></span>');
+            }
+            else {
+                $(this).after('<span class="error error-Description" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Description').mouseout(function () {
+            $('span.error-Description').remove();
+            $('span.valid-Description').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                $(this).after('<span class="valid valid-Description hidden" style="color:green;"></br></span>');
+            }
+            else {
+                $(this).after('<span class="error error-Description" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#IsDriverExpense').click(function () {
+
+            var credit = $('#Credit').val();
+            var debit = $('#Debit').val();
+            $('span.error-Description').remove();
+            $('span.valid-Description').remove();
+            if ($(this).prop("checked")) {
+                console.log("invoked");
+                // checked
+                $('#Description').val("Driver Expense");
+                $('#Description').after('<span class="valid valid-Description hidden" style="color:green;"></br></span>');
+                ValidateDebit();
+                ValidateCredit();
+                return;
+            }
+            // not checked
+            $('#Description').val("");
+            $('#Description').after('<span class="error error-Description" style="color:red;"></br>*Required!</span>');
+            $('#Credit').val(0);
+            ValidateDebit();
+            ValidateCredit();
+        });
+        function ValidateDebit() {
+            var isChecked = $('#IsDriverExpense').prop("checked");
+            $('span.error-Debit').remove();
+            $('span.valid-Debit').remove();
+            var inputVal = $('#Debit').val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $('#Debit').after('<span class="error error-Debit" style="color:red;"></br>Debit Amount Should be Decimal</span>');
+                }
+                else {
+                    var vr = $('#Credit').val();
+                    if (vr > 0) {
+                        $('#Debit').val(0);
+                    }
+                    $('#Debit').after('<span class="valid valid-Debit hidden" style="color:green;"></br></span>');
+                }
+            }
+            else if (isChecked && inputVal.length == 0) {
+                $('#Debit').val(0);
+                $('#Debit').after('<span class="valid valid-Debit hidden" style="color:green;"></br></span>');
+            }
+            else {
+                $('#Debit').after('<span class="error error-Debit" style="color:red;"></br>*Required!</span>');
+            }
+        }
+        $('#Debit').keyup(function () {
+            $('span.error-Debit').remove();
+            $('span.valid-Debit').remove();
+            var inputVal = $('#Debit').val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $('#Debit').after('<span class="error error-Debit" style="color:red;"></br>Debit Amount Should be Decimal</span>');
+                }
+                else {
+                    $('#Debit').after('<span class="valid valid-Debit hidden" style="color:green;"></br></span>');
+                    $('#Credit').val(0);
+                }
+            }
+            else {
+                $('#Debit').after('<span class="error error-Debit" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Debit').focusout(function () {
+            ValidateDebit();
+        });
+        $('#Debit').mouseout(function () {
+            ValidateDebit();
+        });
+        function ValidateCredit() {
+            var isChecked = $('#IsDriverExpense').prop("checked");
+            $('span.error-Credit').remove();
+            $('span.valid-Credit').remove();
+            if (isChecked) {
+                $('#Credit').val(0);
+            }
+            var inputVal = $('#Credit').val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $('#Credit').after('<span class="error error-Credit" style="color:red;"></br>Credit Amount Should be Decimal</span>');
+                }
+                else {
+                    var vr = $('#Debit').val();
+                    if (vr > 0) {
+                        $('#Credit').val(0);
+                    }
+                    $('#Credit').after('<span class="valid valid-Credit hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $('#Credit').after('<span class="error error-Credit" style="color:red;"></br>*Required!</span>');
+            }
+        }
+        $('#Credit').keyup(function () {
+            $('span.error-Credit').remove();
+            $('span.valid-Credit').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Credit" style="color:red;"></br>Credit Amount Should be Decimal</span>');
+                }
+                else {
+                    $(this).after('<span class="valid valid-Credit hidden" style="color:green;"></br></span>');
+                    //$('#Debit').val(0);
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Credit" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Credit').focusout(function () {
+            ValidateCredit();
+        });
+        $('#Credit').mouseout(function () {
+            ValidateCredit();
+        });
+        $('#isCash').click(function () {
+            $("#isCash").prop("checked", true);
+            $("#isBankAccount").prop("checked", false);
+            $("#isCheckbook").prop("checked", false);
+            $('#checkbook_content').remove();
+            //if (!$('#isBankAccount').is(':checked')) {  }
+        });
+        $('#isBankAccount').click(function () {
+            $("#isCash").prop("checked", false);
+            $("#isBankAccount").prop("checked", true);
+            $("#isCheckbook").prop("checked", false);
+            $('#checkbook_content').remove();
+            var temp = '';
+            // temp += '<div class="form-group" id="checkbook_id">';
+            temp += '   <div id="checkbook_content">';
+            temp += '                       <label class="control-label col-md-2">Bank Account no</label>';
+            temp += '                       <div class="col-md-9">';
+            temp += '                           <input name="BankAccNo" id="BankAccNo" class="form-control" required/>';
+            temp += '                       </div>';
+            temp += '</div>';
+            $('#checkbook_id').append(temp);
+            //if (!$('#isBankAccount').is(':checked')) {  }
+        });
+        $('#isCheckbook').click(function () {
+            $("#isCash").prop("checked", false);
+            $("#isCheckbook").prop("checked", true);
+            $("#isBankAccount").prop("checked", false);
+            $('#checkbook_content').remove();
+            var temp = '';
+            // temp += '<div class="form-group" id="checkbook_id">';
+            temp += '   <div id="checkbook_content">';
+            temp += '   <div class="row">';
+            temp += '                       <label class="control-label col-md-2">Check no</label>';
+            temp += '                       <div class="col-md-9">';
+            temp += '                           <input type="number" name="CheckNo" id="CheckNo" class="form-control" required/>';
+            temp += '                       </div>';
+            temp += '   </div>';
+            temp += '   <div class="row" style="margin-top:2%">';
+            temp += '                       <label class="control-label col-md-2">Bank Account no</label>';
+            temp += '                       <div class="col-md-9">';
+            temp += '                           <input name="BankAccNo" id="BankAccNo" class="form-control" required/>';
+            temp += '                       </div>';
+            temp += '   </div>';
+            temp += '</div>';
+            $('#checkbook_id').append(temp);
+            //if (!$('#isBankAccount').is(':checked')) {  }
+        });
+        $('#submit').click(function () {
+            $('span.error-btn').remove();
+            if ($('span.valid').length == 3) {
+                return true;
+            }
+            else {
+                $(this).after('<span width="100%" class="error-btn text-center" style="color:red">     *Fill All Fields</span>');
+                return false;
+            }
+        });
+    });
+</script>

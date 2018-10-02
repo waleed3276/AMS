@@ -14,5 +14,7 @@ namespace AMS.Models.HardCode
         public string Status_Pending = "Pending";
         public string Status_InProcess= "InProcess";
         public string Status_Cancel = "Cancel";
+        public string Transaction_DriverExpense = "DriverExpense";
+        public string Transaction_Manual = "Manual";
     }
 }

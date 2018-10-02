@@ -1,0 +1,94 @@
+﻿@model IEnumerable<AMS.Models.Transaction>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OpeningClosing.OpeningClosing_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_ItemId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_ItemType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_Debit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_Credit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_IsCash)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_BankAccountNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_CheckBookNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OpeningClosing.OpeningClosing_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_ItemId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_ItemType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_Debit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_Credit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_IsCash)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_BankAccountNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_CheckBookNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_Status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Transaction_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Transaction_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Transaction_Id })
+        </td>
+    </tr>
+}
+
+</table>

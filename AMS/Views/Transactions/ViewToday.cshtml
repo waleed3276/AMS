@@ -1,0 +1,106 @@
+﻿@using AMS.Models
+@using AMS.Models.HardCode
+@model IEnumerable<AMS.Models.Transaction>
+@{
+    ViewBag.Title = "ViewToday";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ApplicationDbContext db = new ApplicationDbContext();
+    DefaultStrings ds = new DefaultStrings();
+}
+
+<div>
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">View Today Transaction</h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">View Today</li>
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Transactions</h4>
+                        <h6 class="card-subtitle">Today Transaction Data</h6>
+                        <div class="table-responsive m-t-40">
+                            <table id="" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>By Cash</th>
+                                        <th>Check No</th>
+                                        <th>Bank Account No</th>
+                                        <th>Transaction Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        @foreach (var item in Model)
+                                        {
+                                        <tr>
+                                            <td>@item.Transaction_ItemType</td>
+                                            <td>@item.Transaction_Description</td>
+                                            <td>@item.Transaction_Debit</td>
+                                            <td>@item.Transaction_Credit</td>
+                                            @if (item.Transaction_IsCash)
+                                            {
+                                                <td>Yes</td>
+                                                <td>N/A</td>
+                                                <td>N/A</td>
+                                            }
+                                            else
+                                            {
+                                                <td>No</td>
+                                                <td>@item.Transaction_CheckBookNo</td>
+                                                <td>@item.Transaction_BankAccountNo</td>
+                                            }
+                                            <td>@item.Transaction_Date</td>
+                                            @{ OpeningClosing oc_obj = new OpeningClosing(); }
+                                            @foreach (var oc in db.OpeningClosings)
+                                            {
+                                                if (oc.OpeningClosing_Date.ToShortDateString() == DateTime.Now.ToShortDateString() && !oc.OpeningClosing_IsClosed)
+                                                {
+                                                    oc_obj = oc;
+                                                }
+                                            }
+                                            @if (item.OpeningClosing_Id == oc_obj.OpeningClosing_Id && (item.Transaction_ItemType == ds.Transaction_Manual || item.Transaction_ItemType == ds.Transaction_DriverExpense))
+                                            {
+                                                <td class="actions">
+                                                    <a href="~/Transaction/Edit2?id=@item.Transaction_Id" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                    <a href="~/Transaction/Delete2?id=@item.Transaction_Id" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            }
+                                            else if (item.OpeningClosing_Id != oc_obj.OpeningClosing_Id && item.Transaction_ItemType == ds.Transaction_Manual)
+                                            {
+                                                <td>No Action Day is Closed</td>
+                                            }
+                                            else if (item.Transaction_ItemType != ds.Transaction_Manual)
+                                            {
+                                                <td>N/A</td>
+                                            }
+                                        </tr>
+                                                }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
