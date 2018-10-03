@@ -73,6 +73,18 @@ namespace AMS.Controllers
             soPtObj.SOP_Status = ds.Status_Approve;
             db.Entry(soPtObj).State = EntityState.Modified;
             db.SaveChanges();
+
+            Notification noti = new Notification();
+            noti.Notification_Detail = "Admin has approved your sale order of SO #: '" + soPtObj.SOP_SO + "'.";
+            noti.Id = soPtObj.Customer.ApplicationUser.Id;
+            noti.ApplicationUser = soPtObj.Customer.ApplicationUser;
+            noti.Notification_ItemId = soId;
+            noti.Notification_ItemType = ds.Role_Customer;
+            noti.Notification_Date = DateTime.Now;
+            noti.Notification_IsSeen = false;
+            noti.Notification_Status = true;
+            db.Notifications.Add(noti);
+            db.SaveChanges();
         }
 
         public JsonResult StatusChangeSO_FillPOC(int soId)
@@ -163,6 +175,19 @@ namespace AMS.Controllers
                         Invoice_Status = true
                     };
                     db.Invoices.Add(invoice);
+                    db.SaveChanges();
+
+                    var user = db.Users.Where(u => u.Id == poPt.Vendor.Id).SingleOrDefault();
+                    Notification noti = new Notification();
+                    noti.Notification_Detail = "New Purchase Order of PO #: '" + poPt.POP_PO + "' has been created by admin.";
+                    noti.Id = user.Id;
+                    noti.ApplicationUser = user;
+                    noti.Notification_ItemId = poPt_Id;
+                    noti.Notification_ItemType = ds.Role_Vendor;
+                    noti.Notification_Date = DateTime.Now;
+                    noti.Notification_IsSeen = false;
+                    noti.Notification_Status = true;
+                    db.Notifications.Add(noti);
                     db.SaveChanges();
 
                     return Json("Save", JsonRequestBehavior.AllowGet);
@@ -288,6 +313,19 @@ namespace AMS.Controllers
                     }
                     catch (Exception e)
                     { }
+
+                    var user = db.Users.Where(u => u.Id == poPt.Vendor.Id).SingleOrDefault();
+                    Notification noti = new Notification();
+                    noti.Notification_Detail = "Purchase Order of PO #: '" + poPt.POP_PO + "' has been updated by admin.";
+                    noti.Id = user.Id;
+                    noti.ApplicationUser = user;
+                    noti.Notification_ItemId = poPt.POP_Id;
+                    noti.Notification_ItemType = ds.Role_Vendor;
+                    noti.Notification_Date = DateTime.Now;
+                    noti.Notification_IsSeen = false;
+                    noti.Notification_Status = true;
+                    db.Notifications.Add(noti);
+                    db.SaveChanges();
 
                     return Json("Update", JsonRequestBehavior.AllowGet);
                 }

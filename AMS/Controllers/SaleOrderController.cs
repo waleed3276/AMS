@@ -163,6 +163,18 @@ namespace AMS.Controllers
                     db.Invoices.Add(invoice);
                     db.SaveChanges();
 
+                    Notification noti = new Notification();
+                    noti.Notification_Detail = "New Sale Order of SO #: '" + soPt.SOP_SO + "' has been created by customer.";
+                    noti.Id = userId;
+                    noti.ApplicationUser = db.Users.Where(u => u.Id == userId).SingleOrDefault();
+                    noti.Notification_ItemId = soPt_Id;
+                    noti.Notification_ItemType = ds.Role_Admin;
+                    noti.Notification_Date = DateTime.Now;
+                    noti.Notification_IsSeen = false;
+                    noti.Notification_Status = true;
+                    db.Notifications.Add(noti);
+                    db.SaveChanges();
+
                     return Json("Save", JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
@@ -290,6 +302,18 @@ namespace AMS.Controllers
                     }
                     catch (Exception e)
                     { }
+
+                    Notification noti = new Notification();
+                    noti.Notification_Detail = "Sale Order of SO #: '" + soPt.SOP_SO + "' has been updated by customer.";
+                    noti.Id = userId;
+                    noti.ApplicationUser = db.Users.Where(u => u.Id == userId).SingleOrDefault();
+                    noti.Notification_ItemId = soPt.SOP_Id;
+                    noti.Notification_ItemType = ds.Role_Admin;
+                    noti.Notification_Date = DateTime.Now;
+                    noti.Notification_IsSeen = false;
+                    noti.Notification_Status = true;
+                    db.Notifications.Add(noti);
+                    db.SaveChanges();
 
                     return Json("Update", JsonRequestBehavior.AllowGet);
                 }

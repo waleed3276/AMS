@@ -59,6 +59,18 @@ namespace AMS.Controllers
             poPtObj.POP_Status = ds.Status_Approve;
             db.Entry(poPtObj).State = EntityState.Modified;
             db.SaveChanges();
+
+            Notification noti = new Notification();
+            noti.Notification_Detail = "Vendor has approved your purchase order of PO #: '" + poPtObj.POP_PO + "'.";
+            noti.Id = poPtObj.Vendor.ApplicationUser.Id;
+            noti.ApplicationUser = poPtObj.Vendor.ApplicationUser;
+            noti.Notification_ItemId = poId;
+            noti.Notification_ItemType = ds.Role_Admin;
+            noti.Notification_Date = DateTime.Now;
+            noti.Notification_IsSeen = false;
+            noti.Notification_Status = true;
+            db.Notifications.Add(noti);
+            db.SaveChanges();
         }
 
         public JsonResult StatusChangePO_FillDC(int poId)

@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201809230741259_GatePass.Designer.cs">
       <DependentUpon>201809230741259_GatePass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810030400035_notificationUpdate.cs" />
+    <Compile Include="Migrations\201810030400035_notificationUpdate.Designer.cs">
+      <DependentUpon>201810030400035_notificationUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -835,6 +839,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809230741259_GatePass.resx">
       <DependentUpon>201809230741259_GatePass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810030400035_notificationUpdate.resx">
+      <DependentUpon>201810030400035_notificationUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
