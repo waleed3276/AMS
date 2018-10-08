@@ -177,6 +177,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProductSizesController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
@@ -794,6 +795,8 @@
     <Content Include="Views\Transactions\ViewAll.cshtml" />
     <Content Include="Views\Transactions\ViewToday.cshtml" />
     <Content Include="Views\Transactions\Add.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\ViewReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

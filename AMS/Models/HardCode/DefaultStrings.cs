@@ -10,6 +10,9 @@ namespace AMS.Models.HardCode
         public string SaleInvoiceType = "SaleOrder";
         public string PurchaseInvoiceType = "PurchaseOrder";
 
+        public string Balance_Customer = "CustomerBalance";
+        public string Balance_Vendor = "VendorBalance";
+
         public string Role_Admin = "Admin";
         public string Role_Customer = "Customer";
         public string Role_Vendor = "Vendor";

@@ -1,0 +1,143 @@
+﻿@model IEnumerable<Transaction>
+@using AMS.Models;
+@using AMS.Models.HardCode;
+@{
+    ViewBag.Title = "ViewReport";
+    Layout = null;
+    ApplicationDbContext db = new ApplicationDbContext();
+    DefaultStrings ds = new DefaultStrings();
+    decimal sumAmount = 0, sumAmountD = 0, sumAmountC = 0, charges = 0, profitLoss = 0;
+    string MWTReport = ViewBag.MWTReport;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/Admin/assets/images/favicon.png">
+    <title>Report</title>
+    <link href="~/Content/Admin/dist/css/style.min.css" rel="stylesheet">
+</head>
+<body class="skin-default fixed-layout">
+
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div>
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div>
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row" style="margin-top:20px;margin-right:15%;margin-left:15%;">
+                    <div class="col-md-12">
+                        <div class="card card-body printableArea">
+                            <h3><b>Report</b> <span class="pull-right">@MWTReport</span></h3>
+                            <hr>
+                            @if (Model != null)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="pull-left">
+                                            <address>
+                                            </address>
+                                        </div>
+                                        <div class="pull-right text-right">
+                                            <address>
+                                                <p class="m-t-30"><b>Date :</b> <i class="fa fa-calendar"></i> @DateTime.Now</p>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive m-t-40" style="clear: both;">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Description</th>
+                                                        <th>Debit</th>
+                                                        <th>Credit</th>
+                                                        <th>Payment Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model)
+                                                    {
+                                                        string type = item.Transaction_IsCash ? "Cash" : "Check";
+
+                                                        if (item.Transaction_ItemType == ds.Transaction_Manual || item.Transaction_ItemType == ds.Transaction_DriverExpense)
+                                                        {
+                                                            charges += item.Transaction_Debit + item.Transaction_Credit;
+                                                        }
+
+                                                        <tr>
+                                                            <td>@item.Transaction_Date.ToShortDateString()</td>
+                                                            <td>@item.Transaction_Description</td>
+                                                            <td>@item.Transaction_Debit</td>
+                                                            <td>@item.Transaction_Credit</td>
+                                                            <td>@type</td>
+                                                            @{sumAmountD += item.Transaction_Debit; sumAmountC += item.Transaction_Credit;}
+                                                        </tr>
+                                                     }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="pull-right m-t-30 text-right">
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <hr>
+                                        <div class="text-right">
+                                            <button id="print" class="btn btn-default btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Admin/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/Content/Admin/assets/node_modules/popper/popper.min.js"></script>
+    <script src="~/Content/Admin/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="~/Content/Admin/dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="~/Content/Admin/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="~/Content/Admin/dist/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="~/Content/Admin/assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="~/Content/Admin/assets/node_modules/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="~/Content/Admin/dist/js/custom.min.js"></script>
+    <script src="~/Content/Admin/dist/js/pages/jquery.PrintArea.js" type="text/JavaScript"></script>
+    <script>
+    $(document).ready(function() {
+        $("#print").click(function() {
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableArea").printArea(options);
+        });
+    });
+    </script>
+</body>
+</html>
