@@ -13,6 +13,8 @@ namespace AMS.Models
 
         public int Invoice_No { get; set; }
 
+        public int Invoice_DocumentNo { get; set; }
+
         public string Invoice_Type { get; set; }
 
         public int SalePurchase_Id { get; set; }

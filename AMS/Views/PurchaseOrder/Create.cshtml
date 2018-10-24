@@ -78,10 +78,23 @@
                                 <input type="text" ng-model="PurchaseOrder_PtObj.POP_PO" ng-change="ValidatePurchaseOrder()" class="form-control" readonly>
                             </div>
                             <div class="form-group col-md-6">
+                                <label>Invoice #:</label>
+                                <input type="number" ng-model="InvoiceNo" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Document #:</label>
+                                <input type="number" ng-model="Invoice_DocumentNo" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label>PO to Vendor:</label>
                                 <select class="select2 form-control custom-select" id="Vendor_Id" name="Vendor_Id" ng-model="PurchaseOrder_PtObj.Vendor_Id" ng-options="item.Vendor_Id as item.Vendor_Name for item in VendorData" style="width: 100%; height:36px;">
                                     <option value="">Select Vendor</option>
                                 </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Delivery Date:</label>
+                                <input type="date" ng-model="date" jqdatepicker class="form-control datepicker">
+                                {{date}}
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -136,24 +149,24 @@
                                 <label>Total Amount:</label>
                                 <label>{{PurchaseOrder_PtObj.POP_TotalAmount}}</label>
                             </div>
-                            <div class="form-group col-md-2">
+                            @*<div class="form-group col-md-2">
                                 <label>GST:</label>
                                 <label>{{PurchaseOrder_PtObj.POP_GST}} %</label>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="form-material row">
                             <div class="form-group col-md-4">
-                                <label>Net Total (with GST):</label>
+                                <label>Net Total:</label>
                                 <label>{{NetTotal}}</label>
                             </div>
-                            <div class="form-group col-md-4">
+                            @*<div class="form-group col-md-4">
                                 <label>Paid:</label>
                                 <input type="number" ng-model="PurchaseOrder_PtObj.POP_TotalPaid" ng-change="ValidatePurchaseOrder()" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Remaining:</label>
                                 <label>{{AmountRemaining}}</label>
-                            </div>
+                            </div>*@
                         </div>
                         @*<div class="form-group ">
                             <label class="control-label col-md-2">Select Payment Method</label>

@@ -159,7 +159,8 @@
 
     $scope.CalculateTax = function () {
         if ($scope.PurchaseOrder_PtObj.POP_GST > 0 && $scope.PurchaseOrder_PtObj.POP_TotalAmount > 0) {
-            $scope.PurchaseOrder_PtObj.POP_TaxAmount = ($scope.PurchaseOrder_PtObj.POP_TotalAmount / 100) * $scope.PurchaseOrder_PtObj.POP_GST;
+            //$scope.PurchaseOrder_PtObj.POP_TaxAmount = ($scope.PurchaseOrder_PtObj.POP_TotalAmount / 100) * $scope.PurchaseOrder_PtObj.POP_GST;
+            $scope.PurchaseOrder_PtObj.POP_TaxAmount = 0;
         }
         else {
             $scope.PurchaseOrder_PtObj.POP_TaxAmount = 0;

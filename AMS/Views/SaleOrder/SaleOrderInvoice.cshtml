@@ -6,6 +6,7 @@
     ApplicationDbContext db = new ApplicationDbContext();
     DateTime date = ViewBag.Date;
     string invoiceNo = ViewBag.In;
+    string docNo = ViewBag.docNo;
     decimal totalAmount = 0;
 }
 
@@ -42,6 +43,7 @@
                     <div class="col-md-12">
                         <div class="card card-body printableArea">
                             <h3><b>INVOICE</b> <span class="pull-right">@invoiceNo</span></h3>
+                            <h5><b>Document No</b> <span class="pull-right">@docNo</span></h5>
                             <hr>
                             @if (Model != null)
                             {

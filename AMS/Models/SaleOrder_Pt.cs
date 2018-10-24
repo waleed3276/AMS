@@ -24,9 +24,11 @@ namespace AMS.Models
 
         public DateTime SOP_ModificationDate { get; set; }
 
+        public DateTime SOP_DeliveryDate { get; set; }
+
         public decimal SOP_Charges { get; set; }
 
-        public int SOP_GST { get; set; }
+        //public int SOP_GST { get; set; }
 
         public int SOP_TaxPercent { get; set; }
 

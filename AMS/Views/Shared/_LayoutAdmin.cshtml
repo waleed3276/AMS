@@ -17,7 +17,7 @@
     <!--Toaster Popup message CSS -->
     <link href="~/Content/Admin/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="~/Content/Admin/assets/css/style.min.css" rel="stylesheet">
+    <link href="~/Content/Admin/assets/css/style.min.css?version=1" rel="stylesheet">
     <!-- Vendor Page CSS -->
     <link href="~/Content/Admin/assets/css/pages/dashboard1.css" rel="stylesheet">
     <link href="~/Content/Admin/assets/node_modules/datatables/media/css/dataTables.bootstrap4.css" rel="stylesheet">
@@ -34,6 +34,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link href="~/Content/Admin/simple-line-icons.css" rel="stylesheet" />
+    <link href="~/Content/Admin/themify-icons.css" rel="stylesheet" />
 
     <script src="~/Scripts/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
@@ -49,7 +51,27 @@
         if(IsAuthenticated==""){
             window.location = "/Account/Login";
         }
+
+        function CheckIntialOpening() {
+            $.ajax({
+                type: "POST",
+                traditional: true,
+                async: false,
+                cache: false,
+                url: '/OpeningClosing/CheckIntialOpening',
+                context: document.body,
+                success: function (json) {
+                    if (json == 1) {
+                        window.location = "/OpeningClosing/AddInitialOpenningDay";
+                    }
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        }
     </script>
+    <script src="~/Angular/NotificationController.js"></script>
 
 </head>
 <body class="skin-default fixed-layout">
@@ -119,50 +141,29 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" ng-controller="NotifyCtrl" ng-click="notifySeen()">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="ti-email"></i>
-                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                                <div class="notify" id="notificationNo" ng-hide="NotificationCount==0"> <span class="heartbit"></span> <span class="point">{{NotificationCount}}</span> </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox scale-up">
                                 <ul>
                                     <li>
                                         <div class="drop-title">Notifications</div>
                                     </li>
-                                    <li>
+                                    <li ng-repeat="item in MessageList">
                                         <div class="message-center">
                                             <!-- Message -->
-                                            <a href="javascript:void(0)">
-                                                <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
+                                            <a href="~/Notification/NotificationDetail?id={{item.Notification_Id}}">
+                                                <div class="btn btn-success btn-circle"><i class="fa fa-link"></i></div>
                                                 <div class="mail-contnet">
-                                                    <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)">
-                                                <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)">
-                                                <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)">
-                                                <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span>
+                                                    @*<h5>Luanch Admin</h5>*@ <span class="mail-desc">{{item.Notification_Detail}}</span> <span class="time">Just Now</span>
                                                 </div>
                                             </a>
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="nav-link text-center link" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                        <a class="nav-link text-center link" href="~/Notification/NotifyAll"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
                                     </li>
                                 </ul>
                             </div>

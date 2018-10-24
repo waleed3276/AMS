@@ -13,6 +13,9 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Web.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Security.Cryptography;
+using System.Text;
+using System.IO;
 
 namespace AMS.Controllers
 {
@@ -225,6 +228,65 @@ namespace AMS.Controllers
 
             // If we got this far, something failed, redisplay form
             return null;
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<JsonResult> ChangePassword(FormCollection form)
+        {
+            var js = new JavaScriptSerializer();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ChangePasswordViewModel cvm = new ChangePasswordViewModel();
+                    string oldPassword = js.Deserialize<string>(form["OldPassword"]);
+                    string newPassword = js.Deserialize<string>(form["NewPassword"]);
+                    cvm.OldPassword = oldPassword;
+                    cvm.NewPassword = newPassword;
+                    string id = Session["UserId"].ToString();
+                    var user = db.Users.Where(u => u.Id == id).SingleOrDefault();
+                    byte[] byteArray = Encoding.UTF8.GetBytes(newPassword);
+                    MemoryStream stream = new MemoryStream(byteArray);
+                    var md5 = new MD5CryptoServiceProvider();
+                    var newPasswordHash = md5.ComputeHash(stream);
+                    user.PasswordHash = newPasswordHash.ToString();
+                    //db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    //db.SaveChanges();
+                    
+                    var result = await UserManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return Json(user.Id, JsonRequestBehavior.AllowGet);
+                    }
+                    AddErrors(result);
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return null;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(string newPassword, string confirmPassword, string oldPassword)
+        {
+            string us = User.Identity.GetUserId<string>();
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<string>(), oldPassword, newPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<string>());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            AddErrors(result);
+            return View();
         }
 
 

@@ -28,9 +28,10 @@ namespace AMS.Controllers
             return View();
         }
 
-        public ActionResult SaleOrderInvoice(int? id, string In = null)
+        public ActionResult SaleOrderInvoice(int? id, string In = null, string docNo = null)
         {
             ViewBag.In = In;
+            ViewBag.docNo = docNo;
             if (id != null)
             {
                 var saleOrder = db.SaleOrder_Pts.Where(s => s.SOP_Id == id).SingleOrDefault();
@@ -129,6 +130,7 @@ namespace AMS.Controllers
                     soPt.Customer = db.Customers.Where(c => c.ApplicationUser.Id == userId).SingleOrDefault();
                     soPt.SOP_Date = DateTime.Now;
                     soPt.SOP_ModificationDate = DateTime.Now;
+                    soPt.SOP_DeliveryDate = Convert.ToDateTime(js.Deserialize<string>(form["DeliveryDate"]));
                     soPt.SOP_Status = ds.Status_Pending;
                     //soPt.SOP_SO = oNo.GenerateSaleOrderNumber().ToString();
                     db.SaleOrder_Pts.Add(soPt);
@@ -154,7 +156,9 @@ namespace AMS.Controllers
                     SalePurchaseInvoiceType mSalePurchaseInvoiceType = new SalePurchaseInvoiceType();
                     Invoice invoice = new Invoice()
                     {
-                        Invoice_No = mSalePurchaseInvoiceType.GenerateInvoiceNo(ds.SaleInvoiceType),
+                        //Invoice_No = mSalePurchaseInvoiceType.GenerateInvoiceNo(ds.SaleInvoiceType),
+                        Invoice_No = js.Deserialize<int>(form["InvoiceNo"]),
+                        Invoice_DocumentNo = js.Deserialize<int>(form["Invoice_DocumentNo"]),
                         Invoice_Type = ds.SaleInvoiceType,
                         SalePurchase_Id = soPt_Id,
                         Invoice_Date = DateTime.Now,
@@ -256,7 +260,7 @@ namespace AMS.Controllers
                     soPt_db.SOP_TotalAmount = soPt.SOP_TotalAmount;
                     soPt_db.SOP_TotalReceived = soPt.SOP_TotalReceived;
                     soPt_db.SOP_ModificationDate = DateTime.Now;
-                    soPt_db.SOP_GST = soPt.SOP_GST;
+                    //soPt_db.SOP_GST = soPt.SOP_GST;
                     soPt_db.SOP_SO = soPt.SOP_SO;
                     db.Entry(soPt_db).State = EntityState.Modified;
                     db.SaveChanges();

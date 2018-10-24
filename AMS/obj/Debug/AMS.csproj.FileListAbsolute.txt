@@ -228,3 +228,7 @@ E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.gstMove.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.poChanges.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.GatePass.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.notificationUpdate.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.removeProductWeight.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.docNoAndDelDate.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.docNoAndDelDate0.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.removeGST.resources

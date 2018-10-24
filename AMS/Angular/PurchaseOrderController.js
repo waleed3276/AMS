@@ -1,4 +1,20 @@
-﻿App.controller("PurchaseOrderCtrl", function ($scope, $http) {
+﻿App.directive('jqdatepicker', function () {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModelCtrl) {
+            element.datepicker({
+                dateFormat: 'DD, d  MM, yy',
+                onSelect: function (date) {
+                    scope.date = date;
+                    scope.$apply();
+                }
+            });
+        }
+    };
+});
+
+App.controller("PurchaseOrderCtrl", function ($scope, $http) {
 
     $scope.list = [];
     $scope.Grid = [];
@@ -18,6 +34,8 @@
     $scope.NetTotal = 0;
     $scope.AmountRemaining = 0;
     $scope.AmountRemainingOld = 0;
+    $scope.InvoiceNo = 0;
+    $scope.Invoice_DocumentNo = 0;
     $scope.PurchaseOrder_PtObj = { POP_Id: 0, Vendor_Id: 0, Vendor: {}, POP_TotalQuantity: 0, POP_TotalAmount: 0, POP_TotalPaid: 0, POP_Charges: 0, POP_GST: 0, POP_TaxPercent: 0, POP_TaxAmount: 0, POP_PO: "" };
     $scope.OldPurchaseOrder_PtObj = {};
     $scope.Transaction = { Transaction_Description: "", Transaction_Debit: 0, Transaction_Credit: 0 };
@@ -115,6 +133,9 @@
         var pram = {
             "PurchaseOrder_PtObj": JSON.stringify($scope.PurchaseOrder_PtObj),
             "PurchaseOrder_ChList": JSON.stringify($scope.PurchaseOrder_ChList),
+            "InvoiceNo": JSON.stringify($scope.InvoiceNo),
+            "Invoice_DocumentNo": JSON.stringify($scope.Invoice_DocumentNo),
+            "DeliveryDate": JSON.stringify($scope.date),
         };
 
         if ($scope.PurchaseOrder_PtObj.POP_Id == 0) {
@@ -297,7 +318,8 @@
 
     $scope.CalculateTax = function () {
         if ($scope.PurchaseOrder_PtObj.POP_GST > 0 && $scope.PurchaseOrder_PtObj.POP_TotalAmount > 0) {
-            $scope.PurchaseOrder_PtObj.POP_TaxAmount = ($scope.PurchaseOrder_PtObj.POP_TotalAmount / 100) * $scope.PurchaseOrder_PtObj.POP_GST;
+            //$scope.PurchaseOrder_PtObj.POP_TaxAmount = ($scope.PurchaseOrder_PtObj.POP_TotalAmount / 100) * $scope.PurchaseOrder_PtObj.POP_GST;
+            $scope.PurchaseOrder_PtObj.POP_TaxAmount = 0;
         }
         else {
             $scope.PurchaseOrder_PtObj.POP_TaxAmount = 0;

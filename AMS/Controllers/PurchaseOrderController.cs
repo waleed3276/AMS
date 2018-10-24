@@ -28,9 +28,10 @@ namespace AMS.Controllers
             return View();
         }
 
-        public ActionResult PurchaseOrderInvoice(int? id, string In = null)
+        public ActionResult PurchaseOrderInvoice(int? id, string In = null, string docNo = null)
         {
             ViewBag.In = In;
+            ViewBag.docNo = docNo;
             if (id != null)
             {
                 var purchaseOrder = db.PurchaseOrder_Pts.Where(s => s.POP_Id == id).SingleOrDefault();
@@ -144,6 +145,7 @@ namespace AMS.Controllers
                     poPt.Vendor = db.Vendors.Where(v => v.Vendor_Id == poPt.Vendor_Id).SingleOrDefault();
                     poPt.POP_Date = DateTime.Now;
                     poPt.POP_ModificationDate = DateTime.Now;
+                    poPt.POP_DeliveryDate = Convert.ToDateTime(js.Deserialize<string>(form["DeliveryDate"]));
                     poPt.POP_Status = ds.Status_Pending;
                     db.PurchaseOrder_Pts.Add(poPt);
                     db.SaveChanges();
@@ -168,7 +170,9 @@ namespace AMS.Controllers
                     SalePurchaseInvoiceType mSalePurchaseInvoiceType = new SalePurchaseInvoiceType();
                     Invoice invoice = new Invoice()
                     {
-                        Invoice_No = mSalePurchaseInvoiceType.GenerateInvoiceNo(ds.PurchaseInvoiceType),
+                        //Invoice_No = mSalePurchaseInvoiceType.GenerateInvoiceNo(ds.PurchaseInvoiceType),
+                        Invoice_No = js.Deserialize<int>(form["InvoiceNo"]),
+                        Invoice_DocumentNo = js.Deserialize<int>(form["Invoice_DocumentNo"]),
                         Invoice_Type = ds.PurchaseInvoiceType,
                         SalePurchase_Id = poPt_Id,
                         Invoice_Date = DateTime.Now,
@@ -267,7 +271,7 @@ namespace AMS.Controllers
                     poPt_db.POP_TotalAmount = poPt.POP_TotalAmount;
                     poPt_db.POP_TotalPaid = poPt.POP_TotalPaid;
                     poPt_db.POP_ModificationDate = DateTime.Now;
-                    poPt_db.POP_GST = poPt.POP_GST;
+                    //poPt_db.POP_GST = poPt.POP_GST;
                     poPt_db.POP_PO = poPt.POP_PO;
                     db.Entry(poPt_db).State = EntityState.Modified;
                     db.SaveChanges();

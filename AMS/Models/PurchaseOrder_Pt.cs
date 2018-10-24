@@ -24,9 +24,11 @@ namespace AMS.Models
 
         public DateTime POP_ModificationDate { get; set; }
 
+        public DateTime POP_DeliveryDate { get; set; }
+
         public decimal POP_Charges { get; set; }
 
-        public int POP_GST { get; set; }
+        //public int POP_GST { get; set; }
 
         public int POP_TaxPercent { get; set; }
 

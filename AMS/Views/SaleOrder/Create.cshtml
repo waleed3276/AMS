@@ -33,6 +33,14 @@
                                 <input type="text" ng-model="SaleOrder_PtObj.SOP_SO" ng-change="CheckSaleOrderNoExist()" class="form-control">
                                 <span style="color:red" ng-show="IsSOExist">Sale Order Number Exist</span>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label>Invoice #:</label>
+                                <input type="number" ng-model="InvoiceNo" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Document #:</label>
+                                <input type="number" ng-model="Invoice_DocumentNo" class="form-control">
+                            </div>
                             @if(User.IsInRole("Admin"))
                             {
                                 <div class="form-group col-md-6">
@@ -42,6 +50,11 @@
                                     </select>
                                 </div>
                             }
+                            <div class="form-group col-md-6">
+                                <label>Delivery Date:</label>
+                                <input type="date" ng-model="date" jqdatepicker class="form-control datepicker">
+                                {{date}}
+                            </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
@@ -101,10 +114,10 @@
                                 <label>Total Amount:</label>
                                 <label>{{SaleOrder_PtObj.SOP_TotalAmount}}</label>
                             </div>
-                            <div class="form-group col-md-2">
+                            @*<div class="form-group col-md-2">
                                 <label>GST:</label>
                                 <label>{{SaleOrder_PtObj.SOP_GST}} %</label>
-                            </div>
+                            </div>*@
                         </div>
                         @*<div class="form-material row">
                                 <div class="form-group col-md-6">
@@ -118,17 +131,17 @@
                             </div>*@
                         <div class="form-material row">
                             <div class="form-group col-md-4">
-                                <label>Net Total (with GST):</label>
+                                <label>Net Total:</label>
                                 <label>{{NetTotal}}</label>
                             </div>
-                            <div class="form-group col-md-4">
+                            @*<div class="form-group col-md-4">
                                 <label>Received:</label>
                                 <input type="number" ng-model="SaleOrder_PtObj.SOP_TotalReceived" ng-change="ValidateSaleOrder()" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Remaining:</label>
                                 <label>{{AmountRemaining}}</label>
-                            </div>
+                            </div>*@
                         </div>
                         @*<div class="form-group ">
                             <label class="control-label col-md-2">Select Payment Method</label>
