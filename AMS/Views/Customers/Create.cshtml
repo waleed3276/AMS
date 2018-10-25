@@ -35,35 +35,42 @@
 
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="Customer_Name" ng-model="CustomerObj.Customer_Name" ng-change="ValidateCustomer()" placeholder="Enter Your Name">
+                                <input type="text" class="form-control" name="Customer_Name" ng-model="CustomerObj.Customer_Name" ng-change="ValidateCustomer()" placeholder="Enter Your Name" required>
                                 <span style="color:red" ng-show="form.Customer_Name.$invalid &&form.Customer_Name.$dirty">
                                     <span ng-show="form.Customer_Name.$error.required">Enter Customer Name</span>
                                 </span>
                             </div>
                             <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="Customer_Email" ng-model="CustomerObj.Customer_Email" ng-change="ValidateCustomer()" placeholder="Enter Your Email" required>
+                                <span style="color:red" ng-show="form.Customer_Email.$invalid &&form.Customer_Email.$dirty">
+                                    <span ng-show="form.Customer_Email.$error.required">Enter Customer Email</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
                                 <label>Mobile Number</label>
-                                <input type="text" class="form-control" name="Customer_MobileNo" ng-model="CustomerObj.Customer_MobileNo" ng-change="ValidateCustomer()" placeholder="Enter Your Mobile Number">
+                                <input type="text" class="form-control" name="Customer_MobileNo" ng-model="CustomerObj.Customer_MobileNo" ng-change="ValidateCustomer()" placeholder="Enter Your Mobile Number" required>
                                 <span style="color:red" ng-show="form.Customer_MobileNo.$invalid &&form.Customer_MobileNo.$dirty">
                                     <span ng-show="form.Customer_MobileNo.$error.required">Enter Customer Mobile Number</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
-                                <textarea class="form-control" rows="3" name="Customer_Address" ng-model="CustomerObj.Customer_Address" ng-change="ValidateCustomer()" placeholder="Enter Your Address"></textarea>
+                                <textarea class="form-control" rows="3" name="Customer_Address" ng-model="CustomerObj.Customer_Address" ng-change="ValidateCustomer()" placeholder="Enter Your Address" required></textarea>
                                 <span style="color:red" ng-show="form.Customer_Address.$invalid &&form.Customer_Address.$dirty">
                                     <span ng-show="form.Customer_Address.$error.required">Enter Customer Address</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>National Tax No.</label>
-                                <input type="text" class="form-control" name="Customer_NTN" ng-model="CustomerObj.Customer_NTN" ng-change="ValidateCustomer()" placeholder="Enter Your National Tax Number">
+                                <input type="text" class="form-control" name="Customer_NTN" ng-model="CustomerObj.Customer_NTN" ng-change="ValidateCustomer()" placeholder="Enter Your National Tax Number" required>
                                 <span style="color:red" ng-show="form.Customer_NTN.$invalid &&form.Customer_NTN.$dirty">
                                     <span ng-show="form.Customer_NTN.$error.required">Enter Customer National Tax Number</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Company Name</label>
-                                <input type="text" class="form-control" name="Customer_Company" ng-model="CustomerObj.Customer_Company" ng-change="ValidateCustomer()" placeholder="Enter Your Company Name">
+                                <input type="text" class="form-control" name="Customer_Company" ng-model="CustomerObj.Customer_Company" ng-change="ValidateCustomer()" placeholder="Enter Your Company Name" required>
                                 <span style="color:red" ng-show="form.Customer_Company.$invalid &&form.Customer_Company.$dirty">
                                     <span ng-show="form.Customer_Company.$error.required">Enter Customer Company Name</span>
                                 </span>
@@ -91,6 +98,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Email</th>
                                         <th>Mobile No.</th>
                                         <th>Address</th>
                                         <th>NTN</th>
@@ -101,6 +109,7 @@
                                 <tbody>
                                     <tr class="jsgrid-alt-row" ng-repeat="obj in CustomerData">
                                         <td>{{obj.Customer_Name}}</td>
+                                        <td>{{obj.Customer_Email}}</td>
                                         <td>{{obj.Customer_MobileNo}}</td>
                                         <td>{{obj.Customer_Address}}</td>
                                         <td>{{obj.Customer_NTN}}</td>

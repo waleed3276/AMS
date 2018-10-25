@@ -130,6 +130,7 @@ App.controller("SaleOrderCtrl", function ($scope, $http) {
             obj.SaleOrder_Pt = null;
             obj.Product = null;
         });
+        $scope.SaleOrder_PtObj.CustomerId = Customer_Id;
         $scope.SaleOrder_PtObj.SOP_TotalAmount = $scope.SaleOrder_PtObj.SOP_TotalReceived;//$scope.NetTotal;
         var pram = {
             "SaleOrder_PtObj": JSON.stringify($scope.SaleOrder_PtObj),
@@ -410,7 +411,7 @@ App.controller("SaleOrderCtrl", function ($scope, $http) {
         }
         $scope.AmountRemaining = $scope.NetTotal - $scope.SaleOrder_PtObj.SOP_TotalReceived;
 
-        if ($scope.SaleOrder_PtObj.SOP_TotalReceived > 0 && $scope.SaleOrder_PtObj.SOP_SO != "") {
+        if ($scope.SaleOrder_PtObj.SOP_TotalReceived >= 0 && $scope.SaleOrder_PtObj.SOP_SO != "") {
             $scope.AllowSubmit = false;
         }
         else {

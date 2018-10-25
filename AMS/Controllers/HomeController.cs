@@ -10,6 +10,7 @@ namespace AMS.Controllers
     {
         public ActionResult Index()
         {
+            return RedirectToAction("Dashboard", "Home");
             return View();
         }
 

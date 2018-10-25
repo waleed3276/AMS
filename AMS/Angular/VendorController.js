@@ -4,7 +4,7 @@
     $scope.VendorData = [];
 
     $scope.AllowSubmit = false;
-    $scope.VendorObj = { Vendor_Id: 0, Vendor_Name: "", Vendor_MobileNo: "", Vendor_Address: "", Vendor_NTN: "", Vendor_Company: "" };
+    $scope.VendorObj = { Vendor_Id: 0, Vendor_Name: "", Vendor_Email: "", Vendor_MobileNo: "", Vendor_Address: "", Vendor_NTN: "", Vendor_Company: "" };
 
     function JsonCall(Controller, Action) {
         $.ajax({
@@ -67,7 +67,11 @@
         var pram = { "VendorObj": JSON.stringify($scope.VendorObj) };
 
         if ($scope.VendorObj.Vendor_Id == 0) {
-            JsonCallParam("Account", "Register2", { "UserRole": JSON.stringify("Vendor"), "Username": JSON.stringify($scope.VendorObj.Vendor_Name) })
+            JsonCallParam("Account", "Register2", {
+                "UserRole": JSON.stringify("Vendor"), 
+                "Username": JSON.stringify($scope.VendorObj.Vendor_Name),
+                "Email": JSON.stringify($scope.VendorObj.Vendor_Email),
+            })
             if (list != null)
                 JsonCallParam("Vendors", "CreateVendor", pram)
         }
@@ -87,12 +91,13 @@
     $scope.GetVendor();
 
     $scope.Clear = function () {
-        $scope.VendorObj = { Vendor_Id: 0, Vendor_Name: "", Vendor_MobileNo: "", Vendor_Address: "", Vendor_NTN: "", Vendor_Company: "" };
+        $scope.VendorObj = { Vendor_Id: 0, Vendor_Name: "", Vendor_Email: "", Vendor_MobileNo: "", Vendor_Address: "", Vendor_NTN: "", Vendor_Company: "" };
     };
 
     $scope.ValidateVendor = function () {
         if ($scope.VendorObj.Vendor_Name == ""
             || $scope.VendorObj.Vendor_MobileNo == ""
+            || $scope.VendorObj.Vendor_Email == ""
             || $scope.VendorObj.Vendor_Address == ""
             || $scope.VendorObj.Vendor_NTN == ""
             || $scope.VendorObj.Vendor_Company == "") {

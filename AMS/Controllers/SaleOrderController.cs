@@ -57,7 +57,7 @@ namespace AMS.Controllers
 
         public JsonResult GetCustomers()
         {
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole(ds.Role_Admin))
             {
                 var customer_list = db.Customers.ToList();
                 return Json(customer_list, JsonRequestBehavior.AllowGet);
@@ -117,7 +117,7 @@ namespace AMS.Controllers
         public JsonResult CreateSaleOrder(FormCollection form)
         {
             string userId = Session["UserId"].ToString();
-            if (ModelState.IsValid && userId != null)
+            if (ModelState.IsValid)
             {
                 var js = new JavaScriptSerializer();
                 try
@@ -126,8 +126,20 @@ namespace AMS.Controllers
                     int soPt_Id = 0;
 
                     var soPt = JsonConvert.DeserializeObject<SaleOrder_Pt>(form["SaleOrder_PtObj"]);
-                    soPt.CustomerId = db.Customers.Where(c => c.ApplicationUser.Id == userId).SingleOrDefault().Customer_Id;
-                    soPt.Customer = db.Customers.Where(c => c.ApplicationUser.Id == userId).SingleOrDefault();
+                    if (User.IsInRole(ds.Role_Customer))
+                    {
+                        soPt.CustomerId = db.Customers.Where(c => c.ApplicationUser.Id == userId).SingleOrDefault().Customer_Id;
+                        soPt.Customer = db.Customers.Where(c => c.ApplicationUser.Id == userId).SingleOrDefault();
+                    }
+                    else if (User.IsInRole(ds.Role_Admin) && soPt.CustomerId > 0)
+                    {
+                        soPt.Customer = db.Customers.Where(c => c.Customer_Id == soPt.CustomerId).SingleOrDefault();
+                    }
+                    else
+                    {
+                        return Json("Not Saved", JsonRequestBehavior.AllowGet);
+                    }
+
                     soPt.SOP_Date = DateTime.Now;
                     soPt.SOP_ModificationDate = DateTime.Now;
                     soPt.SOP_DeliveryDate = Convert.ToDateTime(js.Deserialize<string>(form["DeliveryDate"]));
@@ -169,8 +181,16 @@ namespace AMS.Controllers
 
                     Notification noti = new Notification();
                     noti.Notification_Detail = "New Sale Order of SO #: '" + soPt.SOP_SO + "' has been created by customer.";
-                    noti.Id = userId;
-                    noti.ApplicationUser = db.Users.Where(u => u.Id == userId).SingleOrDefault();
+                    if (User.IsInRole(ds.Role_Customer))
+                    {
+                        noti.Id = userId;
+                        noti.ApplicationUser = db.Users.Where(u => u.Id == userId).SingleOrDefault();
+                    }
+                    else
+                    {
+                        noti.Id = soPt.Customer.ApplicationUser.Id;
+                        noti.ApplicationUser = soPt.Customer.ApplicationUser;
+                    }
                     noti.Notification_ItemId = soPt_Id;
                     noti.Notification_ItemType = ds.Role_Admin;
                     noti.Notification_Date = DateTime.Now;

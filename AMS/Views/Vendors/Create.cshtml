@@ -36,35 +36,42 @@
 
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="Vendor_Name" ng-model="VendorObj.Vendor_Name" ng-change="ValidateVendor()" placeholder="Enter Your Name">
+                                <input type="text" class="form-control" name="Vendor_Name" ng-model="VendorObj.Vendor_Name" ng-change="ValidateVendor()" placeholder="Enter Your Name" required>
                                 <span style="color:red" ng-show="form.Vendor_Name.$invalid &&form.Vendor_Name.$dirty">
                                     <span ng-show="form.Vendor_Name.$error.required">Enter Vendor Name</span>
                                 </span>
                             </div>
                             <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="Vendor_Email" ng-model="VendorObj.Vendor_Email" ng-change="ValidateVendor()" placeholder="Enter Your Email" required>
+                                <span style="color:red" ng-show="form.Vendor_Email.$invalid &&form.Vendor_Email.$dirty">
+                                    <span ng-show="form.Vendor_Email.$error.required">Enter Vendor Email</span>
+                                </span>
+                            </div>
+                            <div class="form-group">
                                 <label>Mobile Number</label>
-                                <input type="text" class="form-control" name="Vendor_MobileNo" ng-model="VendorObj.Vendor_MobileNo" ng-change="ValidateVendor()" placeholder="Enter Your Mobile Number">
+                                <input type="text" class="form-control" name="Vendor_MobileNo" ng-model="VendorObj.Vendor_MobileNo" ng-change="ValidateVendor()" placeholder="Enter Your Mobile Number" required>
                                 <span style="color:red" ng-show="form.Vendor_MobileNo.$invalid &&form.Vendor_MobileNo.$dirty">
                                     <span ng-show="form.Vendor_MobileNo.$error.required">Enter Vendor Mobile Number</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
-                                <textarea class="form-control" rows="3" name="Vendor_Address" ng-model="VendorObj.Vendor_Address" ng-change="ValidateVendor()" placeholder="Enter Your Address"></textarea>
+                                <textarea class="form-control" rows="3" name="Vendor_Address" ng-model="VendorObj.Vendor_Address" ng-change="ValidateVendor()" placeholder="Enter Your Address" required></textarea>
                                 <span style="color:red" ng-show="form.Vendor_Address.$invalid &&form.Vendor_Address.$dirty">
                                     <span ng-show="form.Vendor_Address.$error.required">Enter Vendor Address</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>National Tax No.</label>
-                                <input type="text" class="form-control" name="Vendor_NTN" ng-model="VendorObj.Vendor_NTN" ng-change="ValidateVendor()" placeholder="Enter Your National Tax Number">
+                                <input type="text" class="form-control" name="Vendor_NTN" ng-model="VendorObj.Vendor_NTN" ng-change="ValidateVendor()" placeholder="Enter Your National Tax Number" required>
                                 <span style="color:red" ng-show="form.Vendor_NTN.$invalid &&form.Vendor_NTN.$dirty">
                                     <span ng-show="form.Vendor_NTN.$error.required">Enter Vendor National Tax Number</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Company Name</label>
-                                <input type="text" class="form-control" name="Vendor_Company" ng-model="VendorObj.Vendor_Company" ng-change="ValidateVendor()" placeholder="Enter Your Company Name">
+                                <input type="text" class="form-control" name="Vendor_Company" ng-model="VendorObj.Vendor_Company" ng-change="ValidateVendor()" placeholder="Enter Your Company Name" required>
                                 <span style="color:red" ng-show="form.Vendor_Company.$invalid &&form.Vendor_Company.$dirty">
                                     <span ng-show="form.Vendor_Company.$error.required">Enter Vendor Company Name</span>
                                 </span>
@@ -92,6 +99,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Email</th>
                                         <th>Mobile No.</th>
                                         <th>Address</th>
                                         <th>NTN</th>
@@ -102,6 +110,7 @@
                                 <tbody>
                                     <tr class="jsgrid-alt-row" ng-repeat="obj in VendorData">
                                         <td>{{obj.Vendor_Name}}</td>
+                                        <td>{{obj.Vendor_Email}}</td>
                                         <td>{{obj.Vendor_MobileNo}}</td>
                                         <td>{{obj.Vendor_Address}}</td>
                                         <td>{{obj.Vendor_NTN}}</td>

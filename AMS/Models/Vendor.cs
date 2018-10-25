@@ -16,6 +16,8 @@ namespace AMS.Models
 
         public string Vendor_Name { get; set; }
 
+        public string Vendor_Email { get; set; }
+
         public string Vendor_MobileNo { get; set; }
 
         public string Vendor_Address { get; set; }
@@ -28,10 +30,9 @@ namespace AMS.Models
 
         public string Vendor_Company { get; set; }
 
+        public string Vendor_Password { get; set; }
+
         public DateTime Vendor_Date { get; set; }
-
-
-
 
     }
 }

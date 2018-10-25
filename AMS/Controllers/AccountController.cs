@@ -17,6 +17,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 using System.Web.Helpers;
+using AMS.Models.HardCode;
 
 namespace AMS.Controllers
 {
@@ -27,6 +28,7 @@ namespace AMS.Controllers
         private ApplicationUserManager _userManager;
 
         private ApplicationDbContext db = new ApplicationDbContext();
+        private DefaultStrings ds = new DefaultStrings();
 
         public AccountController()
         {
@@ -203,13 +205,15 @@ namespace AMS.Controllers
                 try
                 {
                     RegisterViewModel rvm = new RegisterViewModel();
-                    var username = js.Deserialize<string>(form["Username"]);
+                    string username = js.Deserialize<string>(form["Username"]);
                     string roleName = js.Deserialize<string>(form["UserRole"]);
+                    string email = js.Deserialize<string>(form["Email"]);
                     Random rndm = new Random();
                     rvm.UserName = (username.ToLower().Replace(" ", "")) + rndm.Next(0000, 9999);
                     rvm.Password = "Ask" + Membership.GeneratePassword(7, 0) + "@" + rndm.Next(0, 999);
                     rvm.UserRole = roleName;
-                    rvm.Email = (username.ToLower().Replace(" ", "")) + "123@gmail.com";
+                    rvm.Email = email;
+                    //rvm.Email = (username.ToLower().Replace(" ", "")) + "123@gmail.com";
 
                     var user = new ApplicationUser { UserName = rvm.UserName, Email = rvm.Email, UserRole = rvm.UserRole };
                     var result = await UserManager.CreateAsync(user, rvm.Password);
@@ -218,6 +222,7 @@ namespace AMS.Controllers
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         await this.UserManager.AddToRoleAsync(user.Id, roleName);
                         Session["tempData"] = user.Id;
+                        Session["tempPassword"] = rvm.Password;
                         return Json(user.Id, JsonRequestBehavior.AllowGet);
                     }
                     AddErrors(result);
@@ -249,6 +254,21 @@ namespace AMS.Controllers
                     user.PasswordHash = Crypto.HashPassword(newPassword);
                     db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
+
+                    if (user.UserRole == ds.Role_Customer)
+                    {
+                        var customer = db.Customers.Where(c => c.ApplicationUser.Id == id).SingleOrDefault();
+                        customer.Customer_Password = newPassword;
+                        db.Entry(customer).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else if (user.UserRole == ds.Role_Vendor)
+                    {
+                        var vendor = db.Vendors.Where(c => c.ApplicationUser.Id == id).SingleOrDefault();
+                        vendor.Vendor_Password = newPassword;
+                        db.Entry(vendor).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
 
                     return RedirectToAction("LogOff", "Account");
                 }

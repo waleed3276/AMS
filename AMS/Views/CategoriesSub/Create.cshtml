@@ -42,21 +42,21 @@
                             </div>
                             <div class="form-group">
                                 <label>Sub-Category Title</label>
-                                <input type="text" class="form-control" name="CategorySub_Title" ng-model="CategorySubObj.CategorySub_Title" ng-change="ValidateCategorySub()" placeholder="Enter Sub-Category Title">
+                                <input type="text" class="form-control" name="CategorySub_Title" ng-model="CategorySubObj.CategorySub_Title" ng-change="ValidateCategorySub()" placeholder="Enter Sub-Category Title" required>
                                 <span style="color:red" ng-show="form.CategorySub_Title.$invalid &&form.CategorySub_Title.$dirty">
                                     <span ng-show="form.CategorySub_Title.$error.required">Enter Sub-Category Title</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Sub-Category Code</label>
-                                <input type="text" class="form-control" name="CategorySub_Code" ng-model="CategorySubObj.CategorySub_Code" ng-change="ValidateCategorySub()" placeholder="Enter Sub-Category Code">
+                                <input type="text" class="form-control" name="CategorySub_Code" ng-model="CategorySubObj.CategorySub_Code" ng-change="ValidateCategorySub()" placeholder="Enter Sub-Category Code" required>
                                 <span style="color:red" ng-show="form.CategorySub_Code.$invalid &&form.CategorySub_Code.$dirty">
                                     <span ng-show="form.CategorySub_Code.$error.required">Enter Sub-Category Code</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Sub-Category Description</label>
-                                <textarea class="form-control" rows="3" name="CategorySub_Description" ng-model="CategorySubObj.CategorySub_Description" ng-change="ValidateCategorySub()" placeholder="Enter Sub-Category Description"></textarea>
+                                <textarea class="form-control" rows="3" name="CategorySub_Description" ng-model="CategorySubObj.CategorySub_Description" ng-change="ValidateCategorySub()" placeholder="Enter Sub-Category Description" required></textarea>
                                 <span style="color:red" ng-show="form.CategorySub_Description.$invalid &&form.CategorySub_Description.$dirty">
                                     <span ng-show="form.CategorySub_Description.$error.required">Enter Sub-Category Description</span>
                                 </span>

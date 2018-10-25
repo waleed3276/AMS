@@ -397,7 +397,7 @@ App.controller("PurchaseOrderCtrl", function ($scope, $http) {
         $scope.AmountRemaining = $scope.NetTotal - $scope.PurchaseOrder_PtObj.POP_TotalPaid;
         $scope.PurchaseOrder_PtObj.Vendor_Id = Vendor_Id;
 
-        if ($scope.PurchaseOrder_PtObj.POP_TotalPaid > 0 && $scope.PurchaseOrder_PtObj.POP_PO != "") {
+        if ($scope.PurchaseOrder_PtObj.POP_TotalPaid >= 0 && $scope.PurchaseOrder_PtObj.POP_PO != "") {
             $scope.AllowSubmit = false;
         }
         else {

@@ -16,6 +16,8 @@ namespace AMS.Models
 
         public string Customer_Name { get; set; }
 
+        public string Customer_Email { get; set; }
+
         public string Customer_MobileNo { get; set; }
 
         public string Customer_Address { get; set; }
@@ -28,6 +30,9 @@ namespace AMS.Models
 
         public string Customer_Company { get; set; }
 
+        public string Customer_Password { get; set; }
+
         public DateTime Customer_Date { get; set; }
+
     }
 }

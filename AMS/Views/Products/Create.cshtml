@@ -44,21 +44,21 @@
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="Product_Title" ng-model="ProductObj.Product_Title" ng-change="ValidateProduct()" placeholder="Enter Product Name">
+                                <input type="text" class="form-control" name="Product_Title" ng-model="ProductObj.Product_Title" ng-change="ValidateProduct()" placeholder="Enter Product Name" required>
                                 <span style="color:red" ng-show="form.Product_Title.$invalid &&form.Product_Title.$dirty">
                                     <span ng-show="form.Product_Title.$error.required">Enter Product Name</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Product Code</label>
-                                <input type="text" class="form-control" name="Product_Code" ng-model="ProductObj.Product_Code" ng-change="ValidateProduct()" placeholder="Enter Product Code">
+                                <input type="text" class="form-control" name="Product_Code" ng-model="ProductObj.Product_Code" ng-change="ValidateProduct()" placeholder="Enter Product Code" required>
                                 <span style="color:red" ng-show="form.Product_Code.$invalid &&form.Product_Code.$dirty">
                                     <span ng-show="form.Product_Code.$error.required">Enter Product Code</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Product Description</label>
-                                <input class="form-control" name="Product_Description" ng-model="ProductObj.Product_Description" ng-change="ValidateProduct()" placeholder="Enter Product Description">
+                                <input class="form-control" name="Product_Description" ng-model="ProductObj.Product_Description" ng-change="ValidateProduct()" placeholder="Enter Product Description" required>
                                 <span style="color:red" ng-show="form.Product_Description.$invalid &&form.Product_Description.$dirty">
                                     <span ng-show="form.Product_Description.$error.required">Enter Product Description</span>
                                 </span>
@@ -74,28 +74,28 @@
                             </div>
                             <div class="form-group">
                                 <label>Product Color</label>
-                                <input class="form-control" name="Product_Color" ng-model="ProductObj.Product_Color" ng-change="ValidateProduct()" placeholder="Enter Product Color">
+                                <input class="form-control" name="Product_Color" ng-model="ProductObj.Product_Color" ng-change="ValidateProduct()" placeholder="Enter Product Color" required>
                                 <span style="color:red" ng-show="form.Product_Color.$invalid &&form.Product_Color.$dirty">
                                     <span ng-show="form.Product_Color.$error.required">Enter Product Color</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Product UOM</label>
-                                <input class="form-control" name="Product_Unit" ng-model="ProductObj.Product_Unit" ng-change="ValidateProduct()" placeholder="Enter Product Unit of Measurement">
+                                <input class="form-control" name="Product_Unit" ng-model="ProductObj.Product_Unit" ng-change="ValidateProduct()" placeholder="Enter Product Unit of Measurement" required>
                                 <span style="color:red" ng-show="form.Product_Unit.$invalid &&form.Product_Unit.$dirty">
                                     <span ng-show="form.Product_Unit.$error.required">Enter Product Unit of Measurement</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Product Unit Price</label>
-                                <input type="number" class="form-control" name="Product_UnitPrice" ng-model="ProductObj.Product_UnitPrice" ng-change="ValidateProduct()" placeholder="Enter Product Unit Price (Purchase Rate)">
+                                <input type="number" class="form-control" name="Product_UnitPrice" ng-model="ProductObj.Product_UnitPrice" ng-change="ValidateProduct()" placeholder="Enter Product Unit Price (Purchase Rate)" required>
                                 <span style="color:red" ng-show="form.Product_UnitPrice.$invalid &&form.Product_UnitPrice.$dirty">
                                     <span ng-show="form.Product_UnitPrice.$error.required">Enter Product Unit Price</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Product Rate</label>
-                                <input type="number" class="form-control" name="Product_Rate" ng-model="ProductObj.Product_Rate" ng-change="ValidateProduct()" placeholder="Enter Product Rate (Sale Rate)">
+                                <input type="number" class="form-control" name="Product_Rate" ng-model="ProductObj.Product_Rate" ng-change="ValidateProduct()" placeholder="Enter Product Rate (Sale Rate)" required>
                                 <span style="color:red" ng-show="form.Product_Rate.$invalid &&form.Product_Rate.$dirty">
                                     <span ng-show="form.Product_Rate.$error.required">Enter Product Rate</span>
                                 </span>

@@ -137,11 +137,12 @@ namespace AMS.Controllers
             vendor.Vendor_Remaining = 0;
             vendor.Vendor_Date = DateTime.Now;
             vendor.Vendor_Status = true;
+            vendor.Vendor_Password = Session["tempPassword"].ToString();
             db.Vendors.Add(vendor);
             db.SaveChanges();
 
             Session["tempData"] = null;
-            
+            Session["tempPassword"] = null;
         }
 
         public void UpdateVendor(FormCollection form)
@@ -150,6 +151,7 @@ namespace AMS.Controllers
             int id = vendor.Vendor_Id;
             var vendor_db = db.Vendors.Find(id);
             vendor_db.Vendor_Name = vendor.Vendor_Name;
+            vendor_db.Vendor_Email = vendor.Vendor_Email;
             vendor_db.Vendor_MobileNo = vendor.Vendor_MobileNo;
             vendor_db.Vendor_Address = vendor.Vendor_Address;
             vendor_db.Vendor_Company = vendor.Vendor_Company;

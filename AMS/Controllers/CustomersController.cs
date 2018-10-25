@@ -136,10 +136,12 @@ namespace AMS.Controllers
             customer.Customer_Remaining = 0;
             customer.Customer_Date = DateTime.Now;
             customer.Customer_Status = true;
+            customer.Customer_Password = Session["tempPassword"].ToString();
             db.Customers.Add(customer);
             db.SaveChanges();
 
             Session["tempData"] = null;
+            Session["tempPassword"] = null;
         }
 
         public void UpdateCustomer(FormCollection form)
@@ -148,6 +150,7 @@ namespace AMS.Controllers
             int id = customer.Customer_Id;
             var customer_db = db.Customers.Find(id);
             customer_db.Customer_Name = customer.Customer_Name;
+            customer_db.Customer_Email = customer.Customer_Email;
             customer_db.Customer_MobileNo = customer.Customer_MobileNo;
             customer_db.Customer_Address = customer.Customer_Address;
             customer_db.Customer_NTN = customer.Customer_NTN;

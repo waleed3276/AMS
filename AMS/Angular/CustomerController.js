@@ -4,7 +4,7 @@
     $scope.CustomerData = [];
 
     $scope.AllowSubmit = false;
-    $scope.CustomerObj = { Customer_Id: 0, Customer_Name: "", Customer_MobileNo: "", Customer_Address: "", Customer_NTN: "", Customer_Company: "" };
+    $scope.CustomerObj = { Customer_Id: 0, Customer_Name: "", Customer_Email: "", Customer_MobileNo: "", Customer_Address: "", Customer_NTN: "", Customer_Company: "" };
 
     function JsonCall(Controller, Action) {
         $.ajax({
@@ -67,7 +67,11 @@
         var pram = { "CustomerObj": JSON.stringify($scope.CustomerObj) };
 
         if ($scope.CustomerObj.Customer_Id == 0) {
-            JsonCallParam("Account", "Register2", { "UserRole": JSON.stringify("Customer"), "Username": JSON.stringify($scope.CustomerObj.Customer_Name) })
+            JsonCallParam("Account", "Register2", {
+                "UserRole": JSON.stringify("Customer"), 
+                "Username": JSON.stringify($scope.CustomerObj.Customer_Name),
+                "Email": JSON.stringify($scope.CustomerObj.Customer_Email),
+            })
             if (list != null)
                 JsonCallParam("Customers", "CreateCustomer", pram)
         }
@@ -86,11 +90,12 @@
     $scope.GetCustomer();
 
     $scope.Clear = function () {
-        $scope.CustomerObj = { Customer_Id: 0, Customer_Name: "", Customer_MobileNo: "", Customer_Address: "", Customer_NTN: "", Customer_Company: "" };
+        $scope.CustomerObj = { Customer_Id: 0, Customer_Name: "", Customer_Email: "", Customer_MobileNo: "", Customer_Address: "", Customer_NTN: "", Customer_Company: "" };
     }
 
     $scope.ValidateCustomer = function () {
         if ($scope.CustomerObj.Customer_Name == ""
+            || $scope.CustomerObj.Customer_Email == ""
             || $scope.CustomerObj.Customer_MobileNo == ""
             || $scope.CustomerObj.Customer_Address == ""
             || $scope.CustomerObj.Customer_NTN == ""

@@ -240,3 +240,4 @@ E:\Repos\AMS\AMS\bin\System.Security.Cryptography.Primitives.dll
 E:\Repos\AMS\AMS\bin\System.Security.Cryptography.X509Certificates.dll
 E:\Repos\AMS\AMS\bin\SendGrid.pdb
 E:\Repos\AMS\AMS\bin\SendGrid.xml
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.emailPasswordForUser.resources
