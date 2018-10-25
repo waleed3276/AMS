@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
+using System.Web.Helpers;
 
 namespace AMS.Controllers
 {
@@ -231,8 +232,7 @@ namespace AMS.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        public async Task<JsonResult> ChangePassword(FormCollection form)
+        public ActionResult ChangePassword(FormCollection form)
         {
             var js = new JavaScriptSerializer();
             if (ModelState.IsValid)
@@ -246,25 +246,14 @@ namespace AMS.Controllers
                     cvm.NewPassword = newPassword;
                     string id = Session["UserId"].ToString();
                     var user = db.Users.Where(u => u.Id == id).SingleOrDefault();
-                    byte[] byteArray = Encoding.UTF8.GetBytes(newPassword);
-                    MemoryStream stream = new MemoryStream(byteArray);
-                    var md5 = new MD5CryptoServiceProvider();
-                    var newPasswordHash = md5.ComputeHash(stream);
-                    user.PasswordHash = newPasswordHash.ToString();
-                    //db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                    //db.SaveChanges();
-                    
-                    var result = await UserManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return Json(user.Id, JsonRequestBehavior.AllowGet);
-                    }
-                    AddErrors(result);
+                    user.PasswordHash = Crypto.HashPassword(newPassword);
+                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    return RedirectToAction("LogOff", "Account");
                 }
                 catch (Exception ex)
-                {
-                }
+                {  }
             }
 
             // If we got this far, something failed, redisplay form
@@ -272,7 +261,7 @@ namespace AMS.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ChangePassword(string newPassword, string confirmPassword, string oldPassword)
+        public async Task<ActionResult> ChangePassword2(string newPassword, string confirmPassword, string oldPassword)
         {
             string us = User.Identity.GetUserId<string>();
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<string>(), oldPassword, newPassword);
@@ -320,7 +309,8 @@ namespace AMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                //var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -329,10 +319,10 @@ namespace AMS.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

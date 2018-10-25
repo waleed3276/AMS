@@ -270,7 +270,9 @@
         </form>
     </div>
 }
-
+@using (Html.BeginForm("ForgotPassword", "Account", FormMethod.Post, new { id = "form2" }))
+{
+    @Html.AntiForgeryToken()
     <!-- Forgotten Password Container -->
     <div id="forgotten-container">
         <h1>Forgotten</h1>
@@ -279,10 +281,11 @@
         </span>
 
         <form>
-            <input type="email" name="email" placeholder="E-mail">
-            <a href="#" class="orange-btn">Get new password</a>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <a href="javascript:$('#form2').submit();" class="orange-btn">Get new password</a>
         </form>
     </div>
+}
     <script src="~/Content/includes/stopExecutionOnTimeout.js"></script>
     <script src="~/Content/includes/TweenMax.min.js"></script>
     <script src="~/Content/includes/jquery.min.js"></script>
@@ -313,6 +316,11 @@ $('#forgotten').click(function () {
 $('#form input').keydown(function (e) {
     if (e.keyCode == 13) {
         $('#form').submit();
+    }
+});
+$('#form2 input').keydown(function (e) {
+    if (e.keyCode == 13) {
+        $('#form2').submit();
     }
 });
     </script>

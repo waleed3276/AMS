@@ -1,0 +1,181 @@
+﻿@using AMS.Models
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ApplicationDbContext db = new ApplicationDbContext();
+}
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h4 class="text-themecolor">Dashboard</h4>
+        </div>
+        <div class="col-md-7 align-self-center text-right">
+            <div class="d-flex justify-content-end align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Info box -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">TOTAL CREDIT</h5>
+                    <div class="d-flex no-block align-items-center m-t-20 m-b-20">
+                        <div id="sparklinedash"></div>
+                        <div class="ml-auto">
+                            @{
+                                List<Transaction> trn = db.Transactions.ToList();
+                                decimal sumcredit = 0;
+                                string stlc = "";
+
+                                foreach (var item in trn)
+                                {
+                                    sumcredit += item.Transaction_Credit;
+                                }
+                                stlc = Convert.ToDecimal(sumcredit).ToString("#,##0.00");
+                                <h2 class="text-success"><i class="ti-arrow-down"></i> <span class="counter">@stlc</span></h2>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id="sparkline8" class="sparkchart"></div>
+            </div>
+        </div>
+        <!-- Column -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">TOTAL DEBIT</h5>
+                    <div class="d-flex no-block align-items-center m-t-20 m-b-20">
+                        <div id="sparklinedash2"></div>
+                        <div class="ml-auto">
+                            @{
+                                decimal sumdebit = 0;
+                                string stld = "";
+
+                                foreach (var item in trn)
+                                {
+                                    sumdebit += item.Transaction_Debit;
+                                }
+                                stld = Convert.ToDecimal(sumdebit).ToString("#,##0.00");
+                                <h2 class="text-purple"><i class="ti-arrow-up"></i> <span class="counter">@stld</span></h2>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id="sparkline8" class="sparkchart"></div>
+            </div>
+        </div>
+        <!-- Column -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">TODAY CREDIT</h5>
+                    <div class="d-flex no-block align-items-center m-t-20 m-b-20">
+                        <div id="sparklinedash3"></div>
+                        <div class="ml-auto">
+                            @{
+                                decimal toc = 0;
+                                string stoc = "";
+
+                                DateTime mydate = DateTime.Now;
+                                int Date = DateTime.Now.Day;
+                                int Months = DateTime.Now.Month;
+                                int year = DateTime.Now.Year;
+                                foreach (var item in trn.Where(a => a.Transaction_Date.Day == Date && a.Transaction_Date.Month == Months && a.Transaction_Date.Year == year))
+                                {
+                                    toc += item.Transaction_Credit;
+                                }
+                                stoc = Convert.ToDecimal(toc).ToString("#,##0.00");
+                                <h2 class="text-info"><i class="ti-arrow-down"></i> <span class="counter">@stoc</span></h2>
+                            }
+                            
+                        </div>
+                    </div>
+                </div>
+                <div id="sparkline8" class="sparkchart"></div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">TODAY DEBIT</h5>
+                    <div class="d-flex no-block align-items-center m-t-20 m-b-20">
+                        <div id="sparklinedash4"></div>
+                        <div class="ml-auto">
+                            @{
+                                decimal tod = 0;
+                                string stod = "";
+
+                                foreach (var item in trn.Where(a => a.Transaction_Date.Day == Date && a.Transaction_Date.Month == Months && a.Transaction_Date.Year == year))
+                                {
+                                    tod += item.Transaction_Debit;
+                                }
+                                stod = Convert.ToDecimal(tod).ToString("#,##0.00");
+                                <h2 class="text-danger"><i class="ti-arrow-up"></i> <span class="counter">@stod</span></h2>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id="sparkline8" class="sparkchart"></div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Info box -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">ORDER STATUS</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Invoice</th>
+                                <th>User</th>
+                                <th>Order date</th>
+                                <th>Amount</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Tracking Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="javascript:void(0)" class="link"> Order #53431</a></td>
+                                <td>Steve N. Horton</td>
+                                <td><span class="text-muted"><i class="fa fa-clock-o"></i> Oct 22, 2014</span></td>
+                                <td>$45.00</td>
+                                <td class="text-center">
+                                    <div class="label label-table label-success">Active</div>
+                                </td>
+                                <td class="text-center">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+</div>

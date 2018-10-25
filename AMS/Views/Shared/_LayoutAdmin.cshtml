@@ -397,78 +397,122 @@
                             </ul>
                         </li>
                         <li class="nav-small-cap">--- Links</li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Customer</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Customers/Index">View Customers</a></li>
-                                <li><a href="~/Customers/Create">New Customer</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Vendor</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Vendors/Index">View Vendors</a></li>
-                                <li><a href="~/Vendors/Create">New Vendor</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Category</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Categories/Index">View Categories</a></li>
-                                <li><a href="~/Categories/Create">New Category</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Sub-Category</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/CategoriesSub/Index">View Sub-Categories</a></li>
-                                <li><a href="~/CategoriesSub/Create">New Sub-Category</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Product</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/ProductSizes/Index">Product Sizes</a></li>
-                                <li><a href="~/Products/Index">View Products</a></li>
-                                <li><a href="~/Products/Create">New Product</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Sale Order</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/SaleOrder/Index">View Sale Orders</a></li>
-                                <li><a href="~/SaleOrder/Create">New Sale Order</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Purchase Order</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/PurchaseOrder/Index">View Purchase Orders</a></li>
-                                <li><a href="~/PurchaseOrder/Create">New Purchase Order</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">GatePass</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/GatePass/Index">View GatePasses</a></li>
-                                <li><a href="~/GatePass/Create">New GatePass</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Transaction</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Transactions/ViewAll">View All</a></li>
-                                <li><a href="~/Transactions/ViewToday">View Today</a></li>
-                                <li><a href="~/Transactions/Add">Add Tranaction</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Report</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Reports/Index">View Reports</a></li>
-                            </ul>
-                        </li>
-
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li><a href="~/Home/Dashboard"><i class="ti-layout-grid2"></i>Dashboard</a></li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Customer</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/Customers/Index">View Customers</a></li>
+                                    <li><a href="~/Customers/Create">New Customer</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Vendor</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/Vendors/Index">View Vendors</a></li>
+                                    <li><a href="~/Vendors/Create">New Vendor</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Category</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/Categories/Index">View Categories</a></li>
+                                    <li><a href="~/Categories/Create">New Category</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Sub-Category</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/CategoriesSub/Index">View Sub-Categories</a></li>
+                                    <li><a href="~/CategoriesSub/Create">New Sub-Category</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Product</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/ProductSizes/Index">Product Sizes</a></li>
+                                    <li><a href="~/Products/Index">View Products</a></li>
+                                    <li><a href="~/Products/Create">New Product</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Sale Order</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/SaleOrder/Index">View Sale Orders</a></li>
+                                    <li><a href="~/SaleOrder/Create">New Sale Order</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Purchase Order</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/PurchaseOrder/Index">View Purchase Orders</a></li>
+                                    <li><a href="~/PurchaseOrder/Create">New Purchase Order</a></li>
+                                </ul>
+                            </li>
+                            @*<li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">GatePass</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/GatePass/Index">View GatePasses</a></li>
+                                    <li><a href="~/GatePass/Create">New GatePass</a></li>
+                                </ul>
+                            </li>*@
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Transaction</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/Transactions/ViewAll">View All</a></li>
+                                    <li><a href="~/Transactions/ViewToday">View Today</a></li>
+                                    <li><a href="~/Transactions/Add">Add Tranaction</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Report</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/Reports/Index">View Reports</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Profile</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    @*<li><a href="~/Home/Profile">View Profile</a></li>*@
+                                    <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else if (User.IsInRole("Customer"))
+                        {
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Sale Order</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/SaleOrder/Index">View Sale Orders</a></li>
+                                    <li><a href="~/SaleOrder/Create">New Sale Order</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Profile</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    @*<li><a href="~/Home/Profile">View Profile</a></li>*@
+                                    <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else if (User.IsInRole("Vendor"))
+                        {
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">GatePass</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/GatePass/Index">View GatePasses</a></li>
+                                    <li><a href="~/GatePass/Create">New GatePass</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Profile</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    @*<li><a href="~/Home/Profile">View Profile</a></li>*@
+                                    <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                </ul>
+                            </li>
+                        }
 
                     </ul>
                 </nav>

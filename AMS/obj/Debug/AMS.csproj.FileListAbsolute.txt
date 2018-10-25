@@ -232,3 +232,11 @@ E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.removeProductWeight.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.docNoAndDelDate.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.docNoAndDelDate0.resources
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.removeGST.resources
+E:\Repos\AMS\AMS\bin\SendGrid.dll
+E:\Repos\AMS\AMS\bin\System.Net.Http.dll
+E:\Repos\AMS\AMS\bin\System.Security.Cryptography.Algorithms.dll
+E:\Repos\AMS\AMS\bin\System.Security.Cryptography.Encoding.dll
+E:\Repos\AMS\AMS\bin\System.Security.Cryptography.Primitives.dll
+E:\Repos\AMS\AMS\bin\System.Security.Cryptography.X509Certificates.dll
+E:\Repos\AMS\AMS\bin\SendGrid.pdb
+E:\Repos\AMS\AMS\bin\SendGrid.xml

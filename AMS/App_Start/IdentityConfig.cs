@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using AMS.Models;
+using System.Net;
+using SendGrid.Helpers.Mail;
+using System.Net.Mail;
 
 namespace AMS
 {
@@ -18,8 +21,30 @@ namespace AMS
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            using (MailMessage m = new MailMessage(
+                        new MailAddress("from@gmail.com", "Reset Password"),
+                        new MailAddress("to@gmail.com")))
+            {
+                m.Subject = message.Subject;
+                m.Body = message.Body;
+                m.IsBodyHtml = true;
+                m.Priority = MailPriority.High;
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com"))
+                {
+                    smtp.Credentials = new NetworkCredential("from@gmail.com", "xxxxxx");
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    try
+                    {
+                        smtp.Send(m);
+                    }
+                    catch (Exception ex)
+                    { }
+                }
+
+                // Plug in your email service here to send an email.
+                return Task.FromResult(0);
+            }
         }
     }
 
