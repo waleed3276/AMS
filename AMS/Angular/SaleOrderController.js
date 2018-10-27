@@ -334,6 +334,9 @@ App.controller("SaleOrderCtrl", function ($scope, $http) {
         $scope.isCheckbook = false;
         $scope.NetTotal = 0;
         $scope.AmountRemaining = 0;
+        $scope.InvoiceNo = 0;
+        $scope.Invoice_DocumentNo = 0;
+        $scope.date = "";
         $scope.ShowDescription();
         $scope.GetGST();
     };
@@ -422,6 +425,8 @@ App.controller("SaleOrderCtrl", function ($scope, $http) {
     $scope.LoadSaleOrder = function (obj) {
         $scope.SaleOrder_PtObj = obj.Item1;
         $scope.NetTotal = obj.Item1.SOP_TotalAmount;
+        $scope.InvoiceNo = obj.Item4;
+        $scope.Invoice_DocumentNo = obj.Item7;
         JsonCallParam("SaleOrder", "LoadSaleOrder", { "SoPtId": obj.Item1.SOP_Id })
         $scope.SaleOrder_ChList = list;
         $scope.CalculateTotal();

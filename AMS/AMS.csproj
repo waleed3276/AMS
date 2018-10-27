@@ -203,6 +203,7 @@
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
+    <Compile Include="Controllers\SalesTaxController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -276,6 +277,22 @@
     <Compile Include="Migrations\201810251747100_emailPasswordForUser.Designer.cs">
       <DependentUpon>201810251747100_emailPasswordForUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810260941591_addSalesTax.cs" />
+    <Compile Include="Migrations\201810260941591_addSalesTax.Designer.cs">
+      <DependentUpon>201810260941591_addSalesTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810260955286_salesTaxRelation.cs" />
+    <Compile Include="Migrations\201810260955286_salesTaxRelation.Designer.cs">
+      <DependentUpon>201810260955286_salesTaxRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810261211344_dcToString.cs" />
+    <Compile Include="Migrations\201810261211344_dcToString.Designer.cs">
+      <DependentUpon>201810261211344_dcToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810271901471_addStatusToSoTable.cs" />
+    <Compile Include="Migrations\201810271901471_addStatusToSoTable.Designer.cs">
+      <DependentUpon>201810271901471_addStatusToSoTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -296,6 +313,8 @@
     <Compile Include="Models\PurchaseOrder_Pt.cs" />
     <Compile Include="Models\SaleOrder_Ch.cs" />
     <Compile Include="Models\SaleOrder_Pt.cs" />
+    <Compile Include="Models\SalesTax_Ch.cs" />
+    <Compile Include="Models\SalesTax_Pt.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -312,6 +331,7 @@
     <Content Include="Angular\ProductSizeController.js" />
     <Content Include="Angular\PurchaseOrderController.js" />
     <Content Include="Angular\SaleOrderController.js" />
+    <Content Include="Angular\SalesTaxController.js" />
     <Content Include="Angular\VendorController.js" />
     <Content Include="Content\AdminInformation.txt" />
     <Content Include="Content\Admin\assets\css\pages\bootstrap-switch.css" />
@@ -843,6 +863,9 @@
     <Content Include="Views\Reports\ViewReport.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\SalesTax\Create.cshtml" />
+    <Content Include="Views\SalesTax\Index.cshtml" />
+    <Content Include="Views\SalesTax\SalesTaxInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -907,6 +930,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810251747100_emailPasswordForUser.resx">
       <DependentUpon>201810251747100_emailPasswordForUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810260941591_addSalesTax.resx">
+      <DependentUpon>201810260941591_addSalesTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810260955286_salesTaxRelation.resx">
+      <DependentUpon>201810260955286_salesTaxRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810261211344_dcToString.resx">
+      <DependentUpon>201810261211344_dcToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810271901471_addStatusToSoTable.resx">
+      <DependentUpon>201810271901471_addStatusToSoTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

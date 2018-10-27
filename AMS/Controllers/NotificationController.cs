@@ -39,31 +39,37 @@ namespace AMS.Controllers
 
         public JsonResult CheckAndNotify()
         {
-            string sessionId = Session["UserId"].ToString();
-            if (User.IsInRole(ds.Role_Admin))
+            try
             {
-                var obj = db.Notifications.Where(n => n.Notification_IsSeen == false && n.Notification_ItemType == ds.Role_Admin).ToList();
-                if (obj != null)
+                string sessionId = Session["UserId"].ToString();
+                if (User.IsInRole(ds.Role_Admin))
                 {
-                    return Json(obj, JsonRequestBehavior.AllowGet);
+                    var obj = db.Notifications.Where(n => n.Notification_IsSeen == false && n.Notification_ItemType == ds.Role_Admin).ToList();
+                    if (obj != null)
+                    {
+                        return Json(obj, JsonRequestBehavior.AllowGet);
+                    }
                 }
-            }
-            else if (User.IsInRole(ds.Role_Customer))
-            {
-                var obj = db.Notifications.Where(n => n.Notification_IsSeen == false && n.Notification_ItemType == ds.Role_Customer && n.Id == sessionId).ToList();
-                if (obj != null)
+                else if (User.IsInRole(ds.Role_Customer))
                 {
-                    return Json(obj, JsonRequestBehavior.AllowGet);
+                    var obj = db.Notifications.Where(n => n.Notification_IsSeen == false && n.Notification_ItemType == ds.Role_Customer && n.Id == sessionId).ToList();
+                    if (obj != null)
+                    {
+                        return Json(obj, JsonRequestBehavior.AllowGet);
+                    }
                 }
-            }
-            else if (User.IsInRole(ds.Role_Vendor))
-            {
-                var obj = db.Notifications.Where(n => n.Notification_IsSeen == false && n.Notification_ItemType == ds.Role_Vendor && n.Id == sessionId).ToList();
-                if (obj != null)
+                else if (User.IsInRole(ds.Role_Vendor))
                 {
-                    return Json(obj, JsonRequestBehavior.AllowGet);
+                    var obj = db.Notifications.Where(n => n.Notification_IsSeen == false && n.Notification_ItemType == ds.Role_Vendor && n.Id == sessionId).ToList();
+                    if (obj != null)
+                    {
+                        return Json(obj, JsonRequestBehavior.AllowGet);
+                    }
                 }
+                return Json("", JsonRequestBehavior.AllowGet);
             }
+            catch (Exception ex)
+            {  }
             return Json("", JsonRequestBehavior.AllowGet);
         }
     }

@@ -336,6 +336,9 @@ App.controller("PurchaseOrderCtrl", function ($scope, $http) {
         $scope.isCheckbook = false;
         $scope.NetTotal = 0;
         $scope.AmountRemaining = 0;
+        $scope.InvoiceNo = 0;
+        $scope.Invoice_DocumentNo = 0;
+        $scope.date = "";
         $scope.ShowDescription();
         $scope.GetGST();
     };
@@ -408,6 +411,8 @@ App.controller("PurchaseOrderCtrl", function ($scope, $http) {
     $scope.LoadPurchaseOrder = function (obj) {
         $scope.PurchaseOrder_PtObj = obj.Item1;
         $scope.NetTotal = obj.Item1.POP_TotalAmount;
+        $scope.InvoiceNo = obj.Item4;
+        $scope.Invoice_DocumentNo = obj.Item7;
         JsonCallParam("PurchaseOrder", "LoadPurchaseOrder", { "PoPtId": obj.Item1.POP_Id })
         $scope.PurchaseOrder_ChList = list;
         $scope.CalculateTotal();

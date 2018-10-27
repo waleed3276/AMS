@@ -1,0 +1,178 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/Angular/SalesTaxController.js"></script>
+<div ng-controller="SalesTaxCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Sales Tax</h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Sales Tax</li>
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">New Sales Tax Invoice</h4>
+                        <hr /><br />
+                        <div class="form-material row">
+                            <div class="form-group col-md-6">
+                                <label>Invoice #:</label>
+                                <input type="number" ng-model="InvoiceNo" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Document #:</label>
+                                <input type="number" ng-model="Invoice_DocumentNo" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>DC #:</label>
+                                <input type="number" ng-model="SalesTax_PtObj.STP_DeliveryChallanNo" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Customer:</label>
+                                <select class="form-control custom-select" id="Customer_Id" name="Customer_Id" ng-model="SalesTax_PtObj.CustomerId" ng-options="item.Customer_Id as item.Customer_Name for item in CustomerData" ng-change="GetCustomerSOList()" style="width: 100%; height:36px;">
+                                    <option value="">Select Customer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="CheckAll()" /></th>
+                                        <th>SO #</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="obj in SalesTax_ChList">
+                                        <td>
+                                            <input type="checkbox" ng-model="obj.selected" />
+                                        </td>
+                                        <td>
+                                            <select class="select2 form-control custom-select" id="SO_Id{{$index}}" name="SO_Id" ng-model="obj.SOP_Id" ng-options="item.SOP_Id as item.SOP_SO for item in CustomerSO_List" ng-change="SOChange({{$index}})" style="width: 100%; height:36px;">
+                                                <option value="">Select SO #</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="select2 form-control custom-select" id="Product_Id{{$index}}" name="Product_Id" ng-model="obj.SOC_Id" ng-options="item.SOC_Id as item.SOC_Description for item in obj.CustomerProduct_List" ng-change="ProductChange({{$index}})" style="width: 100%; height:36px;">
+                                                <option value="">Select Product</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="SOC_Quantity" ng-model="obj.SOC_Quantity" required readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="SOC_Unit" ng-model="obj.SOC_Unit" required readonly>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="SOC_Rate" ng-model="obj.SOC_Rate" required readonly>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="SOC_Amount" ng-model="obj.SOC_Amount" required readonly>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <input ng-hide="!SalesTax_ChList.length" type="button" class="btn btn-danger pull-right" ng-click="Remove()" value="Remove Selected">
+                            <input type="button" class="btn btn-success addnew pull-right" value="Add New" ng-click="AddNew()" style="margin-right:3px">
+                        </div>
+                        <br />
+                        <div class="form-material row">
+                            <div class="form-group col-md-5">
+                                <label>Total Amount:</label>
+                                <label>{{SalesTax_PtObj.STP_TotalAmount}}</label>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label>Tax Amount:</label>
+                                <label>{{SalesTax_PtObj.STP_TaxAmount}}</label>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>GST:</label>
+                                <label>{{SalesTax_PtObj.STP_GST}} %</label>
+                            </div>
+                        </div>
+                        <div class="form-material row">
+                            <div class="form-group col-md-4">
+                                <label>Net Total:</label>
+                                <label>{{NetTotal}}</label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Received:</label>
+                                <input type="number" ng-model="SalesTax_PtObj.STP_TotalReceived" ng-change="ValidateSalesTax()" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Remaining:</label>
+                                <label>{{AmountRemaining}}</label>
+                            </div>
+                        </div>
+                        <div class="form-material row">
+                            <div class="btn-group col-md-6">
+                                <input type="button" class="btn btn-success" value="Save" ng-click="GenerateSalesTaxInvoice()" ng-disabled="AllowSubmit" style="width:100%">
+                            </div>
+                            <div class="btn-group col-md-6">
+                                <input type="button" class="btn btn-warning" value="Clear" ng-click="Clear()" style="width:100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">All Sales Tax Invoices</h4>
+                        <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" ng-click="GetSalesTax()">Refresh</button>
+                        <div class="jsgrid table-responsive m-t-40">
+                            <table id="myTable" class="jsgrid-table table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice</th>
+                                        <th>Customer</th>
+                                        <th>Total Amount</th>
+                                        <th>GST</th>
+                                        <th>Tax Amount</th>
+                                        <th>Total Received</th>
+                                        <th>Remaining</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="jsgrid-alt-row" ng-repeat="obj in Grid">
+                                        <td>IN-<a href="~/SalesTax/SalesTaxInvoice?id={{obj.Item1.STP_Id}}&In=IN-{{obj.Item3}}&DC={{obj.Item1.STP_DeliveryChallanNo}}">{{obj.Item1.STP_DeliveryChallanNo}}</a></td>
+                                        <td>{{obj.Item1.Customer.Customer_Name}}</td>
+                                        <td>{{obj.Item1.STP_TotalAmount}}</td>
+                                        <td>{{obj.Item1.STP_GST}}</td>
+                                        <td>{{obj.Item1.STP_TaxAmount}}</td>
+                                        <td>{{obj.Item1.STP_TotalReceived}}</td>
+                                        <td>{{obj.Item2}}</td>
+                                        <td>{{obj.Item4}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

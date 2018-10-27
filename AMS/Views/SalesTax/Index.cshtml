@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/Angular/SalesTaxController.js"></script>
+<div ng-controller="SalesTaxCtrl">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">Sales Tax</h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Sales Tax</li>
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">All Sales Tax Invoice</h4>
+                        <!-- Accordian -->
+                        <div class="accordion" id="accordionTable">
+                            <div class="card m-b-5">
+                                <div class="card-header" id="heading1">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#col1" aria-expanded="true" aria-controls="col1">
+                                            Collapse Sales Tax Data
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="col1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionTable">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="demo-foo-accordion" class="table table-bordered m-b-0 toggle-arrow-tiny" data-filtering="true" data-paging="true" data-sorting="true">
+                                                <thead>
+                                                    <tr class="footable-filtering">
+                                                        <th>DC #</th>
+                                                        <th>Customer</th>
+                                                        <th>Total Amount</th>
+                                                        <th>GST</th>
+                                                        <th>Tax Amount</th>
+                                                        <th>Total Received</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="obj in Grid">
+                                                        <td>IN-<a href="~/SalesTax/SalesTaxInvoice?id={{obj.Item1.STP_Id}}&In=IN-{{obj.Item3}}&DC={{obj.Item1.STP_DeliveryChallanNo}}">{{obj.Item1.STP_DeliveryChallanNo}}</a></td>
+                                                        <td>{{obj.Item1.Customer.Customer_Name}}</td>
+                                                        <td>{{obj.Item1.STP_TotalAmount}}</td>
+                                                        <td>{{obj.Item1.STP_GST}}</td>
+                                                        <td>{{obj.Item1.STP_TaxAmount}}</td>
+                                                        <td>{{obj.Item1.STP_TotalReceived}}</td>
+                                                        <td>{{obj.Item4}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -106,7 +106,7 @@ namespace AMS.Controllers
         {
             var purchaseOrders = db.PurchaseOrder_Pts.ToList();
 
-            List<Tuple<PurchaseOrder_Pt, decimal, string, int, int, string>> obj = new List<Tuple<PurchaseOrder_Pt, decimal, string, int, int, string>>();
+            List<Tuple<PurchaseOrder_Pt, decimal, string, int, int, string, int>> obj = new List<Tuple<PurchaseOrder_Pt, decimal, string, int, int, string, int>>();
             foreach (var item in purchaseOrders)
             {
                 try
@@ -119,8 +119,8 @@ namespace AMS.Controllers
                         action = 1;
                     }
 
-                    int invoice_no = db.Invoices.Where(m => m.SalePurchase_Id == item.POP_Id && m.Invoice_Type == ds.PurchaseInvoiceType).SingleOrDefault().Invoice_No;
-                    obj.Add(new Tuple<PurchaseOrder_Pt, decimal, string, int, int, string>(item, item.POP_TotalAmount - item.POP_TotalPaid, trans.Transaction_Description, invoice_no, action, item.POP_ModificationDate.ToShortDateString()));
+                    var invoice = db.Invoices.Where(m => m.SalePurchase_Id == item.POP_Id && m.Invoice_Type == ds.PurchaseInvoiceType).SingleOrDefault();
+                    obj.Add(new Tuple<PurchaseOrder_Pt, decimal, string, int, int, string, int>(item, item.POP_TotalAmount - item.POP_TotalPaid, trans.Transaction_Description, invoice.Invoice_No, action, item.POP_ModificationDate.ToShortDateString(), invoice.Invoice_DocumentNo));
 
                 }
                 catch (Exception ex)

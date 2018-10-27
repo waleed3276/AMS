@@ -9,6 +9,7 @@ namespace AMS.Models.HardCode
     {
         public string SaleInvoiceType = "SaleOrder";
         public string PurchaseInvoiceType = "PurchaseOrder";
+        public string SalesTax_InvoiceType = "SalesTaxInvoice";
 
         public string Balance_Customer = "CustomerBalance";
         public string Balance_Vendor = "VendorBalance";
@@ -17,6 +18,7 @@ namespace AMS.Models.HardCode
         public string Role_Customer = "Customer";
         public string Role_Vendor = "Vendor";
 
+        public string Status_Complete = "Complete";
         public string Status_Approve = "Approve";
         public string Status_Disapprove = "Disapprove";
         public string Status_Pending = "Pending";

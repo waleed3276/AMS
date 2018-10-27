@@ -28,5 +28,7 @@ namespace AMS.Models
         public string SOC_ItemCode { get; set; }
 
         public string SOC_Unit { get; set; }
+
+        public string SOC_SalesTaxStatus { get; set; }
     }
 }

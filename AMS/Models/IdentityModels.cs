@@ -61,5 +61,9 @@ namespace AMS.Models
         public DbSet<ProductSize> ProductSizes { get; set; }
 
         public DbSet<GatePass> GatePasses { get; set; }
+
+        public DbSet<SalesTax_Pt> SalesTax_Pts { get; set; }
+
+        public DbSet<SalesTax_Ch> SalesTax_Ches { get; set; }
     }
 }

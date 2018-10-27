@@ -241,3 +241,7 @@ E:\Repos\AMS\AMS\bin\System.Security.Cryptography.X509Certificates.dll
 E:\Repos\AMS\AMS\bin\SendGrid.pdb
 E:\Repos\AMS\AMS\bin\SendGrid.xml
 E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.emailPasswordForUser.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.addSalesTax.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.salesTaxRelation.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.dcToString.resources
+E:\Repos\AMS\AMS\obj\Debug\AMS.Migrations.addStatusToSoTable.resources

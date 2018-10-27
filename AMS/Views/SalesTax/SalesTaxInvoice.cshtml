@@ -1,0 +1,167 @@
+﻿@using AMS.Models;
+@model SalesTax_Pt
+@{
+    ViewBag.Title = "SalesTaxInvoice";
+    Layout = null;
+    ApplicationDbContext db = new ApplicationDbContext();
+    DateTime date = ViewBag.Date;
+    string invoiceNo = ViewBag.In;
+    string DcNo = ViewBag.DC;
+    string docNo = ViewBag.docNo;
+    decimal totalAmount = 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/Admin/assets/images/favicon.png">
+    <title>Invoice</title>
+    <link href="~/Content/Admin/dist/css/style.min.css" rel="stylesheet">
+</head>
+<body class="skin-default fixed-layout">
+
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div>
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div>
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row" style="margin-top:20px;margin-right:15%;margin-left:15%;">
+                    <div class="col-md-12">
+                        <div class="card card-body printableArea">
+                            <h3><b>INVOICE #</b> <span class="pull-right">@invoiceNo</span></h3>
+                            <h5><b>DC #</b> <span class="pull-right">@DcNo</span></h5>
+                            <hr>
+                            @if (Model != null)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="pull-left">
+                                            <address>
+                                                <h3> &nbsp;<b class="text-danger">@Model.Customer.Customer_Company</b></h3>
+                                                <p class="text-muted m-l-5">
+                                                    @Model.Customer.Customer_Address
+                                                    <br /> @Model.Customer.Customer_MobileNo
+                                                    <br /> @Model.Customer.Customer_NTN
+                                                </p>
+                                            </address>
+                                        </div>
+                                        <div class="pull-right text-right">
+                                            <address>
+                                                <h3>To,</h3>
+                                                <h4 class="font-bold">Gaala & Sons,</h4>
+                                                <p class="text-muted m-l-30">
+                                                    E 104, Dharti-2,
+                                                    <br /> Nr' Viswakarma Temple,
+                                                    <br /> Talaja Road
+                                                </p>
+                                                <p class="m-t-30"><b>Date :</b> <i class="fa fa-calendar"></i> @date</p>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive m-t-40" style="clear: both;">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">#</th>
+                                                        <th>Description</th>
+                                                        <th class="text-right">Unit</th>
+                                                        <th class="text-right">Quantity</th>
+                                                        <th class="text-right">Rate</th>
+                                                        <th class="text-right">SO #</th>
+                                                        <th class="text-right">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ int sr = 0; }
+                                                    @foreach (var stCh in db.SalesTax_Ches.Where(s => s.STP_Id == Model.STP_Id))
+                                                    {
+                                                        sr++;
+                                                        totalAmount += stCh.SaleOrder_Ch.SOC_Amount;
+                                                        <tr>
+                                                            <td class="text-center">@sr</td>
+                                                            <td>@stCh.SaleOrder_Ch.SOC_Description </td>
+                                                            <td class="text-right">@stCh.SaleOrder_Ch.SOC_Unit </td>
+                                                            <td class="text-right">@stCh.SaleOrder_Ch.SOC_Quantity </td>
+                                                            <td class="text-right">@stCh.SaleOrder_Ch.SOC_Rate </td>
+                                                            <td class="text-right">@stCh.SaleOrder_Ch.SaleOrder_Pt.SOP_SO </td>
+                                                            <td class="text-right">@stCh.SaleOrder_Ch.SOC_Amount </td>
+                                                        </tr>
+                                                    }
+                                                    <tr>
+                                                        <td class="text-center"> </td>
+                                                        <td class="text-center"> </td>
+                                                        <td> </td>
+                                                        <td class="text-right"> </td>
+                                                        <td class="text-right"> </td>
+                                                        <td class="text-right"> </td>
+                                                        <td class="text-right">@totalAmount </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="pull-right m-t-30 text-right">
+                                            <hr>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <hr>
+                                        <div class="text-right">
+                                            <button id="print" class="btn btn-default btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Admin/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/Content/Admin/assets/node_modules/popper/popper.min.js"></script>
+    <script src="~/Content/Admin/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="~/Content/Admin/dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="~/Content/Admin/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="~/Content/Admin/dist/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="~/Content/Admin/assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="~/Content/Admin/assets/node_modules/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="~/Content/Admin/dist/js/custom.min.js"></script>
+    <script src="~/Content/Admin/dist/js/pages/jquery.PrintArea.js" type="text/JavaScript"></script>
+    <script>
+    $(document).ready(function() {
+        $("#print").click(function() {
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableArea").printArea(options);
+        });
+    });
+    </script>
+</body>
+</html>

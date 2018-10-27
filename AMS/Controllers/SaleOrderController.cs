@@ -84,7 +84,7 @@ namespace AMS.Controllers
                 string userId = Session["UserId"].ToString();
                 var saleOrders = db.SaleOrder_Pts.Where(s => s.Customer.ApplicationUser.Id == userId).ToList();
                 
-                List<Tuple<SaleOrder_Pt, decimal, string, int, int, string>> obj = new List<Tuple<SaleOrder_Pt, decimal, string, int, int, string>>();
+                List<Tuple<SaleOrder_Pt, decimal, string, int, int, string, int>> obj = new List<Tuple<SaleOrder_Pt, decimal, string, int, int, string, int>>();
                 foreach (var item in saleOrders)
                 {
                     try
@@ -97,8 +97,8 @@ namespace AMS.Controllers
                             action = 1;
                         }
                         
-                        int invoice_no = db.Invoices.Where(m => m.SalePurchase_Id == item.SOP_Id && m.Invoice_Type == ds.SaleInvoiceType).SingleOrDefault().Invoice_No;
-                        obj.Add(new Tuple<SaleOrder_Pt, decimal, string, int, int, string>(item, item.SOP_TotalAmount - item.SOP_TotalReceived, trans.Transaction_Description, invoice_no, action, item.SOP_ModificationDate.ToShortDateString()));
+                        var invoice = db.Invoices.Where(m => m.SalePurchase_Id == item.SOP_Id && m.Invoice_Type == ds.SaleInvoiceType).SingleOrDefault();
+                        obj.Add(new Tuple<SaleOrder_Pt, decimal, string, int, int, string, int>(item, item.SOP_TotalAmount - item.SOP_TotalReceived, trans.Transaction_Description, invoice.Invoice_No, action, item.SOP_ModificationDate.ToShortDateString(), invoice.Invoice_DocumentNo));
 
                     }
                     catch (Exception ex)
@@ -158,6 +158,7 @@ namespace AMS.Controllers
                             soCh.Product = db.Products.Where(p => p.Product_Id == soCh.Product_Id).SingleOrDefault();
                             soCh.SOP_Id = soPt_Id;
                             soCh.SaleOrder_Pt = db.SaleOrder_Pts.Find(soPt_Id);
+                            soCh.SOC_SalesTaxStatus = ds.Status_Pending;
                             db.SaleOrder_Ches.Add(soCh);
                             db.SaveChanges();
                         }
