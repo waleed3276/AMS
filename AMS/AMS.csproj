@@ -866,6 +866,7 @@
     <Content Include="Views\SalesTax\Create.cshtml" />
     <Content Include="Views\SalesTax\Index.cshtml" />
     <Content Include="Views\SalesTax\SalesTaxInvoice.cshtml" />
+    <Content Include="Views\GatePass\GPInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

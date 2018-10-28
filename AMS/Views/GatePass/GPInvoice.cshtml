@@ -1,19 +1,11 @@
 ﻿@using AMS.Models;
-@model SalesTax_Pt
+@model GatePass
 @{
-    ViewBag.Title = "SalesTaxInvoice";
+    ViewBag.Title = "GPInvoice";
     Layout = null;
     ApplicationDbContext db = new ApplicationDbContext();
     DateTime date = ViewBag.Date;
-    string invoiceNo = ViewBag.In;
-    string DcNo = ViewBag.DC;
-    string docNo = ViewBag.docNo;
-    decimal totalAmount = 0;
-    decimal totalAmountWithTax = 0;
-    string companyName = File.ReadLines(Server.MapPath("~/Content/AdminInformation.txt")).Skip(1).Take(1).First();
-    string companyPhone = File.ReadLines(Server.MapPath("~/Content/AdminInformation.txt")).Skip(4).Take(1).First();
-    string companyAddress = File.ReadLines(Server.MapPath("~/Content/AdminInformation.txt")).Skip(10).Take(1).First();
-    string companyNTN = System.IO.File.ReadLines(Server.MapPath("~/Content/AdminInformation.txt")).Skip(13).Take(1).First();
+    string gpNo = ViewBag.gpNo;
 }
 
 <!DOCTYPE html>
@@ -48,32 +40,27 @@
                 <div class="row" style="margin-top:20px;margin-right:15%;margin-left:15%;">
                     <div class="col-md-12">
                         <div class="card card-body printableArea">
-                            <h3><span class="pull-left"><b>Syme Brothers</b></span> <span class="pull-right float-right"><b>Sales tax Invoice</b></span></h3>
-                            <h5><span class="pull-right float-right"><b>Invoice #</b> @invoiceNo</span></h5>
-                            <h5><span class="pull-right float-right"><b>DC #</b> @DcNo</span></h5>
+                            <h5>
+                                <span class="pull-right float-left">&nbsp;<b>Date: </b>@date</span>
+                                <span class="pull-right float-right" style="margin-right:20%"><b>GP# </b>@gpNo</span>
+                            </h5>
+                            <hr>
                             @if (Model != null)
                             {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="pull-left">
                                             <address>
-                                                <p class="text-muted m-l-5">
-                                                    @companyAddress
-                                                    <br /> @companyPhone
-                                                    <br /> @companyNTN
-                                                </p>
-                                            </address>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="pull-left">
-                                            <address>
-                                                <h3> Customer &nbsp;<b class="text-danger">@Model.Customer.Customer_Company</b></h3>
+                                                <h4> &nbsp; Party Name: <b class="text-danger">@Model.Customer.Customer_Company</b></h4>
                                                 <p class="text-muted m-l-5">
                                                     @Model.Customer.Customer_Address
                                                     <br /> @Model.Customer.Customer_MobileNo
-                                                    <br /> @Model.Customer.Customer_NTN
                                                 </p>
+                                                <p> 
+                                                    <span class="pull-left float-left">&nbsp;<b>Demand #</b>_____________________________  PO #<b class="text-info">@Model.PurchaseOrder_Pt.POP_PO</b></span>
+                                                    <span class="pull-right float-right"><b>Builty #</b>__________________</span>
+                                                </p>
+                                                
                                             </address>
                                         </div>
                                     </div>
@@ -84,59 +71,37 @@
                                                     <tr>
                                                         <th class="text-center">#</th>
                                                         <th>Description</th>
-                                                        <th class="text-right">Unit</th>
                                                         <th class="text-right">Quantity</th>
-                                                        <th class="text-right">Rate</th>
-                                                        <th class="text-right">SO #</th>
-                                                        <th class="text-right">Amount</th>
+                                                        <th class="text-right">Unit</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @{ int sr = 0; }
-                                                    @foreach (var stCh in db.SalesTax_Ches.Where(s => s.STP_Id == Model.STP_Id))
+                                                    @foreach (var poCh in db.PurchaseOrder_Ches.Where(s => s.POP_Id == Model.PurchaseOrder_Pt.POP_Id))
                                                     {
                                                         sr++;
-                                                        totalAmount += stCh.SaleOrder_Ch.SOC_Amount;
                                                         <tr>
                                                             <td class="text-center">@sr</td>
-                                                            <td>@stCh.SaleOrder_Ch.SOC_Description </td>
-                                                            <td class="text-right">@stCh.SaleOrder_Ch.SOC_Unit </td>
-                                                            <td class="text-right">@stCh.SaleOrder_Ch.SOC_Quantity </td>
-                                                            <td class="text-right">@stCh.SaleOrder_Ch.SOC_Rate </td>
-                                                            <td class="text-right">@stCh.SaleOrder_Ch.SaleOrder_Pt.SOP_SO </td>
-                                                            <td class="text-right">@stCh.SaleOrder_Ch.SOC_Amount </td>
+                                                            <td>@poCh.POC_Description</td>
+                                                            <td class="text-right">@poCh.POC_Quantity </td>
+                                                            <td class="text-right">@poCh.POC_Unit </td>
                                                         </tr>
                                                     }
-                                                    @{ totalAmountWithTax = totalAmount + Model.STP_TaxAmount; }
                                                 </tbody>
                                             </table>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="text-right" style="margin-right:5%">
-                                            <p class="float-right"><b>Subtotal: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@totalAmount</b></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="text-right" style="margin-right:5%">
-                                            <p class="float-right"><b>Tax rate: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.STP_GST %</b></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="text-right" style="margin-right:5%">
-                                            <p class="float-right"><b>Tax: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.STP_TaxAmount</b></p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="col-md-12">
-                                        <div class="text-right" style="margin-right:5%">
-                                            <p class="float-right"><b>Total: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@totalAmountWithTax</b></p>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="pull-right m-t-30 text-right">
                                             <hr>
                                         </div>
+                                        <br>
+                                        <p>&nbsp;<b>Remarks</b> <span class="pull-right">_____________________________________________________________________________</span></p>
+                                        <br>
+                                        <p>
+                                            <span class="pull-left float-left">&nbsp;<b>Checked by</b>_____________________________</span>
+                                            <span class="pull-right float-right"><b>Receiver Sign</b>_____________________________</span>
+                                        </p>
                                         <div class="clearfix"></div>
                                         <hr>
                                         <div class="text-right">

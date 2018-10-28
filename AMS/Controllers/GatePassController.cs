@@ -28,6 +28,21 @@ namespace AMS.Controllers
             return View();
         }
 
+        public ActionResult GPInvoice(int? id, string gp = null)
+        {
+            ViewBag.gpNo = gp;
+            if (id != null)
+            {
+                var gatepass = db.GatePasses.Where(s => s.PurchaseOrder_Pt.POP_Id == id).SingleOrDefault();
+                if (gatepass != null)
+                    ViewBag.Date = gatepass.GatePass_Date;
+                else
+                    ViewBag.Date = DateTime.Now;
+                return View(gatepass);
+            }
+            return View();
+        }
+
         public JsonResult GetCustomerToShip(int poId)
         {
             string poNumber = db.PurchaseOrder_Pts.Where(p => p.POP_Id == poId).SingleOrDefault().POP_PO;

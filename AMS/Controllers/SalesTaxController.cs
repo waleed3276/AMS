@@ -125,8 +125,14 @@ namespace AMS.Controllers
                             saleTaxCh.STP_Id = stPt_Id;
                             saleTaxCh.SalesTax_Pt = db.SalesTax_Pts.Find(stPt_Id);
                             saleTaxCh.SOC_Id = soCh.SOC_Id;
-                            saleTaxCh.SaleOrder_Ch = db.SaleOrder_Ches.Find(soCh.SOC_Id);
+                            var saleOrderChObj = db.SaleOrder_Ches.Find(soCh.SOC_Id);
+                            saleTaxCh.SaleOrder_Ch = saleOrderChObj;
                             db.SalesTax_Ches.Add(saleTaxCh);
+                            db.SaveChanges();
+
+                            // convert sale order ch status from pending to complete
+                            saleOrderChObj.SOC_SalesTaxStatus = ds.Status_Complete;
+                            db.Entry(saleOrderChObj).State = EntityState.Modified;
                             db.SaveChanges();
                         }
                     }
